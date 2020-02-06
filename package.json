@@ -1,0 +1,22 @@
+{
+  "name": "realtime_messenger",
+  "version": "1.0.0",
+  "description": "chat realtime",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mthang1801/realtime_messenger.git"
+  },
+  "author": "mthang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mthang1801/realtime_messenger/issues"
+  },
+  "homepage": "https://github.com/mthang1801/realtime_messenger#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

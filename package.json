@@ -4,7 +4,9 @@
   "description": "chat realtime",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "babel-node server.js"
+
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,13 @@
   },
   "homepage": "https://github.com/mthang1801/realtime_messenger#readme",
   "dependencies": {
+    "@babel/node": "^7.8.4",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "nodemon": "^2.0.2"
   }
 }

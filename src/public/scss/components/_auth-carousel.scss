@@ -1,0 +1,25 @@
+.auth{ 
+  &__carousel{     
+   &-inner{
+     height : 100%;    
+     &-item{
+      height: 100%;
+      background-position: top;
+      background-size: cover;
+      opacity : .7;
+      -webkit-filter: brightness(0.3) grayscale(80%);
+      filter: brightness(0.3) grayscale(80%);
+      background-blend-mode: screen;   
+     } 
+     &--bg1{      
+      background-image: url("../images/humangroups5.jpg");      
+     }
+     &--bg2{       
+       background-image: url("../images/humangroups2.jpg");
+     }
+     &--bg3{      
+       background-image: url("../images/humangroups3.jpg");
+     }
+   }
+  }  
+}

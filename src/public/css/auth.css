@@ -1,0 +1,149 @@
+.auth {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  overflow: hidden; }
+  .auth-content {
+    padding: 3rem 5rem;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #fff;
+    height: 100%; }
+  .auth-form {
+    position: absolute;
+    right: 4rem;
+    top: 5rem;
+    width: 40%; }
+  .auth-link {
+    position: absolute;
+    right: .5rem;
+    top: .5rem; }
+  .auth__carousel {
+    height: 100%; }
+
+.auth-content__title {
+  font-size: 4rem;
+  font-weight: 400;
+  letter-spacing: .5rem; }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .auth-content__title {
+      font-size: 3rem; } }
+  @media (max-width: 479px) {
+    .auth-content__title {
+      font-size: 2rem; } }
+
+.auth-content__profile {
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600; }
+
+.auth__carousel-inner {
+  height: 100%; }
+  .auth__carousel-inner-item {
+    height: 100%;
+    background-position: top;
+    background-size: cover;
+    opacity: .7;
+    -webkit-filter: brightness(0.3) grayscale(80%);
+    filter: brightness(0.3) grayscale(80%);
+    background-blend-mode: screen; }
+  .auth__carousel-inner--bg1 {
+    background-image: url("../images/humangroups5.jpg"); }
+  .auth__carousel-inner--bg2 {
+    background-image: url("../images/humangroups2.jpg"); }
+  .auth__carousel-inner--bg3 {
+    background-image: url("../images/humangroups3.jpg"); }
+
+.auth-form__login-register-link {
+  display: inline-block;
+  float: right; }
+
+.bg-transparent {
+  background-color: transparent; }
+
+.active {
+  color: #007bff; }
+
+.text-default {
+  color: #000; }
+
+.circle {
+  border-radius: 50%; }
+
+.google {
+  display: inline-block;
+  text-align: center;
+  background-color: #dd4b39;
+  color: #fff;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  float: left;
+  margin-right: 2rem; }
+  .google:hover {
+    text-decoration: none;
+    background-color: #d62e18;
+    color: #fff; }
+  .google i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); }
+
+.facebook {
+  display: inline-block;
+  text-align: center;
+  background-color: #3b5998;
+  color: #fff;
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+  float: left; }
+  .facebook:hover {
+    text-decoration: none;
+    background-color: #1a449c;
+    color: #fff; }
+  .facebook i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); }
+
+.btn-text:link, .btn-text:visited {
+  color: #fff;
+  text-decoration: none; }
+
+.btn-text:hover {
+  color: #007bff;
+  text-decoration: none; }
+
+.form__box {
+  width: 80%;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: .25rem;
+  box-shadow: 0 3rem 6rem rgba(255, 255, 255, 0.2);
+  min-height: 100%;
+  max-height: 100%;
+  overflow: auto; }
+
+.form__legend {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: .5rem;
+  color: #000;
+  text-align: center; }
+
+.form__label {
+  color: #000 !important; }
+
+.form__footer {
+  text-align: center;
+  font-size: .85em; }
+
+.form__social-login {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 1.5rem 0; }

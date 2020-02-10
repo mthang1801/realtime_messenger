@@ -1,0 +1,32 @@
+.form{
+  &__box{
+    width : 80%;
+    background-color : $color-white;
+    padding : 1.5rem ;
+    border-radius: .25rem;
+    box-shadow: 0 3rem 6rem rgba($color-white , .2);
+    min-height  : 100%;
+    max-height: 100%;
+    overflow: auto;   
+  }
+  &__legend{
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom : .5rem;
+    color : $color-black;
+    text-align: center;
+  }
+  &__label{
+    color : $color-black !important;
+  }
+  &__footer{
+    text-align: center;
+    font-size : .85em;
+  }
+  &__social-login{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin : 1.5rem 0;
+  }
+}

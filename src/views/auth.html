@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/bower_components/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="../public/bower_components/font-awesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="../public/bower_components/font-awesome/css/v4-shims.min.css">
+  <link rel="stylesheet" href="../public/css/auth.css">
+  <title>Home</title>
+</head>
+<body>
+  <div class="auth">
+    <div id="authenticationCarousel" class="auth__carousel carousel slide" data-ride="carousel">
+      <div class="carousel-inner auth__carousel-inner">
+        <div class="carousel-item auth__carousel-inner-item auth__carousel-inner--bg1 active"></div>
+        <div class="carousel-item auth__carousel-inner-item auth__carousel-inner--bg2"></div>
+        <div class="carousel-item auth__carousel-inner-item auth__carousel-inner--bg3"></div>
+      </div>
+    </div>
+    <div class="auth-content">
+      <h1 class="auth-content__title">Messenger Chat</h1>      
+      <div class="table-responsive">
+        <table class="table table-borderless auth-content__profile">        
+          <tbody>
+            <tr>
+              <td class="text-right">Author</td>
+              <td>MVT</td>
+            </tr>
+            <tr>
+              <td class="text-right">Email</td>
+              <td>mthang1801@gmail.com</td>            
+            </tr>
+            <tr>
+              <td class="text-right">GitHub</td>
+              <td>https://github.com/mthang1801</td>
+            </tr>
+          </tbody>
+        </table>                
+      </div>
+    </div>
+    <div class="auth-link">
+      <div class="auth-form__login-register-link">
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link btn-text active" id="btn-register" data-toggle="pill" href="#register-form" role="tab" aria-controls="pills-register" aria-selected="true">Đăng ký</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-text" id="btn-login" data-toggle="pill" href="#login-form" role="tab" aria-controls="pills-login" aria-selected="false">Đăng Nhập</a>
+          </li>        
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+    <div class="auth-form">      
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="register-form" role="tabpanel" aria-labelledby="pills-home-tab">
+          <div class="form__box">
+            <form>
+              <legend class="form__legend"><span>Đăng ký tài khoản</span></legend>
+              
+              <div class="form-group">
+                <label for="email-register">Địa chỉ email <span class="text-danger">(*)</span></label>
+                <input type="email" class="form-control" id="email-register" placeholder="Nhập Email của bạn">                
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-3 pt-0">Giới tính</legend>
+                  <div class="col-sm-9">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" name="gender" id="male" value="male" checked>
+                      <label for="male" class="custom-control-label">Nam</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" class="custom-control-input" name="gender" id="female" value="female">
+                      <label for="female" class="custom-control-label">Nữ</label>
+                    </div>                                                    
+                  </div>
+                </div>
+              </div>            
+              <div class="form-group">
+                <label for="password-register">Mật khẩu <span class="text-danger">(*)</span></label>
+                <input type="password" class="form-control" id="password-register" placeholder="Nhập mật khẩu">
+              </div>
+              <div class="form-group">
+                <label for="confirm-password-register">Nhập lại mật khẩu <span class="text-danger">(*)</span></label>
+                <input type="password" class="form-control" id="confirm-password-register" placeholder="Xác nhận mật khẩu">
+              </div>
+             <div class="form-group">
+              <div class="custom-checkbox custom-control">
+                <input type="checkbox" class="custom-control-input" id="term-register">
+                <label for="term-register" class="custom-control-label text-default">Đồng ý với các điều khoản <a href="#">tại đây</a></label>
+              </div>
+             </div>
+              <div class="form-group text-right">
+                <button type="button" class="btn btn-primary">Đăng ký tài khoản</button>            
+              </div>
+              <div class="form__footer">
+                <div class="text-default">Đã có tài khoản? - <a href="javascript:showLoginForm()" >Đăng nhập</a></div>
+                <div class="text-default">Quên mật khẩu? - <a href="#">Lấy lại mật khẩu</a></div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="login-form" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <div class="form__box">
+            <form>
+              <legend class="form__legend"><span>Đăng nhập tài khoản</span></legend>
+              
+              <div class="form__social-login">
+                <a href="#" id="google-login" class="circle google" title="Đăng nhập bằng tài khoản google">
+                  <i class="fab fa-google-plus-g"></i>
+                </a>
+                <a href="#" id="fb-login" class="circle facebook" title="Đăng nhập bằng tài khoản facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>                  
+              </div>
+              <div class="clearfix"></div>
+            
+              <div class="form-group">
+                <label for="email-login">Địa chỉ email <span class="text-danger"></span></label>
+                <input type="email" class="form-control" id="email-login" placeholder="Nhập Email của bạn">                
+              </div>
+             
+           
+              <div class="form-group">
+                <label for="password-login">Mật khẩu <span class="text-danger"></span></label>
+                <input type="password" class="form-control" id="password-login" placeholder="Nhập mật khẩu">
+              </div>
+             
+             
+              <div class="form-group text-right">
+                <button type="button" class="btn btn-primary">Đăng nhập</button>            
+              </div>
+              <div class="form__footer">
+                <div class="text-default">Chưa có tài khoản? - <a href="javascript:showRegisterForm()" onclick="">Đăng ký</a></div>
+                <div class="text-default">Quên mật khẩu? - <a href="#">Lấy lại mật khẩu</a></div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  <script src="../public/bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="../public/js/auth.js"></script>
+</body>
+</html>

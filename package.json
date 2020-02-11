@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node server.js",
-    "sasstocss" : "node-sass ./src/public/scss/main.scss ./src/public/css/auth.css -w"
+    "start": "babel-node ./src/server.js",
+    "sasstocss": "node-sass ./src/public/scss/main.scss ./src/public/css/auth.css -w"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,8 @@
   "homepage": "https://github.com/mthang1801/realtime_messenger#readme",
   "dependencies": {
     "@babel/node": "^7.8.4",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

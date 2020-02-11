@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node server.js",
+    "start": "babel-node src/server.js",
     "sasstocss" : "node-sass ./src/public/scss/main.scss ./src/public/css/auth.css -w"
   },
   "repository": {

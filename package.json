@@ -5,13 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-<<<<<<< HEAD
     "start": "babel-node src/server.js",
     "sasstocss" : "node-sass ./src/public/scss/main.scss ./src/public/css/auth.css -w"
-=======
-    "start": "babel-node ./src/server.js",
-    "sasstocss": "node-sass ./src/public/scss/main.scss ./src/public/css/auth.css -w"
->>>>>>> 82dde5348aff782c6529d0c3e57461e2f81f84e2
   },
   "repository": {
     "type": "git",

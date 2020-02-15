@@ -1,5 +1,5 @@
 let getLoginRegister = (req,res) => {
-  return res.render("authentication/loginRegister");
+  return res.render("authentication/master");
 }
 
 module.exports = {

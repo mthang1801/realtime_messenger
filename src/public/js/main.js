@@ -93,20 +93,30 @@ let enableEmojiChat = (dataID) => {
     hidePickerOnBlur : true ,
     shortnames : false ,
     events  : {
-      keyup : (editor, event) => {
+      keyup : function(editor, event) {
         $(".write-chat").val(this.getText());
       }    
     }
   });
 
+ 
   
-  $(".icon-chat").on("click" ,  function(e){       
+  $(".icon-chat").on("click" ,  function(){  
     $(".icon-chat").toggleClass("click-on");
     if($(".icon-chat").hasClass("click-on")){
       $(".emojionearea-button").trigger("click");
       $(".emojionearea-editor").focus();
     }else{
       $(".emojionearea-editor").focusout();
+    }
+    return false;
+  })
+  //when click document except $(".icon-chat") , we must remove class ".icon-chat"
+  $(document).on("click", function(e){
+    if($(e.target).is(".emojionearea-button")){
+      return;
+    }else{
+      $(".icon-chat").removeClass("click-on");
     }
   })
 };
@@ -118,7 +128,7 @@ let toggleNotificationBoard = () => {
     return false;
   })
   $(document).on("click" , () => {
-    $("#notification-board").fadeOut("fast");
+    $("#notification-board").fadeOut("fast");    
   })
 };
 

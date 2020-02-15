@@ -1,6 +1,3 @@
-
-
-
 let showRegisterForm = () => {
   $(".tab-pane").each((index,element) => {
     $(element).removeClass("active show");
@@ -22,5 +19,9 @@ let showLoginForm = () => {
   
   $("#btn-login").click();
 }
+
+$(document).ready(function () {
+
+});
 
 

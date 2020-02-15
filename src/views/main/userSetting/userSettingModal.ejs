@@ -1,0 +1,137 @@
+<div class="modal fade" id="modalUserProfile" tabindex="-1" role="dialog" aria-labelledby="modalUser" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Tài khoản cá nhân</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#general-setting-profile" role="tab" aria-controls="nav-home" aria-selected="true">Cài đặt chung</a>
+            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#password-setting-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cài đặt mật khẩu</a>								
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="general-setting-profile" role="tabpanel" aria-labelledby="nav-general-setting-profile">
+            <div class="row general-setting">
+              <div class="col-12 col-lg-4">									
+                <div class="text-center general-setting__update-avatar" id="update-avatar">
+                  <img src="images/bg_01.jpg" class="general-setting__update-avatar-image" id="image-update-avatar">											
+                </div>
+                <h6 class="general-setting__update-text" id="text-update-avatar">Tải lên một ảnh mới</h6>	
+                <div class="form-group">
+                  <input type="file" class="form-control general-setting__update-input" id="input-change-avatar">
+                </div>
+              </div>
+              <div class="col-12 col-lg-8">
+                <div class="general-setting__alert">
+                  <div class="alert alert-success" role="alert">
+                    <strong>Thành công</strong>
+                  </div>
+                  <div class="alert alert-danger" role="alert">
+                    <strong>Thất bại</strong>
+                  </div>
+                </div>
+                <div class="general-setting__type-acount">
+                  <h3>Local Account</h3>
+                  <h3>Google Account</h3>
+                  <h3>Facebook Account</h3>
+                </div>
+                <form class="general-setting__update-form">
+                  <div class="form-group row">
+                    <label for="email-profile" class="col-lg-3 col-form-label text-right">Email:</label>
+                    <div class="col-lg-9">
+                      <input type="email" class="form-control" id="email-profile" value="mthang1801@gmail.com" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="username-profile" class="col-lg-3 col-form-label text-right">Username:</label>
+                    <div class="col-lg-9">
+                      <input type="text" class="form-control" id="username-profile" value="mthang1801">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <label for="username-profile" class="col-sm-4 col-lg-3 col-form-label text-right">Giới tính:</label>
+                      <div class="col-sm-8 col-lg-9 mt-2">
+                        <div class="form-check form control">
+                          <input type="radio" class="form-check-input" name="gender" id="male" value="male" checked>
+                          <label class="form-check-label" for="male">Nam</label>
+                        </div>
+                        <div class="form-check form control">
+                          <input type="radio" class="form-check-input" name="gender" id="female" value="female">
+                          <label class="form-check-label" for="female">Nữ</label>
+                        </div>
+                      </div>
+                    </div>											
+                  </div>
+                  <div class="form-group row">
+                    <label for="address-profile" class="col-lg-3 col-form-label text-right">Địa chỉ:</label>
+                    <div class="col-lg-9">
+                      <input type="text" class="form-control" id="address-profile" value="Gò Vấp TPHCM">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="phone-profile" class="col-lg-3 col-form-label text-right">Số điện thoại:</label>
+                    <div class="col-lg-9">
+                      <input type="text" class="form-control" id="phone-profile" value="0939323700">
+                    </div>
+                  </div>
+                  <div class="form-group text-center mt-3">
+                    <button class="btn btn-success mr-3">Lưu thay đổi</button>
+                    <button class="btn btn-danger">Hủy bỏ</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="password-setting-profile" role="tabpanel" aria-labelledby="nav-password-profile">
+            <div class="password-setting">
+              <div class="password-setting__alert">
+                <div class="row">
+                  <div class="col-10 col-md-12 col-lg-8">
+                    <div class="alert alert-success" role="alert">
+                      <strong>Cập nhật thành công</strong>
+                    </div>
+                    <div class="alert alert-danger" role="alert">
+                      <strong>Cập nhật thất bại</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <form class="password-setting__form">
+                <div class="form-group row ">
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu cũ: </label>
+                  <div class="col-10 col-md-8 col-lg-6">
+                    <input type="password" class="form-control" id="old-password-profile" placeholder="Nhập mật khẩu cũ">
+                  </div>
+                </div>
+                <div class="form-group row ">
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu mới: </label>
+                  <div class="col-10 col-md-8 col-lg-6">
+                    <input type="password" class="form-control" id="new-password-profile" placeholder="Nhập mật khẩu mới">
+                  </div>
+                </div>
+                <div class="form-group row ">
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Nhập lại MK mới: </label>
+                  <div class="col-10 col-md-8 col-lg-6">
+                    <input type="password" class="form-control" id="confirm-new-password-profile" placeholder="Xác nhận mật khẩu mới">
+                  </div>
+                </div>
+                <div class="form-group mt-4 row">
+                  <div class="col-10 col-md-12 col-lg-8 text-center">
+                    <button class="btn btn-success">Thay đổi</button>
+                    <button class="btn btn-danger">Hủy bỏ</button>
+                  </div>											
+                </div>
+              </form>
+            </div>
+          </div>							
+        </div>
+      </div>					
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+.list-messenger-users{
+  margin-top : .1rem;
+  list-style : none ;   
+  
+  &__item{
+    display : flex ;
+    flex-wrap: nowrap;
+    height: 5rem;      
+    padding: .75rem ;
+    &-avatar{
+      align-self : center;
+      flex-basis: 10%;
+      width : 20%;
+      &-image{
+        width : 3rem;
+        height : 3rem;
+        border-radius : 50%;
+      }      
+    }
+    &-text{
+      flex-basis: 70%;
+      width : 50%;
+      padding : .25rem .5rem;    
+      &--username{        
+        font-weight: 700;
+        width : 100%;
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      &--chat{
+        width : 100%;
+        font-size : .9rem;
+        color: $color-dark-mode-gray-70;
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        white-space: nowrap;        
+      }
+    }
+    &-timer{
+      flex-basis: 30%;     
+      font-size : .7rem;
+      color : $color-dark-mode-gray-50;
+      align-items : center;
+    }
+    &:hover{
+      background-color :$color-divider-on-wash;
+      cursor : pointer;
+    }
+  }
+}

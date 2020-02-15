@@ -8,3 +8,44 @@
     text-decoration: none;
   }
 }
+
+.btn-light-grey{
+  &,&:visited , &:link{
+    background-color:  $color-divider-on-white;
+    color : $color-dark-ui-medium-text;
+  }
+  &:hover{
+    background-color:  $color-divider-on-wash;
+    color : $color-dark-ui-secondary-icon;
+  }
+}
+
+.btn-create-group-chat{
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-left: 10px;
+  border: 1px solid $color-btn-success;
+  background-color: $color-btn-success;
+  border-radius: 50%;
+  padding : .75rem;
+  color : $color-white;
+  position : relative;
+  &:hover{
+    color : $color-white;   
+    background-color : $color-btn-background-success;
+  }
+  & > i{
+    position : absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+.btn-dark-grey{
+  color : $color-dark-mode-gray-80;
+  &:hover{
+    color: $color-dark-mode-gray-100;
+  }
+}

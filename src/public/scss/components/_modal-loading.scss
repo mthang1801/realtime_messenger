@@ -1,0 +1,13 @@
+.modal-loading{
+  /* The Modal (background) */ 
+  position: fixed; /* Stay in place */
+  z-index: 998; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: $color-black; /* Fallback color */
+  background-color: rgba($color-black,0.3); /* Black w/ opacity */
+
+}

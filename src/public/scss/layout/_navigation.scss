@@ -1,0 +1,59 @@
+.navigation{
+  height: 100%;
+  position :relative;
+  padding : 0 1rem;
+  &__input{    
+   width: 80%;
+   align-items : center;
+  &-control{
+    padding : .15rem .75rem;
+    height: calc(1em + .75rem);    
+    }
+  &-button{
+    padding : .1rem .75rem;
+    height: calc(1em + .75rem);        
+    }
+  }
+  &__nav {
+    &-image{
+    width: 1.5rem  ;
+    height: 1.5rem ;
+    border-radius: 50%;  
+    }
+    &-username{      
+      display : inline-block;
+      margin-left : .5rem;
+    }
+    &-link{
+      font-size: 1rem;
+      padding: .5rem;
+      width : 100%;
+      text-align :center;      
+    }
+  }
+  &__nav{
+    &-item{
+      font-size : 1.2rem;  
+      position : relative;
+      width : 5rem;
+      &:last-child{        
+        width : 9rem;
+      }
+      &:hover{
+        cursor : pointer;  
+        background-color: $color-facebook-dark      
+       
+      }
+    }   
+    &-notification-count{
+      position : absolute;
+      left:  3rem;
+      top : 0rem;
+      font-size : .75rem;
+      background-color: $color-red-notification;
+      padding : .05rem .1rem;
+      border-radius: .2rem;
+      color :$color-white;
+    }    
+  }
+}

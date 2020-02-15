@@ -1,0 +1,125 @@
+.right-side{
+  background-color: $color-white;
+  &__top{
+    background-color : $color-divider-on-white;
+    height :7%;
+    padding : .5rem 1.5rem; 
+    &--leftside{
+      float : left ; 
+      &-username{
+        font-weight: 700;
+      }
+    }
+    &--rightside{
+      float: right;
+      &-item:not(last-child){
+        margin-right : 1.5rem;
+      }
+    }
+    &::after{
+      content : "" ;
+      clear : both ; 
+      display :table;
+    }
+  }
+  &__middle{
+    height: 78%;   
+    padding : .5rem;
+    &-content{
+      border : 1px solid $color-dark-mode-gray-35;
+      height: 100%;
+      padding : .5rem 1.25rem;
+      overflow: auto;
+      &--me{
+        float : right ;
+        background-color :$color-facebook-bg-messenger;
+        color : $color-white;
+        &.bubble{
+          & a{
+            float: right ;
+            border-bottom: 1.5px solid #c8d6e5;
+            padding: .5rem;
+            margin : .5rem;
+          }
+        }
+      }
+      &--you{
+        float : left ;
+        background-color :$color-dark-ui-primary-text;  
+        color : $color-black;
+        &.bubble{          
+          & a{
+            float : left;
+            border-bottom: 1.5px solid #c8d6e5;
+            padding: .5rem;
+            margin : .5rem;
+          }
+        }
+      }
+    }
+  }
+  &__bottom{
+    height: 15%;
+    margin : 0 0.5rem;
+    padding: 0.05rem 0.5rem;    
+    border-radius: .2rem;
+    background-color : $color-comment-background;
+    &-write{
+      width : 100%;
+      height: 70%;
+      font-size: 1rem;
+      float: left;   
+      padding: 0 10px;
+      color: #1a1a1a;
+      border: 0;
+      outline: none;
+      background-color: #eceff1;
+      font-family: 'Source Sans Pro', sans-serif;
+      font-weight: 400;
+      resize:  none;
+    }
+    &-icons{    
+      height: 30%;
+      &-item{
+        float : left ;
+        font-size: 1.25rem;       
+        color : $color-btn-success;        
+        & a{
+          color : $color-btn-success;
+        }
+        & label{
+          cursor : pointer;        
+        }                
+        &:not(:last-child){
+          margin-right : 1rem;
+        }        
+        &:hover{
+          color :  $color-btn-background-success !important;
+        }
+      }
+    }
+  }
+}
+
+.bubble{
+  max-width: 46%;
+  word-wrap: break-word;
+  font-size: 1rem;
+  position: relative;
+  display: inline-block;
+  clear: both;
+  margin-top: .25rem;
+  margin-bottom: .25rem;
+  padding: 1rem;
+  vertical-align: top;
+  border-radius: .25rem;
+  &-image-file{
+    background-color: $color-white;
+  }
+
+}
+
+.show-image-file{
+  max-width : 90%;
+  max-height: 25rem;
+}

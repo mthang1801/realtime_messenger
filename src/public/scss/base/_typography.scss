@@ -11,3 +11,26 @@
   position : relative;
   color : $color-white;
 }
+
+body{
+  width : 100%;
+  height : 100vh;
+  margin : 0 auto ; 
+  overflow : hidden;
+  background-color: $color-comment-background;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  // background-image : url("../images/background1.jpg");
+  // background-position: top;
+  // background-size: cover;
+  background-repeat: none;
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1.7;
+  font-size : 1rem;
+  position : relative;
+  color :  $color-black;
+}
+

@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../public/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../public/bower_components/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="../public/bower_components/font-awesome/css/fontawesome.min.css">
+	<link rel="stylesheet" href="../public/bower_components/font-awesome/css/v4-shims.min.css">
+	<link rel="stylesheet" href="../public/bower_components/emojionearea/dist/emojionearea.min.css">
+	<link rel="stylesheet" href="../public/bower_components/photoset-grid/css/colorbox.css">
+  <link rel="stylesheet" href="../public/css/style.css">
+  <title>Messenger</title>
+</head>
+<body>
+	<!-- Loading -->
+	<div class="loading-ring" id="loading"><div></div><div></div><div></div><div></div></div>
+	<!-- Modal Loading -->
+	<div class="modal-loading"></div>
+
+	<!-- Integrate libraries -->	
+	<script src="../public/bower_components/jquery/dist/jquery.js"></script>
+	<script src="../public/bower_components/jquery/dist/core.js"></script>
+	<script src="../public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="../public/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+	<script src="../public/bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+	<script src="../public/bower_components/emojionearea/dist/emojionearea.min.js"></script>
+	<script src="../public/bower_components/photoset-grid/jquery.photoset-grid.min.js"></script>
+	<script src="../public/bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+	<script src="../public/js/main.js"></script>
+	
+	<!-- Navigation bar -->
+  <div class="section-navbar">
+		<nav class="navbar navbar-expand-sm navbar-dark navigation">    
+			<a class="navbar-brand navigation__brand">MVT</a>    
+			<button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapse_navigation" aria-controls="collapse_navigation"
+				aria-expanded="false" aria-label="Toggle navigation">
+			<i class="navbar-toggler-icon"></i></button>
+			<div class="collapse navbar-collapse" id="collapse_navigation">            			
+				<div class="col-12 col-md-6 my-0 d-flex justify-content-lg-center">			
+						<div class="input-group navigation__input">
+							<input type="text" class="form-control navigation__input-control" placeholder="Tìm Kiếm...">
+							<span class="input-group-append">
+								<button class="btn btn-light-grey navigation__input-button">
+									<i class="fas fa-search"></i>
+								</button>
+							</span>
+						</div>				
+				</div>
+				<div class="col-12 col-md-6">
+					<ul class="navbar-nav mt-lg-0  navigation__nav justify-content-end">
+						<li class="nav-item navigation__nav-item">
+							<a class="nav-link  navigation__nav-link active" href="#"><i class="fas fa-home"></i></a>
+						</li>
+						<li class="nav-item navigation__nav-item">
+							<a class="nav-link  navigation__nav-link" data-toggle="modal" href="#modalContact"><i class="fas fa-user-plus"></i></a>
+							<span class="navigation__nav-notification-count" id="notification-contact-count">100</span>
+						</li>
+						<li class="nav-item navigation__nav-item" id="button-notification">
+							<a class="nav-link  navigation__nav-link" href="#"><i class="fas fa-bell"></i></a>
+							<span class="navigation__nav-notification-count" id="notification-count">99+</span>
+							<!-- notification dashboard-->
+							<div class="notification" id="notification-board">
+								<div class="notification__header">
+									<div class="notification__header--title">
+										Thông báo
+									</div>
+									<div class="notification__header--link">
+										<a href="javascript:void(0);" class="btn-link">Đánh dấu đọc Tất cả</a>
+										<a href="javascript:void(0);" class="btn-link">Cài đặt</a>
+									</div>
+								</div>
+								<hr class="hr-notification">
+								<div class="notification__body">
+									<ul class="card-notifications">
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+										<li class="card-notifications__item">
+											<div class="card-notifications__avatar">
+												<img src="../public/images/person2.jpg" class="card-notifications__avatar-image">
+											</div>
+											<div class="card-notifications__text">
+												<div class="card-notifications__text--primary">
+													<span class="card-notifications__text--primary--username">
+														maivthang
+													</span>
+													<span class="Card-notifications__text--primary--content">
+														đã gửi cho bạn một lời mời kết bạn và đề xuất bạn với một vài người bạn khác
+													</span>
+												</div>
+												<div class="card-notifications__text--sub">
+													9:32 A.M
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+								<hr class="hr-notification">
+								<div class="card-notifications__footer">
+									<a href="javascript:void(0);" class="btn-link">Xem tất cả</a>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item dropdown navigation__nav-item">
+							<a class="nav-link dropdown-toggle navigation__nav-link" href="javascript:void(0)" id="dropdownId" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<img src="../public/images/person1.jpg" class="navigation__nav-image"><span class="navigation__nav-username">MV Thang</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
+								<a class="dropdown-item" data-toggle="modal" href="#modalUserProfile"><i class="fas fa-cog"></i> Thông tin tài khoản</a>
+								<a class="dropdown-item" href="#modalPasswordProfile"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+	
+	<section class="row section-main">
+		<!-- Section leftside -->
+		<div class="col-12 col-sm-4 col-lg-4 col-xl-3 left-side">
+			<div class="left-side__setting">
+					<select class="custom-select w-75" id="select-type-chat">
+						<option value="all-chat">Toàn bộ trò chuyện</option>
+						<option value="private-chat">Trò chuyện cá nhân</option>
+						<option value="group-chat">Trò chuyện nhóm</option>
+					</select>
+					<a href="#modalGroupChat" class="btn-create-group-chat" id="btn-create-group-chat" data-toggle="modal"><i class="fas fa-edit"></i></a>				
+			</div>
+			<div class="left-side__content">
+				<ul class="list-messenger-users">					
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>
+					<li class="list-messenger-users__item">
+						<div class="list-messenger-users__item-avatar">
+							<img src="../public/images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
+						</div>
+						<div class="list-messenger-users__item-text">
+							<div class="list-messenger-users__item-text--username">
+								maivthang
+							</div>
+							<div class="list-messenger-users__item-text--chat">
+								Hello xin chao ban, rat vui duoc lam quen voi ban
+							</div>						
+						</div>
+						<div class="list-messenger-users__item-timer">
+							vài giây trước
+						</div>
+					</li>																														
+				</ul>
+			</div>			
+		</div>
+		<!-- section rightside -->
+		<div class="col-12 col-sm-8 col-lg-8 col-xl-9 right-side">
+			<div class="right-side__top">
+				<div class="right-side__top--leftside">
+					To :
+					<span class="right-side__top--leftside-username">
+						Mai Văn Thắng
+					</span>
+				</div>
+				<div class="right-side__top--rightside">
+					<span class="right-side__top--rightside-item">
+						<a href="#modalImage" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+					</span>
+					<span class="right-side__top--rightside-item">
+						<a href="#modalAttachFile" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+					</span>
+				</div>
+			</div>
+			<div class="right-side__middle">
+				<div class="right-side__middle-content">
+					<div class="right-side__middle-content--me bubble">
+						Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
+					</div>					
+					<div class="right-side__middle-content--you bubble">
+						Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
+					</div>
+					<div class="right-side__middle-content--me bubble">
+						Đây là thumbnail của mình!!
+					</div>
+					<div class="right-side__middle-content--me bubble bubble-image-file">
+						<img src="../public/images/person1.jpg" class="show-image-file">
+					</div>
+					<div class="right-side__middle-content--me bubble bubble-image-file">
+						<img src="../public/images/calendar.jpeg" class="show-image-file">
+					</div>
+					<div class="right-side__middle-content--me bubble bubble-image-file">
+						<a href="../public/fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
+					</div>
+					<div class="right-side__middle-content--you bubble">
+						Còn đây là mình 
+					</div>
+					<div class="right-side__middle-content--you bubble-image-file bubble">
+						<img src="../public/images/person2.jpg" class="show-image-file">
+					</div>
+					<div class="right-side__middle-content--you bubble-image-file bubble">
+						<a href="../public/fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
+					</div>
+				</div>
+			</div>
+			<div class="right-side__bottom">
+				<input type="text" class="right-side__bottom-write write-chat" id="text-write-chat" data-chat="1234" style="display:none">
+				<div class="right-side__bottom-icons">
+					<div class="right-side__bottom-icons-item">
+						<a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+					</div>					
+					<div class="right-side__bottom-icons-item">
+						<input type="file" class="d-none" id="image-chat">
+						<label for="image-chat"><i class="fas fa-image"></i></label>
+					</div>
+					<div class="right-side__bottom-icons-item">
+						<input type="file" class="d-none" id="attach-chat">
+						<label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+					</div>
+					<div class="right-side__bottom-icons-item">
+						<a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+					</div>				
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Modal -->
+	<div class="section-modal">	
+		<!-- Modal contact -->
+		<div class="modal fade" id="modalContact" tabindex="-1" role="dialog" aria-labelledby="modalContact" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Quản lý liên lạc</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						<nav class="nav nav-tabs" role="tablist">
+							<a href="#search-users" class="nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="search-users" aria-selected="true">Tìm người dùng</a>
+							<a href="#contacts" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">Danh sách liên lạc</a>
+							<a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận</a>
+							<a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn</a>
+						</nav>
+						<div class="tab-content">
+							<div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-search-user" id="search-users">
+								<div class="search-users-box">
+									<div class="search-users-box__search-bar">
+										<div class="input-group">
+											<input type="text" class="form-control" placeholder="Tìm kiếm người dùng">
+											<span class="input-group-append">
+												<button class="btn btn-primary">
+													<i class="fas fa-search"></i>
+												</button>
+											</span>
+										</div>
+									</div>
+									<div class="search-users-box__list-box">
+										<ul class="search-users-box__list-users">
+											<li class="search-users-box__list-users-item">
+												<div class="card-user">
+													<div class="card-user__body">
+														<div class="card-user__body-avatar">
+															<img src="../public/images/person1.jpg" class="card-user__body-avatar--image">
+														</div>
+														<div class="card-user__body-text">
+															<div class="card-user__body-text--username">
+																Mai Van Thang
+															</div>
+															<div class="card-user__body-text-address">
+																TPHCM
+															</div>
+														</div>
+													</div>
+													<div class="card-user__footer">
+														<button class="btn btn-success btn-sm">Mời kết bạn</button>
+													</div>
+												</div>
+											</li>
+											<li class="search-users-box__list-users-item">
+												<div class="card-user">
+													<div class="card-user__body">
+														<div class="card-user__body-avatar">
+															<img src="../public/images/person1.jpg" class="card-user__body-avatar--image">
+														</div>
+														<div class="card-user__body-text">
+															<div class="card-user__body-text--username">
+																Mai Van Thang
+															</div>
+															<div class="card-user__body-text-address">
+																TPHCM
+															</div>
+														</div>
+													</div>
+													<div class="card-user__footer">
+														<button class="btn btn-success btn-sm">Mời kết bạn</button>
+													</div>
+												</div>
+											</li>
+											<li class="search-users-box__list-users-item">
+												<div class="card-user">
+													<div class="card-user__body">
+														<div class="card-user__body-avatar">
+															<img src="../public/images/person1.jpg" class="card-user__body-avatar--image">
+														</div>
+														<div class="card-user__body-text">
+															<div class="card-user__body-text--username">
+																Mai Van Thang
+															</div>
+															<div class="card-user__body-text-address">
+																TPHCM
+															</div>
+														</div>
+													</div>
+													<div class="card-user__footer">
+														<button class="btn btn-success btn-sm">Mời kết bạn</button>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-contact" id="contacts">
+								<div class="contact-box">
+									<ul class="contact-list">
+										<li class="contact-list__item">
+											<div class="card-user">
+												<div class="card-user__body">
+													<div class="card-user__body-avatar">
+														<img src="../public/images/unknown_man.jpeg" class="card-user__body-avatar--image">
+													</div>
+													<div class="card-user__body-text">
+														<div class="card-user__body-text--username">
+															Nguyễn Hoàng Giang
+														</div>
+														<div class="card-user__body-text-address">
+															Cần Thơ
+														</div>
+													</div>
+												</div>
+												<div class="card-user__footer">
+													<button class="btn btn-success btn-sm">Trò Chuyện</button>
+													<button class="btn btn-danger btn-sm">Xóa Quan hệ bạn bè</button>
+												</div>
+											</div>
+										</li>
+										<li class="contact-list__item">
+											<div class="card-user">
+												<div class="card-user__body">
+													<div class="card-user__body-avatar">
+														<img src="../public/images/unknown_woman.png" class="card-user__body-avatar--image">
+													</div>
+													<div class="card-user__body-text">
+														<div class="card-user__body-text--username">
+															Trần Ngọc Linh
+														</div>
+														<div class="card-user__body-text-address">
+															Vĩnh Long
+														</div>
+													</div>
+												</div>
+												<div class="card-user__footer">
+													<button class="btn btn-success btn-sm">Trò Chuyện</button>
+													<button class="btn btn-danger btn-sm">Xóa Quan hệ bạn bè</button>
+												</div>
+											</div>
+										</li>
+										<li class="contact-list__item">
+											<div class="card-user">
+												<div class="card-user__body">
+													<div class="card-user__body-avatar">
+														<img src="../public/images/background1.jpg" class="card-user__body-avatar--image">
+													</div>
+													<div class="card-user__body-text">
+														<div class="card-user__body-text--username">
+															Mai Văn Quốc
+														</div>
+														<div class="card-user__body-text-address">
+															Cần Thơ
+														</div>
+													</div>
+												</div>
+												<div class="card-user__footer">
+													<button class="btn btn-success btn-sm">Trò Chuyện</button>
+													<button class="btn btn-danger btn-sm">Xóa Quan hệ bạn bè</button>
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-request-contact-sent" id="link-request-contact-sent">
+								<div class="request-contact-sent-box">
+									<ul class="request-contact-sent-list">
+										<li class="request-contact-sent-list__item">
+											<div class="card-user">
+												<div class="card-user__body">
+													<div class="card-user__body-avatar">
+														<img src="../public/images/unknown_man.jpeg" class="card-user__body-avatar--image">
+													</div>
+													<div class="card-user__body-text">
+														<div class="card-user__body-text--username">
+															Nguyễn Hoàng Giang
+														</div>
+														<div class="card-user__body-text-address">
+															Cần Thơ
+														</div>
+													</div>
+												</div>
+												<div class="card-user__footer">
+													<button class="btn btn-danger btn-sm">Hủy yêu cầu</button>												
+												</div>
+											</div>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-request-contact-received" id="link-request-contact-received">
+								<div class="request-contact-received-box">
+									<ul class="request-contact-received-list">
+										<li class="request-contact-received-list__item">
+											<li class="request-contact-sent-list__item">
+												<div class="card-user">
+													<div class="card-user__body">
+														<div class="card-user__body-avatar">
+															<img src="../public/images/unknown_man.jpeg" class="card-user__body-avatar--image">
+														</div>
+														<div class="card-user__body-text">
+															<div class="card-user__body-text--username">
+																Nguyễn Duy Tâm
+															</div>
+															<div class="card-user__body-text-address">
+																Long An
+															</div>
+														</div>
+													</div>
+													<div class="card-user__footer">
+														<button class="btn btn-success">Chấp nhận</button>
+														<button class="btn btn-danger btn-sm">Xóa yêu cầu</button>												
+													</div>
+												</div>
+											</li>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>				
+				</div>
+			</div>
+		</div>
+		<!-- Modal user profile -->
+		<div class="modal fade" id="modalUserProfile" tabindex="-1" role="dialog" aria-labelledby="modalUser" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Tài khoản cá nhân</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						<nav>
+							<div class="nav nav-tabs" id="nav-tab" role="tablist">
+								<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#general-setting-profile" role="tab" aria-controls="nav-home" aria-selected="true">Cài đặt chung</a>
+								<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#password-setting-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Cài đặt mật khẩu</a>								
+							</div>
+						</nav>
+						<div class="tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="general-setting-profile" role="tabpanel" aria-labelledby="nav-general-setting-profile">
+								<div class="row general-setting">
+									<div class="col-12 col-lg-4">									
+										<div class="text-center general-setting__update-avatar" id="update-avatar">
+											<img src="../public/images/bg_01.jpg" class="general-setting__update-avatar-image" id="image-update-avatar">											
+										</div>
+										<h6 class="general-setting__update-text" id="text-update-avatar">Tải lên một ảnh mới</h6>	
+										<div class="form-group">
+											<input type="file" class="form-control general-setting__update-input" id="input-change-avatar">
+										</div>
+									</div>
+									<div class="col-12 col-lg-8">
+										<div class="general-setting__alert">
+											<div class="alert alert-success" role="alert">
+												<strong>Thành công</strong>
+											</div>
+											<div class="alert alert-danger" role="alert">
+												<strong>Thất bại</strong>
+											</div>
+										</div>
+										<div class="general-setting__type-acount">
+											<h3>Local Account</h3>
+											<h3>Google Account</h3>
+											<h3>Facebook Account</h3>
+										</div>
+										<form class="general-setting__update-form">
+											<div class="form-group row">
+												<label for="email-profile" class="col-lg-3 col-form-label text-right">Email:</label>
+												<div class="col-lg-9">
+													<input type="email" class="form-control" id="email-profile" value="mthang1801@gmail.com" disabled>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="username-profile" class="col-lg-3 col-form-label text-right">Username:</label>
+												<div class="col-lg-9">
+													<input type="text" class="form-control" id="username-profile" value="mthang1801">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="row">
+													<label for="username-profile" class="col-sm-4 col-lg-3 col-form-label text-right">Giới tính:</label>
+													<div class="col-sm-8 col-lg-9 mt-2">
+														<div class="form-check form control">
+															<input type="radio" class="form-check-input" name="gender" id="male" value="male" checked>
+															<label class="form-check-label" for="male">Nam</label>
+														</div>
+														<div class="form-check form control">
+															<input type="radio" class="form-check-input" name="gender" id="female" value="female">
+															<label class="form-check-label" for="female">Nữ</label>
+														</div>
+													</div>
+												</div>											
+											</div>
+											<div class="form-group row">
+												<label for="address-profile" class="col-lg-3 col-form-label text-right">Địa chỉ:</label>
+												<div class="col-lg-9">
+													<input type="text" class="form-control" id="address-profile" value="Gò Vấp TPHCM">
+												</div>
+											</div>
+											<div class="form-group row">
+												<label for="phone-profile" class="col-lg-3 col-form-label text-right">Số điện thoại:</label>
+												<div class="col-lg-9">
+													<input type="text" class="form-control" id="phone-profile" value="0939323700">
+												</div>
+											</div>
+											<div class="form-group text-center mt-3">
+												<button class="btn btn-success mr-3">Lưu thay đổi</button>
+												<button class="btn btn-danger">Hủy bỏ</button>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="password-setting-profile" role="tabpanel" aria-labelledby="nav-password-profile">
+								<div class="password-setting">
+									<div class="password-setting__alert">
+										<div class="row">
+											<div class="col-10 col-md-12 col-lg-8">
+												<div class="alert alert-success" role="alert">
+													<strong>Cập nhật thành công</strong>
+												</div>
+												<div class="alert alert-danger" role="alert">
+													<strong>Cập nhật thất bại</strong>
+												</div>
+											</div>
+										</div>
+									</div>
+									<form class="password-setting__form">
+										<div class="form-group row ">
+											<label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu cũ: </label>
+											<div class="col-10 col-md-8 col-lg-6">
+												<input type="password" class="form-control" id="old-password-profile" placeholder="Nhập mật khẩu cũ">
+											</div>
+										</div>
+										<div class="form-group row ">
+											<label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu mới: </label>
+											<div class="col-10 col-md-8 col-lg-6">
+												<input type="password" class="form-control" id="new-password-profile" placeholder="Nhập mật khẩu mới">
+											</div>
+										</div>
+										<div class="form-group row ">
+											<label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Nhập lại MK mới: </label>
+											<div class="col-10 col-md-8 col-lg-6">
+												<input type="password" class="form-control" id="confirm-new-password-profile" placeholder="Xác nhận mật khẩu mới">
+											</div>
+										</div>
+										<div class="form-group mt-4 row">
+											<div class="col-10 col-md-12 col-lg-8 text-center">
+												<button class="btn btn-success">Thay đổi</button>
+												<button class="btn btn-danger">Hủy bỏ</button>
+											</div>											
+										</div>
+									</form>
+								</div>
+							</div>							
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+
+		<!--Modal group chat  -->		
+		<div class="modal fade" id="modalGroupChat" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Tạo nhóm</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal image chat -->
+		<div class="modal fade" id="modalImage" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Thư viện Hình Ảnh</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						<div class="all-images" style="visibility: hidden;">
+							<img src="../public/images/bg_01.jpg">
+							<img src="../public/images/bg_02.jpg">
+							<img src="../public/images/bg_03.jpg">
+							<img src="../public/images/calendar_01.jpg">
+							<img src="../public/images/calendar_02.jpeg">
+							<img src="../public/images/calendar_03.jpg">
+							<img src="../public/images/background1.jpg">
+							<img src="../public/images/background2.jpg">
+						</div>
+					</div>				
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal attachment file -->
+		<div class="modal fade" id="modalAttachFile" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true"-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Tập tin đính kèm</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						Body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Modal video call -->
+		<div class="modal fade" id="modalVideoCall" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Cuộc gọi video call</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+					</div>
+					<div class="modal-body">
+						Body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+</html>

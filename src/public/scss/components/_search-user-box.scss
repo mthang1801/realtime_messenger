@@ -1,0 +1,25 @@
+.search-users-box{
+  &__search-bar{
+    margin: 1rem 0;
+    @include tablet{
+      width : 100%;
+    }
+    @include desktop{
+      width : 60%;
+    }
+  }
+  &__list-box{
+    margin-top: 1rem;
+  }
+  &__list-users{
+    list-style: none;
+    &-item{
+      background-color: $color-divider-on-white;
+      margin-bottom : .75rem;
+      &:hover{
+        background-color: $color-divider-on-wash;
+      }
+    }    
+  }
+
+}

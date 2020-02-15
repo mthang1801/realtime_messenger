@@ -1,0 +1,14 @@
+.contact-list{
+  list-style : none ;
+  margin-top : 1rem;  
+  border-radius: .2rem; 
+  &__item{
+    &:not(:last-child){
+      margin-bottom : .25rem;
+    }
+    background-color : $color-divider-on-white;
+    &:hover{
+      background-color : $color-divider-on-wash;
+    }
+  }
+}

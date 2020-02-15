@@ -1,0 +1,17 @@
+.general-setting{  
+  margin : 1.5rem 0;
+  &__update{
+    &-avatar{
+      text-align : center;    
+      &-image{
+        width : 5rem;
+        height: 5rem;
+        border-radius: 50%;
+      }
+    }
+    &-text{
+      text-align :center;
+      margin : 1.5rem;
+    }
+  }
+}

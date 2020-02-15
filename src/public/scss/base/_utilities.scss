@@ -2,10 +2,6 @@
   background-color : $color-transparent;
 }
 
-.active{
-  color : $color-primary;
-}
-
 .text-default{
   color : $color-black;
 }
@@ -58,3 +54,16 @@
     transform : translate(-50%, -50%);
   }
 }
+
+.bg-primary-dark{
+  background-color : $color-primary-dark;
+}
+.bg-navbar-fb{
+  background-color : $color-navbar-fb;
+}
+
+.hr-notification{
+  padding : 0 ;
+  margin : 0rem -0.5rem;
+}
+

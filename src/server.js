@@ -1,12 +1,25 @@
 import express from "express";
+import connectDB from "./config/connectDB";
+import contactModel from "./models/contactModel.js";
 var app = express();
 
-const port = process.env.PORT || 3000;
+//connect to mongodb
+connectDB();
 
-app.get('/', (req, res) => {
-  res.send("<h1>Xin Chao Cac Ban</h1>");
+app.get('/test-database', async (req, res) => {
+  try{
+    let item = {
+      userId : "skajdk213hjhkas" , 
+      contactId : "hewjheuiy2162" ,             
+    }
+    console.log(contactModel.createNew(item));
+    let contact = await contactModel.createNew(item);  
+    res.send(contact);
+  }catch(err){
+    console.log(err)
+  }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+app.listen(process.env.APP_PORT, process.env.APP_HOST , () => {
+  console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
 })

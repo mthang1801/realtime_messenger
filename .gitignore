@@ -105,3 +105,6 @@ dist
 
 #node modules
 .node_modules
+
+#env
+.sh/env.sh

@@ -25,20 +25,6 @@ let niceScrollChatBox = () => {
   $(".right-side__middle-content").scrollTop($(".right-side__middle-content")[0].scrollHeight);
 };
 
-let niceScrollModal = () => {
- 
-  $(".modal-content").each( function(index, elem){
-    $(this).niceScroll({
-      cursorcolor : "#828282", 
-      scrollspeed: 50,
-      smoothscroll: true, // scroll with ease movement
-      cursormaxheight: 32,
-      horizrailenabled: false,
-      autohidemode : "leave"
-    })
-  })
-}
-
 let spinLoaded = () => {
   $("#loading").css("display" , "none");
   $(".modal-loading").css("display", "none");
@@ -153,9 +139,6 @@ $(document).ready(function () {
 
   //create nice scroll with smooth for right side middle
   niceScrollChatBox();
-  
-  //create nice scroll for MOdal 
-  niceScrollModal();
 
   //init ajax Loadings
   ajaxLoading();

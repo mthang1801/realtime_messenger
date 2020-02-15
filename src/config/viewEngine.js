@@ -3,6 +3,7 @@ import expressEjsExtend from "express-ejs-extend";
 
 /**
  * Config view engine express ejs
+ *  @param app from exactly express module
  */
 
 let configViewEngine = (app) => {

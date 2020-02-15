@@ -107,4 +107,4 @@ dist
 .node_modules
 
 #env
-.sh/env.sh
+sh/env.sh

@@ -35,7 +35,14 @@ userSchema.statics = {
   },
   findByEmail(email){
     return this.findOne({"local.email" : email}).exec();
-  }
+  },
+  activeAccount(token){
+    return this.findOneAndUpdate(
+      {"local.verifyToken" : token},
+      {"local.verifyToken" :null, "local.isActive" : true}
+    ).exec();
+  },
+
 }
 module.exports = mongoose.model("user", userSchema);
 

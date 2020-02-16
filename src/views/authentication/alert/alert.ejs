@@ -14,3 +14,18 @@
     </div>
   <%})%>
 <%}%>
+
+<% if(activeSuccess != ""){ %>  
+  <script>showLoginForm();</script> 
+    <div class="alert alert-success" role="alert">
+      <%- activeSuccess %>
+    </div>
+<%}%>
+<% if(activeErrors != "") { %>  
+  <script>showLoginForm();</script> 
+    <div class="alert alert-danger" role="alert">
+      <%- activeErrors %>
+    </div>
+<%}%>
+
+

@@ -3,9 +3,11 @@ import {auth} from "../services";
 let getLoginRegister = (req,res) => {
   return res.render("authentication/master",{
     errors : req.flash("errors"), 
-    success : req.flash("success")
+    success : req.flash("success"), 
+    activeSuccess : req.flash("activeSuccess"),
+    activeErrors : req.flash("activeErrors")
   });
-}
+};
 
 let postRegister = async(req,res) => {
   let arrErrors = []; 
@@ -22,8 +24,8 @@ let postRegister = async(req,res) => {
   try {
     let email = req.body.email;
     let gender = req.body.gender;
-    let password = req.body.password;
-    let registerResult = await auth.register(email, gender, password);    
+    let password = req.body.password;    
+    let registerResult = await auth.register(email, gender, password, req.protocol, req.get("host"));    
     arrSuccess.push(registerResult);
     req.flash("success", arrSuccess);
     return res.redirect("/login-register");
@@ -32,8 +34,24 @@ let postRegister = async(req,res) => {
     req.flash("errors" ,arrErrors);   ;
     return res.redirect("/login-register");
   }
+};
+
+/**
+ * Active account from email
+ */
+let verifyAccount =async (req, res) => {
+  try{
+    let params = req.params.verifyToken;
+    let verifyResult = await auth.verifyAccount(params);
+    req.flash("activeSuccess" , verifyResult);
+    return res.redirect("/login-register");
+  }catch(err){
+    req.flash("activeErrors", err);
+    return res.redirect("/login-register");
+  }
 }
 module.exports = {
   getLoginRegister : getLoginRegister,
-  postRegister : postRegister
+  postRegister : postRegister,
+  verifyAccount : verifyAccount
 }

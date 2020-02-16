@@ -11,6 +11,12 @@
 
   <link rel="stylesheet" href="">
   <link rel="stylesheet" href="/css/auth.css">
+
+  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="./bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+  <script src="./bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="./js/auth.js"></script>
   <title>Login-Register</title>
 </head>
 <body>
@@ -55,25 +61,21 @@
         </ul>
       </div>
       <div class="clearfix"></div>
-    </div>
+    </div>   
     <div class="auth-form">      
       <div class="tab-content">
         <!-- Show Register Form -->
         <div class="tab-pane fade show active" id="register-form" role="tabpanel" aria-labelledby="pills-home-tab">
-            <%- include("register/register") %>
-        </div>
+         <%- include("register/register") %>
+        </div>        
         <!-- Show Login Form -->
         <div class="tab-pane fade" id="login-form" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <%- include("login/login") %>
+          <%- include("login/login") %>
         </div>
+       
       </div>
     </div>
- 
   </div>
-  <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="/bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
-  <script src="/bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
-  <script src="/js/auth.js"></script>
+  
 </body>
 </html>

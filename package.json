@@ -20,11 +20,18 @@
   "homepage": "https://github.com/mthang1801/realtime_messenger#readme",
   "dependencies": {
     "@babel/node": "^7.8.4",
+    "bcrypt": "^3.0.8",
     "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^3.2.0",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-ejs-extend": "0.0.1",
-    "mongoose": "^5.8.11"
+    "express-session": "^1.17.0",
+    "express-validator": "^4.3.0",
+    "mongoose": "^5.8.11",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

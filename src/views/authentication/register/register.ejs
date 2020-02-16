@@ -1,21 +1,21 @@
 <div class="form__box">
-  <form>
-    <legend class="form__legend"><span>Đăng ký tài khoản</span></legend>       
-    <%- include("../alert/alert.js") %>
+  <form method="POST" action="/register">
+    <legend class="form__legend"><span>Đăng ký tài khoản</span></legend>      
+    <%- include("../alert/alert")  %>
     <div class="form-group">
       <label for="email-register">Địa chỉ email <span class="text-danger">(*)</span></label>
-      <input type="email" class="form-control" id="email-register" placeholder="Nhập Email của bạn">                
+      <input type="email" class="form-control" id="email-register" name="email" placeholder="Nhập Email của bạn" required>                
     </div>
     <div class="form-group">
       <div class="row">
         <legend class="col-form-label col-sm-3 pt-0">Giới tính</legend>
         <div class="col-sm-9">
           <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" name="gender" id="male" value="male" checked>
+            <input type="radio" class="custom-control-input" name="gender" id="male" value="male" checked required>
             <label for="male" class="custom-control-label">Nam</label>
           </div>
           <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" class="custom-control-input" name="gender" id="female" value="female">
+            <input type="radio" class="custom-control-input" name="gender" id="female" value="female" required>
             <label for="female" class="custom-control-label">Nữ</label>
           </div>                                                    
         </div>
@@ -23,11 +23,11 @@
     </div>            
     <div class="form-group">
       <label for="password-register">Mật khẩu <span class="text-danger">(*)</span></label>
-      <input type="password" class="form-control" id="password-register" placeholder="Nhập mật khẩu">
+      <input type="password" class="form-control" id="password-register" name="password" placeholder="Nhập mật khẩu" required>
     </div>
     <div class="form-group">
       <label for="confirm-password-register">Nhập lại mật khẩu <span class="text-danger">(*)</span></label>
-      <input type="password" class="form-control" id="confirm-password-register" placeholder="Xác nhận mật khẩu">
+      <input type="password" class="form-control" id="confirm-password-register" name="confirm_password" placeholder="Xác nhận mật khẩu" required>
     </div>
    <div class="form-group">
     <div class="custom-checkbox custom-control">
@@ -36,7 +36,7 @@
     </div>
    </div>
     <div class="form-group text-right">
-      <button type="button" class="btn btn-primary">Đăng ký tài khoản</button>            
+      <button type="submit" class="btn btn-primary">Đăng ký tài khoản</button>            
     </div>
     <div class="form__footer">
       <div class="text-default">Đã có tài khoản? - <a href="javascript:showLoginForm()" >Đăng nhập</a></div>

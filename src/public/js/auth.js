@@ -1,27 +1,22 @@
-let showRegisterForm = () => {
-  $(".tab-pane").each((index,element) => {
+function showRegisterForm(){
+  $(".tab-pane").each(function(index,element) {
     $(element).removeClass("active show");
   })
-  $(".nav-link").each((index,element) => {
+  $(".nav-link").each(function(index,element) {
     $(element).removeClass("active");
   })
   
   $("#btn-register").click();
 }
 
-let showLoginForm = () => {
-  $(".tab-pane").each((index,element) => {
+function showLoginForm(){
+  $(".tab-pane").each(function(index,element){    
     $(element).removeClass("active show");
   })
-  $(".nav-link").each((index,element) => {
+  $(".nav-link").each(function(index,element){
     $(element).removeClass("active");
-  })
-  
+  })  
   $("#btn-login").click();
 }
-
-$(document).ready(function () {
-
-});
 
 

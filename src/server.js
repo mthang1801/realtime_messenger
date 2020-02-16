@@ -2,13 +2,27 @@ import express from "express";
 import connectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
 import initRoutes from "./routes/web";
+import bodyParser from "body-parser";
+import connectFlash from "connect-flash";
+import configSession from "./config/session";
 var app = express();
+
 
 //connect to mongodb
 connectDB();
 
+//config session
+configSession(app);
+
 //config view engine
 configViewEngine(app);
+
+//enable post data by requesting
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+//enable flash message
+app.use(connectFlash());
 
 //initial all routes
 initRoutes(app);

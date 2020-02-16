@@ -65,7 +65,7 @@
   background-color: transparent; }
 
 .active {
-  color: #007bff; }
+  color: #1a449c; }
 
 .text-default {
   color: #000; }
@@ -138,7 +138,8 @@
   text-align: center; }
 
 .form__label {
-  color: #000 !important; }
+  color: #000 !important; 
+}
 
 .form__footer {
   text-align: center;
@@ -149,3 +150,8 @@
   text-align: center;
   justify-content: center;
   margin: 1.5rem 0; }
+
+.alert{
+  font-size: .9em;
+  font-weight: 400;
+}

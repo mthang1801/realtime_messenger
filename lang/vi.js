@@ -12,14 +12,20 @@ export const transErrors = {
   email_isBlocked : "Tài khoản đã bị khóa, nếu bạn có thắc mắc hay khiếu nại vui lòng liên hệ vui quản trị viên để tìm hiểu thêm",
   send_email_failed : "Có lỗi xảy ra, tạo tài khoản thất bại, vui lòng thử lại",
   invalid_verify_token : "Địa chỉ kích họat không tồn tại hoặc đã hết hạn",
-  activeAccountFail : "Có lỗi xảy ra, vui lòng thử lại"
+  activeAccountFail : "Có lỗi xảy ra, vui lòng thử lại",
+  email_not_existence : "Tài khoản này không tồn tại",
+  username_or_password_wrong : "Sai tài khoản hoặc mật khẩu"
 }
 
 export const transSuccess = {
   email_register : (email) => {
     return `Đăng ký tài khoản <b>${email}</b> thành công, để có thể đăng nhập vào ứng dụng vui lòng kiểm tra email để kích hoạt tài khoản`
   },
-  activeAccount : `Tài khoản đã được kích hoạt thành công, bạn có thể đăng nhập vào ứng dụng`
+  activeAccount : `Tài khoản đã được kích hoạt thành công, bạn có thể đăng nhập vào ứng dụng`,
+  login_success : (username) => {
+    return `Chào mừng <b>${username}</b> đã đến với Messenger Chat, chúc bạn có phút giây trải nghiệm tuyệt vời`
+  },
+  loggout_success : "Đăng xuất tài khoản thành công."
 }
 
 

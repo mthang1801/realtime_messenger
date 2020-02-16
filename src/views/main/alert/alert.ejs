@@ -1,1 +1,5 @@
-<div class="alert alert-success d-none">Example success</div>
+<%if (activeSuccess != "") {%>
+  <div class="alert-master-success alert alert-success d-none">
+    <%- activeSuccess %>
+  </div>
+<%}%>

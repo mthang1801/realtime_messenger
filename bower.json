@@ -22,6 +22,8 @@
     "jquery-colorbox": "colorbox#^1.6.4",
     "jquery.nicescroll": "nicescroll#^3.7.6",
     "jquery": "jquery/jquery-dist#^3.4.1",
-    "photoset-grid": "^1.0.1"
+    "photoset-grid": "^1.0.1",
+    "alertify": "^0.3.10",
+    "alertifyjs": "^1.0.11"
   }
 }

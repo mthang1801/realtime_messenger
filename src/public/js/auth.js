@@ -18,5 +18,3 @@ function showLoginForm(){
   })  
   $("#btn-login").click();
 }
-
-

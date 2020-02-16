@@ -1,5 +1,5 @@
 <div class="form__box">
-  <form>
+  <form method="POST" action="/login">
     <legend class="form__legend"><span>Đăng nhập tài khoản</span></legend>
     <%- include("../alert/alert")  %>
     <div class="form__social-login">
@@ -14,18 +14,18 @@
   
     <div class="form-group">
       <label for="email-login">Địa chỉ email <span class="text-danger"></span></label>
-      <input type="email" class="form-control" id="email-login" placeholder="Nhập Email của bạn">                
+      <input type="email" class="form-control" id="email-login" name="email" placeholder="Nhập Email của bạn">                
     </div>
    
  
     <div class="form-group">
       <label for="password-login">Mật khẩu <span class="text-danger"></span></label>
-      <input type="password" class="form-control" id="password-login" placeholder="Nhập mật khẩu">
+      <input type="password" class="form-control" id="password-login" name="password" placeholder="Nhập mật khẩu">
     </div>
    
    
     <div class="form-group text-right">
-      <button type="button" class="btn btn-primary">Đăng nhập</button>            
+      <button class="btn btn-primary">Đăng nhập</button>            
     </div>
     <div class="form__footer">
       <div class="text-default">Chưa có tài khoản? - <a href="javascript:showRegisterForm()" onclick="">Đăng ký</a></div>

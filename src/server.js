@@ -5,6 +5,7 @@ import initRoutes from "./routes/web";
 import bodyParser from "body-parser";
 import connectFlash from "connect-flash";
 import configSession from "./config/session";
+import passport from "passport";
 var app = express();
 
 
@@ -20,6 +21,10 @@ configViewEngine(app);
 //enable post data by requesting
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+//config passport with middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 //enable flash message
 app.use(connectFlash());

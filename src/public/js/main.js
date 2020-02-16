@@ -141,6 +141,16 @@ $("#select-type-chat").on("change" , function(){
 })
 
 
+function flashMasterNotify(){
+  let notify = $(".alert-master-success").text();
+  console.log(notify);
+  if(notify.length){
+    alertify.set('notifier','position', 'right-bottom');
+    alertify.success(notify);
+  }
+}
+
+
 $(document).ready(function () {
   initialConfigure();
 
@@ -167,4 +177,6 @@ $(document).ready(function () {
 
   toggleNotificationBoard();
 
+  //flash message at master screen
+  flashMasterNotify();
 });

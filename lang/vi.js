@@ -14,7 +14,8 @@ export const transErrors = {
   invalid_verify_token : "Địa chỉ kích họat không tồn tại hoặc đã hết hạn",
   activeAccountFail : "Có lỗi xảy ra, vui lòng thử lại",
   email_not_existence : "Tài khoản này không tồn tại",
-  username_or_password_wrong : "Sai tài khoản hoặc mật khẩu"
+  username_or_password_wrong : "Sai tài khoản hoặc mật khẩu",
+  general_fail : "Có lỗi xảy ra, vui lòng thử lại"
 }
 
 export const transSuccess = {

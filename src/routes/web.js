@@ -2,11 +2,13 @@ import express from 'express';
 import {home, auth} from "../controllers";
 import {authValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
+import initPassportFacebook from "../controllers/passportController/fb";
 import passport from "passport";
 
 
 //init all passport
 initPassportLocal();
+initPassportFacebook();
 
 let router = express.Router();
 
@@ -26,8 +28,13 @@ let initRoutes = (app) => {
     successFlash : true , 
     successRedirect : "/"
   }));
-
+  router.get("/auth/facebook", auth.checkLoggedOut , passport.authenticate("facebook" , { scope : ["email"]}));
+  router.get("/auth/facebook/callback", auth.checkLoggedOut , passport.authenticate("facebook" , {
+    successRedirect : "/" ,
+    failureRedirect : "/login-register" 
+  }))
   router.get("/logout",auth.checkLoggedIn, auth.logoutAccount);
+
   return app.use(router);
 }
 

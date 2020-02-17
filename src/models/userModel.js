@@ -27,7 +27,7 @@ let userSchema = new mongoose.Schema({
   },
   createdAt : {type : Number, default : Date.now},
   updatedAt : {type : Number, default : null},
-  deletedAt : {type : Number, default : null},
+  deletedAt : {type : Number, default : null}
 })
 
 userSchema.statics = {
@@ -45,6 +45,9 @@ userSchema.statics = {
   },
   findUserById(id){
     return this.findById(id,{"local.password" : 0}).exec();
+  },
+  findUserByFacebookUID(uid){
+    return this.findOne({"facebook.uid" : uid}).exec();
   }
 };
 

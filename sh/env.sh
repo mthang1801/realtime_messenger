@@ -16,7 +16,12 @@ export MAIL_PASS=Th@ng1995
 export MAIL_HOST=smtp.gmail.com
 export MAIL_PORT=587
 
-#config to login facebook
+#config login facebook
 export FB_APP_ID=564805340774728
 export FB_APP_SECRET=5079294686743f66b58b567a9e5356b9
 export FB_CALLBACK_URL=https://localhost:3000/auth/facebook/callback
+
+#config login google+
+export GG_APP_ID=519432788476-lv9bi1joqjgtdaj2fnsncppalfprieje.apps.googleusercontent.com
+export GG_APP_SECRET=KzkCrWbZw6hvvCh93Xg8hRBy
+export GG_CALLBACK_URL=https://localhost:3000/auth/google/callback

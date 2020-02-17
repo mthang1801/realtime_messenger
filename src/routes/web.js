@@ -39,9 +39,11 @@ let initRoutes = (app) => {
   router.get("/auth/google/callback", auth.checkLoggedOut, passport.authenticate("google", {
     failureRedirect : "/login-register", 
     successRedirect : "/"
-  }))
+  }));
   router.get("/logout",auth.checkLoggedIn, auth.logoutAccount);
-
+  router.post("/user/forgot-password", auth.checkLoggedOut, auth.forgotPassword);
+  router.post("/user/forgot-password/verify", auth.checkLoggedOut, auth.verifyForgotPassword);
+  router.post("/user/forgot-password/verify/new-update-password", auth.checkLoggedOut, auth.updateNewPassword);
   return app.use(router);
 }
 

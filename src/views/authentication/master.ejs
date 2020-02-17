@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/bower_components/font-awesome/css/all.min.css">
   <link rel="stylesheet" href="/bower_components/font-awesome/css/fontawesome.min.css">
   <link rel="stylesheet" href="/bower_components/font-awesome/css/v4-shims.min.css">
+  <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.min.css">
 
   <link rel="stylesheet" href="">
   <link rel="stylesheet" href="/css/auth.css">
@@ -16,6 +17,7 @@
   <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="./bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
   <script src="./bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
   <script src="./js/auth.js"></script>
   <title>Login-Register</title>
 </head>
@@ -55,7 +57,7 @@
           <li class="nav-item" style="z-index: 99;">
             <a class="nav-link btn-text" id="btn-register" data-toggle="pill" href="#register-form" role="tab" aria-controls="pills-register" aria-selected="true">Đăng ký</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item disabled">
             <a class="nav-link btn-text active" id="btn-login" data-toggle="pill" href="#login-form" role="tab" aria-controls="pills-login" aria-selected="false">Đăng Nhập</a>
           </li>        
         </ul>
@@ -63,7 +65,7 @@
       <div class="clearfix"></div>
     </div>   
     <div class="auth-form">      
-      <div class="tab-content">
+      <div class="tab-content" id="tab-form">
         <!-- Show Register Form -->
         <div class="tab-pane fade" id="register-form" role="tabpanel" aria-labelledby="pills-home-tab">
          <%- include("register/register") %>
@@ -72,7 +74,10 @@
         <div class="tab-pane fade show active" id="login-form" role="tabpanel" aria-labelledby="pills-profile-tab">
           <%- include("login/login") %>
         </div>
-       
+        <!-- Show Forgot password form -->
+        <div class="tab-pane fade" id="forgot-pw-form" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <%- include("request_restore_password/request_restore_password") %>
+        </div>
       </div>
     </div>
   </div>

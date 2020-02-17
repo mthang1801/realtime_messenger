@@ -28,7 +28,7 @@ let register = (email, gender, password, protocol, host) => {
         username : email.split("@")[0], 
         gender : gender,             
         local : {
-          email : email,
+          email : email.trim().toLowerCase(),
           password : bcrypt.hashSync(password, salt),
           verifyToken : uuidv4()
         }       
@@ -64,9 +64,77 @@ let verifyAccount = (token) => {
       reject(transErrors.activeAccountFail);
     }
   })
-}
+};
+
+/**
+ * 
+ * @param {email} String email
+ * find user in documents, if user exists, it will create number verify code in order to user get link in email, else return false to notify error
+ */
+let forgotPassword = (email) => {
+  return new Promise( async (resolve, reject) => {
+    try {      
+      let user = await userModel.findUserAndCreateNumberVerify(email);
+      if(!user){
+        return reject(transErrors.email_not_existence);
+      }
+      //send email to user to get verify number
+      sendEmail(email, transEmail.mail_forgot_subject, transEmail.mail_forgot_template(user.username, user.local.verifyNumber))
+        .then(success => resolve(transSuccess.mail_forgot_success))
+        .catch(error => reject(transErrors.general_fail));
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+/**
+ * 
+ * @param {String} email 
+ * @param {Number} verifyNumber 
+ * check user has whether existed or not, if existed, return true else return false
+ */
+let verifyForgotPassword = (email, verifyNumber) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let user = await userModel.findUserByEmailAndVerifyNumber(email, verifyNumber); 
+      if(!user){
+        return reject(transErrors.verifyNumber_wrong);
+      }
+      resolve(true);
+    } catch (error) {
+      return reject(error);
+    }
+  })
+};
+
+/**
+ * 
+ * @param {String} email 
+ * @param {String} password 
+ * proceed update new password from forgot password 
+ */
+let updateNewPassword = (email, password) => {
+  return new Promise( async (resolve, reject) =>{
+    try {
+      let salt = bcrypt.genSaltSync(saltRounds);
+      let hashPassword = bcrypt.hashSync(password, salt);
+      console.log(hashPassword);
+      let userUpdate = await userModel.FindUserByEmailAndUpdateNewPassword(email, hashPassword);
+      if(!userUpdate){
+       return reject(transErrors.server_error);
+      }
+      console.log(userUpdate);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }    
+  })
+};
 
 module.exports ={
   register: register,
-  verifyAccount : verifyAccount
+  verifyAccount : verifyAccount,
+  forgotPassword : forgotPassword,
+  verifyForgotPassword : verifyForgotPassword,
+  updateNewPassword : updateNewPassword
 }

@@ -2,7 +2,8 @@ export const authInvalidation = {
   email_invalidation  : "Địa chỉ email không hợp lệ",
   gender_invalidation : "Vui lòng không thay đổi trường giới tính",
   password_invalidation : "Mật khẩu không hợp lệ, mật khẩu hợp lệ phải có ít nhất 8 ký tự, bao gồm chữ thường, chữ in hoa, số, và ký tự đặc biệt",
-  confirm_password_invalidation : "Mật khẩu nhập lại không trùng khớp với mật khẩu trên"
+  confirm_password_invalidation : "Mật khẩu nhập lại không trùng khớp với mật khẩu trên",
+  confirm_email_wrong : "Mật khẩu xác thực không đúng"
 }
 
 export const transErrors = {
@@ -15,7 +16,10 @@ export const transErrors = {
   activeAccountFail : "Có lỗi xảy ra, vui lòng thử lại",
   email_not_existence : "Tài khoản này không tồn tại",
   username_or_password_wrong : "Sai tài khoản hoặc mật khẩu",
-  general_fail : "Có lỗi xảy ra, vui lòng thử lại"
+  general_fail : "Có lỗi xảy ra, vui lòng thử lại",
+  empty_request : "Vui lòng nhập đầy đủ thông tin các trường",
+  verifyNumber_wrong : "Mã xác thực không chính xác",
+  server_error : "Lỗi xảy ra từ hệ thống"
 }
 
 export const transSuccess = {
@@ -26,7 +30,8 @@ export const transSuccess = {
   login_success : (username) => {
     return `Chào mừng <b>${username}</b> đã đến với Messenger Chat, chúc bạn có phút giây trải nghiệm tuyệt vời`
   },
-  loggout_success : "Đăng xuất tài khoản thành công."
+  loggout_success : "Đăng xuất tài khoản thành công.",
+  mail_forgot_success : "Yêu cầu khôi phục mật khẩu của bạn thành công, vui lòng kiểm tra email để lấy mã xác nhận kích hoạt lại mật khẩu"
 }
 
 
@@ -38,6 +43,15 @@ export const transEmail = {
       <h4>Bạn đã đăng ký thành công tài khoản trên Messenger Chat, để  tiến hành đăng nhập vào ứng dụng, bạn vui lòng nhấn vào link dưới đây để kích hoạt tài khoản</h4>
       <h4><a href="${linkVerify}" target="_blank">Vui lòng nhấn vào đây</a></h4>  
       <h4>Cám ơn vì bạn đã sử dụng ứng dụng, trân trọng</h4>
+    `
+  },
+  mail_forgot_subject : "Messenger Chat: Xác nhận kích hoạt lại mật khẩu",
+  mail_forgot_template : (username,verifyNumber) => {
+    return `
+      <h3>Xin chào ${username}</h3>
+      <h4>Chúng tôi đã nhận được một đề nghị khôi phục lại mật khẩu của bạn, để tiến hành khôi phục mật khẩu, bạn cần phải nhập mã xác nhận vào mẫu yêu cầu</h4>
+      <h4>Đây là mã xác nhận: <span style="color:blue;font-size:20px"><strong>${verifyNumber}</strong><span></h4>
+      <h4 style="color:red"><strong>Xin lưu ý, đề đảm bảo an toàn cho tài khoản, không chia sẻ mã này cho bất kỳ ai. Trân trọng</strong></h4>
     `
   }
 }

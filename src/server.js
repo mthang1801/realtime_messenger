@@ -10,70 +10,71 @@ import pem from "pem";
 import https from "https";
 
 //#region config selfSiged (SSL) to login fb or google
-pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-  if (err) {
-    throw err
-  }
-  let app = express()
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//   if (err) {
+//     throw err
+//   }
+//   let app = express()
   
-  //connect to mongodb
-  connectDB();
+//   //connect to mongodb
+//   connectDB();
 
-  //config session
-  configSession(app);
+//   //config session
+//   configSession(app);
 
-  //config view engine
-  configViewEngine(app);
+//   //config view engine
+//   configViewEngine(app);
 
-  //enable post data by requesting
-  app.use(bodyParser.urlencoded({extended: true}));
-  app.use(bodyParser.json());
+//   //enable post data by requesting
+//   app.use(bodyParser.urlencoded({extended: true}));
+//   app.use(bodyParser.json());
 
-  //config passport with middleware
-  app.use(passport.initialize());
-  app.use(passport.session());
+//   //config passport with middleware
+//   app.use(passport.initialize());
+//   app.use(passport.session());
 
-  //enable flash message
-  app.use(connectFlash());
+//   //enable flash message
+//   app.use(connectFlash());
 
-  //initial all routes
-  initRoutes(app);
+//   //initial all routes
+//   initRoutes(app);
 
-  // app.listen(process.env.APP_PORT, process.env.APP_HOST , () => {
-  //   console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
-  // })
+//   // app.listen(process.env.APP_PORT, process.env.APP_HOST , () => {
+//   //   console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
+//   // })
 
  
-  https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT, process.env.APP_HOST , () => {
-    console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
-  })
-})
+//   https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(process.env.APP_PORT, process.env.APP_HOST , () => {
+//     console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
+//   })
+// })
 
 //#endregion
 
-// //connect to mongodb
-// connectDB();
+let app = express();
+//connect to mongodb
+connectDB();
 
-// //config session
-// configSession(app);
+//config session
+configSession(app);
 
-// //config view engine
-// configViewEngine(app);
+//config view engine
+configViewEngine(app);
 
-// //enable post data by requesting
-// app.use(bodyParser.urlencoded({extended: true}));
-// app.use(bodyParser.json());
+//enable post data by requesting
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
-// //config passport with middleware
-// app.use(passport.initialize());
-// app.use(passport.session());
+//config passport with middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
-// //enable flash message
-// app.use(connectFlash());
+//enable flash message
+app.use(connectFlash());
 
-// //initial all routes
-// initRoutes(app);
+//initial all routes
+initRoutes(app);
 
-// app.listen(process.env.APP_PORT, process.env.APP_HOST , () => {
-//   console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
-// })
+app.listen(process.env.APP_PORT, process.env.APP_HOST , () => {
+  console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
+})

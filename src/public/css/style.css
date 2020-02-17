@@ -95,6 +95,9 @@ a {
   padding: 0;
   margin: 0rem -0.5rem; }
 
+.animate-fade {
+  animation: animate-fade .5s ease-out; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }
@@ -645,4 +648,3 @@ a {
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3);
   /* Black w/ opacity */ }
-

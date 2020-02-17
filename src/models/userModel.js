@@ -13,7 +13,8 @@ let userSchema = new mongoose.Schema({
     email : {type : String, trim : true},
     password : String,
     isActive : {type : Boolean, default : false},
-    verifyToken : String
+    verifyToken : String,
+    verifyNumber : Number
   },
   google : {
     uid : String ,
@@ -51,6 +52,15 @@ userSchema.statics = {
   },
   findUserByGoogleUID(uid){
     return this.findOne({"google.uid" : uid}).exec();
+  },
+  findUserAndCreateNumberVerify(email){
+    return this.findOneAndUpdate({"local.email" : { $regex : new RegExp(email, "i")}}, {"local.verifyNumber": Math.round(Math.random()*1000000) }, {new : true}).exec();
+  },
+  findUserByEmailAndVerifyNumber(email, verifyNumber){
+    return this.findOne({"local.email" : email, "local.verifyNumber" : verifyNumber}).exec();
+  },
+  FindUserByEmailAndUpdateNewPassword(email, hashPassword){
+    return this.findOneAndUpdate({"local.email" : email}, {"local.password" : hashPassword, "local.verifyNumber" : null}, {new : true}).exec();
   }
 };
 

@@ -9,6 +9,7 @@ import passport from "passport";
 import pem from "pem";
 import https from "https";
 
+//#region config selfSiged (SSL) to login fb or google
 pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
   if (err) {
     throw err
@@ -47,6 +48,8 @@ pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
     console.log(`Server is running on ${process.env.APP_HOST}:${process.env.APP_PORT}`);
   })
 })
+
+//#endregion
 
 // //connect to mongodb
 // connectDB();

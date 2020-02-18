@@ -19,11 +19,11 @@
             <div class="row general-setting">
               <div class="col-12 col-lg-4">									
                 <div class="text-center general-setting__update-avatar" id="update-avatar">
-                  <img src="images/bg_01.jpg" class="general-setting__update-avatar-image" id="image-update-avatar">											
+                  <img src="images/users/<%= user.avatar %>" class="general-setting__update-avatar-image" id="image-update-avatar">											
                 </div>
                 <h6 class="general-setting__update-text" id="text-update-avatar">Tải lên một ảnh mới</h6>	
                 <div class="form-group">
-                  <input type="file" class="form-control general-setting__update-input" id="input-change-avatar">
+                  <input type="file" class="form-control general-setting__update-input" name="avatar"  id="input-change-avatar">
                 </div>
               </div>
               <div class="col-12 col-lg-8">
@@ -36,21 +36,36 @@
                   </div>
                 </div>
                 <div class="general-setting__type-acount">
-                  <h3>Local Account</h3>
-                  <h3>Google Account</h3>
-                  <h3>Facebook Account</h3>
+                  <% if(user.local.email) {%>
+                    <h3>Local Account</h3>
+                  <%}%>
+                  <% if(user.google.email) {%>
+                    <h3>Google Account</h3>
+                  <% } %>
+                  <%if (user.facebook.email) {%>
+                    <h3>Facebook Account</h3>
+                  <%}%>
                 </div>
                 <form class="general-setting__update-form">
                   <div class="form-group row">
                     <label for="email-profile" class="col-lg-3 col-form-label text-right">Email:</label>
                     <div class="col-lg-9">
-                      <input type="email" class="form-control" id="email-profile" value="mthang1801@gmail.com" disabled>
+                      <% if(user.local.email) {%>
+                        <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.local.email %>" disabled>
+                      <%}%>
+                      <% if(user.google.email) {%>
+                        <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.google.email %>" disabled>
+                      <% } %>
+                      <%if (user.facebook.email) {%>
+                        <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.facebook.email %>" disabled>
+                      <%}%>
+                     
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="username-profile" class="col-lg-3 col-form-label text-right">Username:</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="username-profile" value="mthang1801">
+                      <input type="text" class="form-control" id="input-change-username-profile" value="<%= user.username %>">
                     </div>
                   </div>
                   <div class="form-group">
@@ -58,12 +73,12 @@
                       <label for="username-profile" class="col-sm-4 col-lg-3 col-form-label text-right">Giới tính:</label>
                       <div class="col-sm-8 col-lg-9 mt-2">
                         <div class="form-check form control">
-                          <input type="radio" class="form-check-input" name="gender" id="male" value="male" checked>
-                          <label class="form-check-label" for="male">Nam</label>
+                          <input type="radio" class="form-check-input" name="gender" id="input-change-gender-male" value="male" <%if(user.gender=="male"){%>checked<%}%>  >
+                          <label class="form-check-label" for="input-change-gender-male">Nam</label>
                         </div>
                         <div class="form-check form control">
-                          <input type="radio" class="form-check-input" name="gender" id="female" value="female">
-                          <label class="form-check-label" for="female">Nữ</label>
+                          <input type="radio" class="form-check-input" name="gender" id="input-change-gender-female" value="female" <%if(user.gender=="female"){%>checked<%}%> >
+                          <label class="form-check-label" for="input-change-gender-female">Nữ</label>
                         </div>
                       </div>
                     </div>											
@@ -71,18 +86,18 @@
                   <div class="form-group row">
                     <label for="address-profile" class="col-lg-3 col-form-label text-right">Địa chỉ:</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="address-profile" value="Gò Vấp TPHCM">
+                      <input type="text" class="form-control" id="input-change-address-profile" value="<%= user.address ? user.address : 'Chưa cập nhật'%>">
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="phone-profile" class="col-lg-3 col-form-label text-right">Số điện thoại:</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="phone-profile" value="0939323700">
+                      <input type="text" class="form-control" id="input-change-phone-profile" value="<%= user.phone ? user.phone : 'Chưa cập nhật'%>">
                     </div>
                   </div>
                   <div class="form-group text-center mt-3">
-                    <button class="btn btn-success mr-3">Lưu thay đổi</button>
-                    <button class="btn btn-danger">Hủy bỏ</button>
+                    <button type="button" id="btn-update-profile" class="btn btn-success mr-3">Lưu thay đổi</button>
+                    <button type="reset" id="btn-cancel-update-profile" class="btn btn-danger">Hủy bỏ</button>
                   </div>
                 </form>
               </div>
@@ -123,8 +138,8 @@
                 </div>
                 <div class="form-group mt-4 row">
                   <div class="col-10 col-md-12 col-lg-8 text-center">
-                    <button class="btn btn-success">Thay đổi</button>
-                    <button class="btn btn-danger">Hủy bỏ</button>
+                    <button type="button" class="btn btn-success" id="btn-update-password">Thay đổi</button>
+                    <button type="reset" class="btn btn-danger" id="btn-cancel-update-password">Hủy bỏ</button>
                   </div>											
                 </div>
               </form>

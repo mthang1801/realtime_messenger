@@ -133,7 +133,7 @@ let toggleNotificationBoard = () => {
 };
 
 let initialConfigure = () => {
-  $("#notification-board").fadeToggle();  
+  $("#notification-board").hide();  
 };
 
 $("#select-type-chat").on("change" , function(){

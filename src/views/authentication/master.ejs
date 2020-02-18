@@ -4,25 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/bower_components/font-awesome/css/all.min.css">
-  <link rel="stylesheet" href="/bower_components/font-awesome/css/fontawesome.min.css">
-  <link rel="stylesheet" href="/bower_components/font-awesome/css/v4-shims.min.css">
-  <link rel="stylesheet" href="/bower_components/sweetalert2/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/v4-shims.min.css">
+  <link rel="stylesheet" href="bower_components/sweetalert2/dist/sweetalert2.min.css">
+  <link rel="stylesheet" href="bower_components/alertifyjs/css/alertify.min.css"> 
+  <link rel="stylesheet" href="css/auth.css">
 
-  <link rel="stylesheet" href="">
-  <link rel="stylesheet" href="/css/auth.css">
-
-  <script src="./bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="./bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
-  <script src="./bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
+  <script src="bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
+  <script src="bower_components/alertifyjs/alertify.min.js"></script>
   <script src="bower_components/sweetalert2/dist/sweetalert2.all.min.js"></script>
-  <script src="./js/auth.js"></script>
-  <title>Login-Register</title>
+  <script src="js/auth.js"></script>
+  <title>Truy cập tài khoản</title>
 </head>
 <body>
   <div class="auth">
+    <div class="loading-ring"><div></div><div></div><div></div><div></div></div>
+    <div class="loading-modal"></div>
     <div id="authenticationCarousel" class="auth__carousel carousel slide" data-ride="carousel">
       <div class="carousel-inner auth__carousel-inner">
         <div class="carousel-item auth__carousel-inner-item auth__carousel-inner--bg1 active"></div>
@@ -79,7 +81,7 @@
           <%- include("request_restore_password/request_restore_password") %>
         </div>
       </div>
-    </div>
+    </div>    
   </div>
   
 </body>

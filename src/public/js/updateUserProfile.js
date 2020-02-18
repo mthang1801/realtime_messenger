@@ -8,16 +8,16 @@ function updateUserInfor(){
       let match = ["image/png", "image/jpg", "image/jpeg"];
       let maxSize = 1024*1024;
       console.log(maxSize);
-      if($.inArray(fileData.type, match)==-1){
-        alertify.notify("File hình ảnh phải có đuôi jpg, jpeg, hoặc png", "error", 7);
-        $(this).val("");
-        return false ;
-      }      
-      if(fileData.size > maxSize) {
-        alertify.notify("Kích thước của file quá lớn, vui lòng chọn file có kích thước không quá 1MB", "error", 7);
-        $(this).val("");
-        return false ;
-      }      
+      // if($.inArray(fileData.type, match)==-1){
+      //   alertify.notify("File hình ảnh phải có đuôi jpg, jpeg, hoặc png", "error", 7);
+      //   $(this).val("");
+      //   return false ;
+      // }      
+      // if(fileData.size > maxSize) {
+      //   alertify.notify("Kích thước của file quá lớn, vui lòng chọn file có kích thước không quá 1MB", "error", 7);
+      //   $(this).val("");
+      //   return false ;
+      // }      
 
       if(typeof(FileReader) !== undefined){
         let imagePreview = $("#update-avatar");
@@ -103,7 +103,39 @@ function updateUserInfor(){
   });
 };
 
-
+function updateUserAvatarAndInfor(){
+  $("#btn-update-profile").on("click", function(){   
+    if($.isEmptyObject(userInformation) && !userAvatar){
+      alertify.notify("Bạn chưa thay đổi thông tin của bất kỳ trường nào để tiến hành cập nhật", "error", 7);
+      return false;
+    };
+    if(userAvatar){
+      $.ajax({
+        type: "put",
+        url: "/user/update-avatar",
+        data: userAvatar,
+        //to request FormData() type to server, we must set dataType, cache, contentType
+        processData: false,
+        cache: false,
+        contentType : false ,
+        success: function (response) {
+          if(response.success){
+            let data = response.data ; 
+            $("#navbar-user-avatar").attr("src" , `images/users/${data.avatar}`);         
+            userOriginalAvatar=`images/users/${data.avatar}`;
+            $("#btn-cancel-update-profile").click();
+            $("#alert-update-profile-success").show().text("Cập nhật ảnh đại diện thành công");
+          }
+        },
+        error: function(error){
+          $("#btn-cancel-update-profile").click();
+          $("#alert-update-profile-error").show().text(`Cập nhật ảnh đại diện không thành công, ${error.responseText}`);
+          return false ;
+        }
+      });
+    }
+  })  
+};
 
 $(document).ready(function () {
   updateUserInfor();
@@ -118,28 +150,10 @@ $(document).ready(function () {
   //get user avatar after page loaded
   userOriginalAvatar = $("#image-update-avatar").attr("src");
 
-  console.log(userOriginalInformation);
-  $("#btn-update-profile").on("click", function(){
-    if($.isEmptyObject(userInformation) || !userAvatar){
-      alertify.notify("Bạn chưa thay đổi thông tin của bất kỳ trường nào để tiến hành cập nhật", "error", 7);
-      return false;
-    };
-    $.ajax({
-      type: "put",
-      url: "/user/update-avatar",
-      data: userAvatar,
-      //to request FormData() type to server, we must set dataType, cache, contentType
-      dataType: false,
-      cache: false,
-      contentType : false ,
-      success: function (response) {
-        console.log(response);
-      },
-      error: function(error){
-        console.log(error);
-      }
-    });
-  })
+  //update user avatar and user infor ( solve btn-update-profile)
+  updateUserAvatarAndInfor();
+
+  //solve btn-cancel-update-profile
   $("#btn-cancel-update-profile").on("click", function(){
     $("#input-change-username-profile").val(userOriginalInformation.username) ;
     userOriginalInformation.gender == "male" ? $("#input-change-gender-male").checked :  $("#input-change-gender-female").checked;
@@ -148,6 +162,6 @@ $(document).ready(function () {
     $("#image-update-avatar").attr("src", userOriginalAvatar);
     $("#input-change-avatar").val("");
     userInformation = {};
-    userAvatar = null;
+    userAvatar = null;   
   })
 });

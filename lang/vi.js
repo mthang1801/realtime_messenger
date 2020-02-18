@@ -19,7 +19,9 @@ export const transErrors = {
   general_fail : "Có lỗi xảy ra, vui lòng thử lại",
   empty_request : "Vui lòng nhập đầy đủ thông tin các trường",
   verifyNumber_wrong : "Mã xác thực không chính xác",
-  server_error : "Lỗi xảy ra từ hệ thống"
+  server_error : "Lỗi xảy ra từ hệ thống",
+  typeof_avatar : "Kiểu file không chính xác, file hình ảnh phải có đuôi png, jpeg, hoặc jpg",
+  overSize_avatar : "Kích thước tập tin quá lớn, cập nhật thất bại"
 }
 
 export const transSuccess = {

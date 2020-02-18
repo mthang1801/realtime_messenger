@@ -195,7 +195,7 @@
           </li>
           <li class="nav-item dropdown navigation__nav-item">
             <a class="nav-link dropdown-toggle navigation__nav-link" href="javascript:void(0)" id="dropdownId" data-display="static" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img src="images/users/<%= user.avatar %>" class="navigation__nav-image"><span class="navigation__nav-username">MV Thang</span>
+              <img src="images/users/<%= user.avatar %>" id="navbar-user-avatar" class="navigation__nav-image"><span class="navigation__nav-username"><%if(user.username.length > 15) {%><%= user.username.substring(0, 5)%><span>...</span><%}else{%><%= user.username %><%}%></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownId">
               <a class="dropdown-item" data-toggle="modal" href="#modalUserProfile"><i class="fas fa-cog"></i> Thông tin tài khoản</a>

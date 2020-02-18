@@ -1,11 +1,10 @@
 import express from 'express';
-import {home, auth} from "../controllers";
+import {home, auth, user} from "../controllers";
 import {authValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
 import initPassportGoogle from "../controllers/passportController/google";
 import passport from "passport";
-
 
 //init all passport
 initPassportLocal();
@@ -20,9 +19,12 @@ let router = express.Router();
  */
 
 let initRoutes = (app) => {
+  //home page and login-register page
   router.get("/", auth.checkLoggedIn, home.getHome);  
   router.get("/login-register", auth.checkLoggedOut, auth.getLoginRegister);
+  //register 
   router.post("/register", auth.checkLoggedOut, authValid.register , auth.postRegister);
+  //login account with local, facebook, google
   router.get("/auth/user/verify/:verifyToken", auth.checkLoggedOut, auth.verifyAccount);
   router.post("/login", auth.checkLoggedOut, passport.authenticate("local", {
     failureFlash : true, 
@@ -40,10 +42,14 @@ let initRoutes = (app) => {
     failureRedirect : "/login-register", 
     successRedirect : "/"
   }));
+  //logout account
   router.get("/logout",auth.checkLoggedIn, auth.logoutAccount);
+  //forgot password
   router.post("/user/forgot-password", auth.checkLoggedOut, auth.forgotPassword);
   router.post("/user/forgot-password/verify", auth.checkLoggedOut, auth.verifyForgotPassword);
   router.post("/user/forgot-password/verify/new-update-password", auth.checkLoggedOut, auth.updateNewPassword);
+  //update user avatar and information
+  router.put("/user/update-avatar", auth.checkLoggedIn , user.updateAvatar);
   return app.use(router);
 }
 

@@ -61,7 +61,16 @@ userSchema.statics = {
   },
   FindUserByEmailAndUpdateNewPassword(email, hashPassword){
     return this.findOneAndUpdate({"local.email" : email}, {"local.password" : hashPassword, "local.verifyNumber" : null}, {new : true}).exec();
-  }
+  },
+  updateUserProfile(userId, userUpdateItem){
+    return this.findByIdAndUpdate(
+      userId, 
+      userUpdateItem,
+      {
+        "local.password": 0 , "role" : 0 , "isBlocked" : 0, "local.isActive" : 0
+      }).exec();
+  },
+
 };
 
 userSchema.methods = {

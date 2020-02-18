@@ -161,5 +161,67 @@
 }
 
 .animate-fade{
-  animation: animate-fade .5s ease-out ;
+  animation: animate-fade 1s ease-out ;
+}
+
+@keyframes animate-fade{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+
+.loading-ring {
+  display: none;
+  position: fixed;
+  top : 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  z-index : 10000;
+}
+.loading-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid lightgoldenrodyellow;
+  border-radius: 50%;
+  animation: loading-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: lightgoldenrodyellow transparent transparent transparent;
+}
+.loading-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.loading-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.loading-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes loading-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+.loading-modal{
+  display : none ;
+  position : fixed;
+  width : 100%;
+  height : 100%;
+  left:  0;
+  top : 0;
+  background-color: rgb(0,0,0);
+  background-color : rgba(0,0,0,.7);
+  z-index : 9999;
 }

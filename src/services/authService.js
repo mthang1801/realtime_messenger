@@ -9,7 +9,7 @@ const saltRounds = 10;
 let register = (email, gender, password, protocol, host) => {
   return new Promise(async (resolve, reject) => {              
     try {
-        let checkIsEmailExistence = await userModel.findByEmail(email);
+      let checkIsEmailExistence = await userModel.findByEmail(email);        
       if(checkIsEmailExistence){    
         if(!checkIsEmailExistence.local.isActive){
           return reject(transErrors.email_isNotActive)
@@ -22,11 +22,13 @@ let register = (email, gender, password, protocol, host) => {
         }       
         return reject(transErrors.email_existence);
       }
+      
       let salt = bcrypt.genSaltSync(saltRounds);
 
       let newUserItem = {
         username : email.split("@")[0], 
-        gender : gender,             
+        gender : gender,  
+        avatar : gender=="male" ? "avatar-default-man.jpeg" : "avatar-default-woman.png",
         local : {
           email : email.trim().toLowerCase(),
           password : bcrypt.hashSync(password, salt),
@@ -117,13 +119,11 @@ let updateNewPassword = (email, password) => {
   return new Promise( async (resolve, reject) =>{
     try {
       let salt = bcrypt.genSaltSync(saltRounds);
-      let hashPassword = bcrypt.hashSync(password, salt);
-      console.log(hashPassword);
+      let hashPassword = bcrypt.hashSync(password, salt); 
       let userUpdate = await userModel.FindUserByEmailAndUpdateNewPassword(email, hashPassword);
       if(!userUpdate){
        return reject(transErrors.server_error);
-      }
-      console.log(userUpdate);
+      }      
       resolve(true);
     } catch (error) {
       reject(error);

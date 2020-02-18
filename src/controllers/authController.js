@@ -100,8 +100,7 @@ let verifyForgotPassword = async (req, res) => {
     return res.status(500).send(transErrors.empty_request);
   }
   try {
-    let status = await auth.verifyForgotPassword(email, verifyNumber);
-    console.log(status);
+    let status = await auth.verifyForgotPassword(email, verifyNumber);  
     return res.status(200).send({success : !!status});
   } catch (error) {
     return res.status(500).send(error);
@@ -110,15 +109,12 @@ let verifyForgotPassword = async (req, res) => {
 
 let updateNewPassword = async (req, res) => {
   let email = req.body.email;
-  let password = req.body.password;
-  console.log(email);
-  console.log(password);
+  let password = req.body.password;  
   if(email == "" || password == ""){
     return res.status(500).send(transErrors.empty_request);
   }
   try {
-    let status = await auth.updateNewPassword(email, password);
-    console.log("This is" + status);
+    let status = await auth.updateNewPassword(email, password);   
     return res.status(200).send(status);
   } catch (error) {
     return res.status(500).send(error);

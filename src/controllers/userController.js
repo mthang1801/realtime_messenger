@@ -2,7 +2,7 @@ import multer from "multer";
 import {app} from "../config/app";
 import {transErrors, transSuccess} from "../../lang/vi";
 import {user} from "../services";
-
+import {validationResult} from "express-validator/check";
 //config storage to help control storing file to disk
 let storageAvatar = multer.diskStorage({
   destination : (req, file, cb) => {
@@ -20,7 +20,7 @@ let storageAvatar = multer.diskStorage({
 let uploadAvatar = multer({
   storage : storageAvatar,
   limits : { fileSize : app.avatar_maxSize}
-}).single("avatar")
+}).single("avatar");
 
 let updateAvatar = (req, res) => {
   uploadAvatar(req, res, async err =>{
@@ -43,8 +43,37 @@ let updateAvatar = (req, res) => {
       return res.status(500).send(error);
     }
   })
+};
+
+let updateInfo = async (req, res) => {
+  let errorsArr = [];  
+  if(!validationResult(req).isEmpty()){
+    let errors = Object.values(validationResult(req).mapped());
+    errors.forEach( error => {
+      errorsArr.push(error.msg);
+    })
+    if(errorsArr.length){
+      return res.status(500).send(errorsArr);
+    }
+  }
+  try {
+    let userId = req.user._id ; 
+    let keys = Object.keys(req.body);
+    let userUpdateItem = {};
+    keys.forEach( key => {
+      userUpdateItem[key] = req.body[key];      
+    });
+    userUpdateItem.updatedAt = Date.now();
+    let updateStatus = await user.updateInfo(userId, userUpdateItem);
+    console.log(updateStatus);
+    return res.status(200).send({data: updateStatus, success : !!updateStatus});
+  } catch (error) {
+    return status(500).send(error);
+  }
+
 }
 
 module.exports = {
-  updateAvatar : updateAvatar
+  updateAvatar : updateAvatar,
+  updateInfo : updateInfo
 }

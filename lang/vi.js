@@ -21,7 +21,11 @@ export const transErrors = {
   verifyNumber_wrong : "Mã xác thực không chính xác",
   server_error : "Lỗi xảy ra từ hệ thống",
   typeof_avatar : "Kiểu file không chính xác, file hình ảnh phải có đuôi png, jpeg, hoặc jpg",
-  overSize_avatar : "Kích thước tập tin quá lớn, cập nhật thất bại"
+  overSize_avatar : "Kích thước tập tin quá lớn, cập nhật thất bại",
+  invalid_update_username : "username không hợp lệ, username không chứa ký tự đặc biệt",
+  invalid_update_gender : "Không được phép thay đổi giá trị của trường này",
+  invalid_update_address : "Địa chỉ quá dài!!!",
+  invalid_update_phone : "Số điện thoại không hợp lệ"
 }
 
 export const transSuccess = {

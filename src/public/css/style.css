@@ -274,6 +274,18 @@ a {
   margin: 0;
   overflow: hidden; }
 
+@media (max-width: 479px) {
+  .form-label {
+    text-align: left; } }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .form-label {
+    text-align: left; } }
+
+@media (min-width: 1024px) {
+  .form-label {
+    text-align: right; } }
+
 .search-users-box__search-bar {
   margin: 1rem 0; }
   @media (min-width: 768px) and (max-width: 1023px) {

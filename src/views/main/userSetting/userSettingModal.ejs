@@ -29,10 +29,10 @@
               <div class="col-12 col-lg-8">
                 <div class="general-setting__alert">
                   <div class="alert alert-success" id="alert-update-profile-success" style="display:none" role="alert">
-                    <strong>Thành công</strong>
+                    
                   </div>
                   <div class="alert alert-danger" id="alert-update-profile-error" style="display:none" role="alert">
-                    <strong>Thất bại</strong>
+                   
                   </div>
                 </div>
                 <div class="general-setting__type-acount">
@@ -48,7 +48,7 @@
                 </div>
                 <form class="general-setting__update-form">
                   <div class="form-group row">
-                    <label for="email-profile" class="col-lg-3 col-form-label text-right">Email:</label>
+                    <label for="email-profile" class="col-lg-3 col-form-label form-label">Email:</label>
                     <div class="col-lg-9">
                       <% if(user.local.email) {%>
                         <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.local.email %>" disabled>
@@ -63,41 +63,41 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="username-profile" class="col-lg-3 col-form-label text-right">Username:</label>
+                    <label for="username-profile" class="col-lg-3 col-form-label form-label">Username:</label>
                     <div class="col-lg-9">
                       <input type="text" class="form-control" id="input-change-username-profile" value="<%= user.username %>">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="row">
-                      <label for="username-profile" class="col-sm-4 col-lg-3 col-form-label text-right">Giới tính:</label>
+                      <label for="username-profile" class="col-sm-4 col-lg-3 col-form-label form-label">Giới tính:</label>
                       <div class="col-sm-8 col-lg-9 mt-2">
                         <div class="form-check form control">
                           <input type="radio" class="form-check-input" name="gender" id="input-change-gender-male" value="male" <%if(user.gender=="male"){%>checked<%}%>  >
-                          <label class="form-check-label" for="input-change-gender-male">Nam</label>
+                          <label class="form-check-label form-label" for="input-change-gender-male">Nam</label>
                         </div>
                         <div class="form-check form control">
                           <input type="radio" class="form-check-input" name="gender" id="input-change-gender-female" value="female" <%if(user.gender=="female"){%>checked<%}%> >
-                          <label class="form-check-label" for="input-change-gender-female">Nữ</label>
+                          <label class="form-check-label form-label" for="input-change-gender-female">Nữ</label>
                         </div>
                       </div>
                     </div>											
                   </div>
                   <div class="form-group row">
-                    <label for="address-profile" class="col-lg-3 col-form-label text-right">Địa chỉ:</label>
+                    <label for="address-profile" class="col-lg-3 col-form-label form-label">Địa chỉ:</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="input-change-address-profile" value="<%= user.address ? user.address : 'Chưa cập nhật'%>">
+                      <input type="text" class="form-control" id="input-change-address-profile" value="<%= user.address%>" placeholder="Chưa có thông tin">
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label for="phone-profile" class="col-lg-3 col-form-label text-right">Số điện thoại:</label>
+                    <label for="phone-profile" class="col-lg-3 col-form-label form-label">Số điện thoại:</label>
                     <div class="col-lg-9">
-                      <input type="text" class="form-control" id="input-change-phone-profile" value="<%= user.phone ? user.phone : 'Chưa cập nhật'%>">
+                      <input type="text" class="form-control" id="input-change-phone-profile" value="<%= user.phone%>"  placeholder="Chưa có thông tin">
                     </div>
                   </div>
                   <div class="form-group text-center mt-3">
                     <button type="button" id="btn-update-profile" class="btn btn-success mr-3">Lưu thay đổi</button>
-                    <button type="reset" id="btn-cancel-update-profile" class="btn btn-danger">Hoàn tác</button>
+                    <button type="button" id="btn-cancel-update-profile" class="btn btn-danger">Hoàn tác</button>
                   </div>
                 </form>
               </div>

@@ -24,3 +24,15 @@
   margin : 0;
   overflow: hidden;
 }
+
+.form-label{
+  @include mobile{
+    text-align: left;
+  }
+  @include tablet{
+    text-align: left;
+  }
+  @include desktop{
+    text-align: right;
+  }
+}

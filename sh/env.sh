@@ -11,8 +11,8 @@ export APP_HOST=localhost
 export APP_PORT=3000
 
 #config admin email
-export MAIL_USER=maivthang95@gmail.com
-export MAIL_PASS=Th@ng1995
+export MAIL_USER=t6cantho1@gmail.com
+export MAIL_PASS=thangcha
 export MAIL_HOST=smtp.gmail.com
 export MAIL_PORT=587
 

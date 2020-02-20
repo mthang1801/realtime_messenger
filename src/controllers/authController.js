@@ -24,6 +24,7 @@ let postRegister = async(req,res) => {
       arrErrors.push(error.msg);
     })
     req.flash("errors" , arrErrors);
+    console.log("postRegister" );
     console.log(arrErrors);
     return res.redirect("/login-register");
   }
@@ -78,28 +79,22 @@ let logoutAccount = (req,res) => {
 };
 
 //request reset password through verifying with email
-let forgotPassword = async (req, res) => {  
-  let email = req.body.email;
-  let confirm_email = req.body.confirm_email;
-  if(email !== confirm_email){
-    return res.status(500).send(authInvalidation.confirm_email_wrong);
-  }
+let forgotPassword = async (req, res) => {    
   try {
+    let email = req.body.email; 
     let status = await auth.forgotPassword(email);
     return res.status(200).send({email : email , success : status});
   } catch (error) {
+    console.log("Forgot password");
     console.log(error);
     return res.status(500).send(error);
   }
 };
 
 let verifyForgotPassword = async (req, res) => {
-  let email = req.body.email;
-  let verifyNumber = req.body.verifyNumber; 
-  if(email == "" || verifyNumber == ""){
-    return res.status(500).send(transErrors.empty_request);
-  }
   try {
+    let email = req.query.email;
+    let verifyNumber = req.query.verifyNumber;
     let status = await auth.verifyForgotPassword(email, verifyNumber);  
     return res.status(200).send({success : !!status});
   } catch (error) {
@@ -108,12 +103,9 @@ let verifyForgotPassword = async (req, res) => {
 };
 
 let updateNewPassword = async (req, res) => {
-  let email = req.body.email;
-  let password = req.body.password;  
-  if(email == "" || password == ""){
-    return res.status(500).send(transErrors.empty_request);
-  }
   try {
+    let email = req.body.email;
+    let password = req.body.password;  
     let status = await auth.updateNewPassword(email, password);   
     return res.status(200).send(status);
   } catch (error) {

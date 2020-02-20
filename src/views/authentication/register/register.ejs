@@ -1,5 +1,5 @@
 <div class="form__box">
-  <form method="POST" action="/register">
+  <form method="POST" action="/register" html="{:multipart=>true}" data-remote="true" accept-charset="utf-8">
     <legend class="form__legend"><span>Đăng ký tài khoản</span></legend>      
     <%- include("../alert/alert")  %>
     <div class="form-group">

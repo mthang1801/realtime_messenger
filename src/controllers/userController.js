@@ -3,6 +3,7 @@ import {app} from "../config/app";
 import {transErrors, transSuccess} from "../../lang/vi";
 import {user} from "../services";
 import {validationResult} from "express-validator/check";
+import { compareSync } from "bcrypt";
 //config storage to help control storing file to disk
 let storageAvatar = multer.diskStorage({
   destination : (req, file, cb) => {
@@ -35,8 +36,7 @@ let updateAvatar = (req, res) => {
       let userUpdateItem = {
         avatar : req.file.filename,
         updatedAt : Date.now()
-      }
-      console.log(userUpdateItem);
+      }    
       let statusUpdate = await user.updateAvatar(userId, userUpdateItem);
       return res.status(200).send({success : !!statusUpdate, data : statusUpdate});
     }catch(error){
@@ -53,6 +53,8 @@ let updateInfo = async (req, res) => {
       errorsArr.push(error.msg);
     })
     if(errorsArr.length){
+      console.log("Error update info");
+      console.log(errorsArr);
       return res.status(500).send(errorsArr);
     }
   }
@@ -65,15 +67,36 @@ let updateInfo = async (req, res) => {
     });
     userUpdateItem.updatedAt = Date.now();
     let updateStatus = await user.updateInfo(userId, userUpdateItem);
-    console.log(updateStatus);
     return res.status(200).send({data: updateStatus, success : !!updateStatus});
   } catch (error) {
+    console.log("updateInfo");
+    console.log(error);
     return status(500).send(error);
   }
+};
 
+let updatePassword = async (req,res) => {
+  let errorsArr = [];
+  if(!validationResult(req).isEmpty()){
+    let errors = Object.values(validationResult(req).mapped());
+    errors.forEach( error => {
+      errorsArr.push(error.msg);
+    })    
+    return res.status(500).send({dataErrors : errorsArr});
+  }
+  try {
+    let userId = req.user._id ;
+    let currentPassword = req.body.currentPassword;
+    let newPassword = req.body.newPassword;
+    let statusUpdatePassword = await user.updatePassword(userId, currentPassword, newPassword);
+    return res.status(200).send({success:!!statusUpdatePassword});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }
 
 module.exports = {
   updateAvatar : updateAvatar,
-  updateInfo : updateInfo
+  updateInfo : updateInfo,
+  updatePassword : updatePassword
 }

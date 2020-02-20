@@ -354,6 +354,17 @@ a {
 .password-setting {
   margin: 1.5rem 0; }
   @media (max-width: 479px) {
+    .password-setting__alert {
+      width: 100%; } }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .password-setting__alert {
+      width: 80%;
+      margin: auto; } }
+  @media (min-width: 1024px) {
+    .password-setting__alert {
+      width: 50%;
+      margin: 0 10%; } }
+  @media (max-width: 479px) {
     .password-setting__form-label {
       text-align: left; } }
   @media (min-width: 768px) and (max-width: 1023px) {

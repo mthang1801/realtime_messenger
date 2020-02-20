@@ -35,6 +35,9 @@ userSchema.statics = {
   createNew(item){
     return this.create(item);
   },
+  removeUserById(id){
+    return this.remove({"_id" : id}).exec();
+  },
   findByEmail(email){
     return this.findOne({"local.email" : email}).exec();
   },
@@ -46,6 +49,9 @@ userSchema.statics = {
   },
   findUserById(id){
     return this.findById(id,{"local.password" : 0}).exec();
+  },
+  findUserByIdHasPassword(id){
+    return this.findById(id).exec();
   },
   findUserByFacebookUID(uid){
     return this.findOne({"facebook.uid" : uid}).exec();
@@ -78,6 +84,16 @@ userSchema.statics = {
         "fields" : {"username" : 1, "gender" : 1, "address" : 1, "phone" : 1},
         "new": true
       }).exec();
+  },
+  findUserByIdAndUpdateNewPassword(userId, hashPassword){
+    return this.findByIdAndUpdate(
+      userId, 
+      {"local.password": hashPassword}, 
+      {
+        "fields" : {"local.password": 0},
+        "new" : true
+      }
+      ).exec();
   }
 };
 

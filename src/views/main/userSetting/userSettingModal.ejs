@@ -105,41 +105,34 @@
           </div>
           <div class="tab-pane fade" id="password-setting-profile" role="tabpanel" aria-labelledby="nav-password-profile">
             <div class="password-setting">
-              <div class="password-setting__alert">
-                <div class="row">
-                  <div class="col-10 col-md-12 col-lg-8">
-                    <div class="alert alert-success" role="alert">
-                      <strong>Cập nhật thành công</strong>
-                    </div>
-                    <div class="alert alert-danger" role="alert">
-                      <strong>Cập nhật thất bại</strong>
-                    </div>
-                  </div>
-                </div>
+              <div class="password-setting__alert">                                 
+                  <div class="alert" style="display:none" id="alert-update-password-status"" role="alert">
+                    
+                  </div>                                               
               </div>
               <form class="password-setting__form">
                 <div class="form-group row ">
-                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu cũ: </label>
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu cũ: <span class="text-danger">(*)</span></label>
                   <div class="col-10 col-md-8 col-lg-6">
-                    <input type="password" class="form-control" id="old-password-profile" placeholder="Nhập mật khẩu cũ">
+                    <input type="password" class="form-control" id="input-current-password-profile" placeholder="Nhập mật khẩu cũ" required>
                   </div>
                 </div>
                 <div class="form-group row ">
-                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu mới: </label>
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Mật khẩu mới: <span class="text-danger">(*)</span> </label>
                   <div class="col-10 col-md-8 col-lg-6">
-                    <input type="password" class="form-control" id="new-password-profile" placeholder="Nhập mật khẩu mới">
+                    <input type="password" class="form-control" id="input-new-password-profile" placeholder="Nhập mật khẩu mới" required>
                   </div>
                 </div>
                 <div class="form-group row ">
-                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Nhập lại MK mới: </label>
+                  <label class="col-10 col-md-4 col-lg-2 col-form-label password-setting__form-label" for="old-password-profile">Nhập lại MK mới:  <span class="text-danger">(*)</span></label>
                   <div class="col-10 col-md-8 col-lg-6">
-                    <input type="password" class="form-control" id="confirm-new-password-profile" placeholder="Xác nhận mật khẩu mới">
+                    <input type="password" class="form-control" id="input-confirm-new-password-profile" placeholder="Xác nhận mật khẩu mới" required>
                   </div>
                 </div>
                 <div class="form-group mt-4 row">
                   <div class="col-10 col-md-12 col-lg-8 text-center">
-                    <button type="button" class="btn btn-success" id="btn-update-password">Thay đổi</button>
-                    <button type="reset" class="btn btn-danger" id="btn-cancel-update-password">Hủy bỏ</button>
+                    <button type="button" class="btn btn-success" id="btn-update-user-password">Thay đổi</button>
+                    <button type="button" class="btn btn-danger" id="btn-cancel-update-user-password">Hủy bỏ</button>
                   </div>											
                 </div>
               </form>

@@ -8,7 +8,7 @@ let register = [
   .custom((value,{req}) => {
     return Object.is(value,req.body.password);
   })
-]
+];
 
 module.exports = {
   register : register

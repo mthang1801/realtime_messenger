@@ -28,8 +28,7 @@ let initPassportFacebook = () => {
           return done(null, null, req.flash("activeErrors", transErrors.email_isBlocked));
         }
         return done(null, user, req.flash("activeSuccess", transSuccess.login_success(user.username)));
-      }
-      console.log(profile.photos);
+      }    
       let newUserItem = {
         username : profile.displayName, 
         gender : profile.gender,                                

@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import uuidv4 from "uuid/v4";
 import {transErrors, transSuccess, transEmail} from "../../lang/vi";
 import sendEmail from "../config/mailer";
-const saltRounds = 10;
+const saltRounds =  +process.env.SALT_ROUNDS;
 
 
 let register = (email, gender, password, protocol, host) => {
@@ -35,15 +35,15 @@ let register = (email, gender, password, protocol, host) => {
           verifyToken : uuidv4()
         }       
       }               
-      
+      let user = await userModel.createNew(newUserItem);
       //send email      
       let linkVerify = `${protocol}://${host}/auth/user/verify/${newUserItem.local.verifyToken}`;     
       sendEmail(email, transEmail.mail_register_subject, transEmail.mail_register_template(email, linkVerify))
-        .then( async success => {
-          await userModel.createNew(newUserItem);
+        .then( async success => {          
           resolve(transSuccess.email_register(email))
         })
-        .catch( err => {
+        .catch( async err => {
+          await userModel.removeUserById(user._id);          
           reject(transErrors.send_email_failed);
         })
         
@@ -83,7 +83,7 @@ let forgotPassword = (email) => {
       //send email to user to get verify number
       sendEmail(email, transEmail.mail_forgot_subject, transEmail.mail_forgot_template(user.username, user.local.verifyNumber))
         .then(success => resolve(transSuccess.mail_forgot_success))
-        .catch(error => reject(transErrors.general_fail));
+        .catch(error => reject(error));
     } catch (error) {
       reject(error);
     }
@@ -101,7 +101,7 @@ let verifyForgotPassword = (email, verifyNumber) => {
       let user = await userModel.findUserByEmailAndVerifyNumber(email, verifyNumber); 
       if(!user){
         return reject(transErrors.verifyNumber_wrong);
-      }
+      }    
       resolve(true);
     } catch (error) {
       return reject(error);

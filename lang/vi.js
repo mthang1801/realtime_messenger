@@ -25,7 +25,12 @@ export const transErrors = {
   invalid_update_username : "username không hợp lệ, username không chứa ký tự đặc biệt",
   invalid_update_gender : "Không được phép thay đổi giá trị của trường này",
   invalid_update_address : "Địa chỉ quá dài!!!",
-  invalid_update_phone : "Số điện thoại không hợp lệ"
+  invalid_update_phone : "Số điện thoại không hợp lệ",
+  invalid_password : "Mật khẩu không hợp lệ, mật khẩu hợp lệ phải có ít nhất 8 ký tự, bao gồm chữ thường, chữ in hoa, số, và ký tự đặc biệt",
+  invalid_newpassword : "Mật khẩu mới không hợp lệ, mật khẩu hợp lệ phải có ít nhất 8 ký tự, bao gồm chữ thường, chữ in hoa, số, và ký tự đặc biệt",
+  invalid_confirm_newpassword : "Mật khẩu xác nhận không trùng với mật khẩu mới",
+  invalid_newpassword_and_currentpassword_are_the_same : "Mật khẩu mới không được giống với mật khẩu cũ",
+  wrong_password : "Mật khẩu hiện tại không đúng"
 }
 
 export const transSuccess = {

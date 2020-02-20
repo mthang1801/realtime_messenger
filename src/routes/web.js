@@ -52,9 +52,10 @@ let initRoutes = (app) => {
   router.put("/user/update-avatar", auth.checkLoggedIn , user.updateAvatar);
   router.put("/user/update-info", auth.checkLoggedIn, userValid.userUpdateInfo, user.updateInfo);
   router.put("/user/update-password", auth.checkLoggedIn, userValid.userUpdatePassword, user.updatePassword);
-
   //contact section
-  router.get("/users/find-users", auth.checkLoggedIn, contact.findUsersContact); 
+  router.get("/contact/find-users", auth.checkLoggedIn, contact.findUsersContact); 
+  router.post("/contact/add-contact" , auth.checkLoggedIn, contact.addContact);
+  router.delete("/contact/remove-add-contact", auth.checkLoggedIn, contact.removeAddContact);
   return app.use(router);
 }
 

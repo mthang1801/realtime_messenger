@@ -12,6 +12,15 @@ let contactSchema = new mongoose.Schema({
 contactSchema.statics = {
   createNew(item){
     return this.create(item);
+  },
+  findAllContactByUserId(currentUserId){
+    return this.find(
+      {
+        $or : [
+          {"userId": currentUserId},
+          {"contactId": currentUserId}
+        ]
+      }).exec()
   }
 }
 

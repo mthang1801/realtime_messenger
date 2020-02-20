@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, auth, user} from "../controllers/index";
+import {home, auth, user, contact} from "../controllers/index";
 import {authValid, userValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
@@ -51,7 +51,10 @@ let initRoutes = (app) => {
   //update user avatar, information and password
   router.put("/user/update-avatar", auth.checkLoggedIn , user.updateAvatar);
   router.put("/user/update-info", auth.checkLoggedIn, userValid.userUpdateInfo, user.updateInfo);
-  router.put("/user/update-password", auth.checkLoggedIn, userValid.userUpdatePassword, user.updatePassword)
+  router.put("/user/update-password", auth.checkLoggedIn, userValid.userUpdatePassword, user.updatePassword);
+
+  //contact section
+  router.get("/users/find-users", auth.checkLoggedIn, contact.findUsersContact); 
   return app.use(router);
 }
 

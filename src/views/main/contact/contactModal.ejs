@@ -10,9 +10,15 @@
       <div class="modal-body">
         <nav class="nav nav-tabs" role="tablist">
           <a href="#search-users" class="nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="search-users" aria-selected="true">Tìm người dùng</a>
-          <a href="#contacts" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">Danh sách liên lạc</a>
-          <a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận</a>
-          <a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn</a>
+          <a href="#contacts" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">Danh sách liên lạc            
+            <span class="text-dark-red" id="count-contact-users"><em>(5)</em></span>              
+          </a>
+          <a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận            
+             <span class="text-dark-red" id="count-request-contact-sent"><em>(12)</em></span>                        
+          </a>
+          <a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn
+            <span class="text-dark-red" id="count-request-contact-received" ><em>(20)</em></span>
+          </a>
         </nav>
         <div class="tab-content">
           <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-search-user" id="search-users">

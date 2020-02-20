@@ -98,6 +98,9 @@ a {
 .animate-fade {
   animation: animate-fade .5s ease-out; }
 
+.text-dark-red {
+  color: #d62e18; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }

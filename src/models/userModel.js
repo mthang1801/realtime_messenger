@@ -110,7 +110,7 @@ userSchema.statics = {
         }
       ]
     },{ "username" : 1, "local.email" : 1, "facebook.email": 1, "google.email" : 1, "address" : 1 , "phone" : 1, "avatar" : 1, "gender" : 1}).exec();
-  }
+  }  
 };
 
 userSchema.methods = {

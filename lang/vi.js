@@ -30,7 +30,8 @@ export const transErrors = {
   invalid_newpassword : "Mật khẩu mới không hợp lệ, mật khẩu hợp lệ phải có ít nhất 8 ký tự, bao gồm chữ thường, chữ in hoa, số, và ký tự đặc biệt",
   invalid_confirm_newpassword : "Mật khẩu xác nhận không trùng với mật khẩu mới",
   invalid_newpassword_and_currentpassword_are_the_same : "Mật khẩu mới không được giống với mật khẩu cũ",
-  wrong_password : "Mật khẩu hiện tại không đúng"
+  wrong_password : "Mật khẩu hiện tại không đúng",
+  existed_contact : "Người này đã được lưu vào danh sách kết bạn"
 }
 
 export const transSuccess = {

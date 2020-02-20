@@ -1,0 +1,23 @@
+<% listUsers.forEach( user => { %>
+<li class="search-users-box__list-users-item" data-uid="<%= user._id %>">
+  <div class="card-user">
+    <div class="card-user__body">
+      <div class="card-user__body-avatar">
+        <img src="images/users/<%= user.avatar %>" class="card-user__body-avatar--image">
+      </div>
+      <div class="card-user__body-text">
+        <div class="card-user__body-text--username">
+          <%- user.username %>
+        </div>
+        <div class="card-user__body-text-address">
+          <%- user.address %>
+        </div>
+      </div>
+    </div>
+    <div class="card-user__footer">
+      <button class="btn btn-success btn-sm">Mời kết bạn</button>
+      <button class="btn btn-danger btn-sm d-none">Hủy yêu cầu</button>
+    </div>
+  </div>
+</li>      
+<%})%>

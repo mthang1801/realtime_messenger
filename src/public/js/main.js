@@ -179,4 +179,5 @@ $(document).ready(function () {
 
   //flash message at master screen
   flashMasterNotify();
+
 });

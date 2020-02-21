@@ -13,6 +13,24 @@ contactSchema.statics = {
   createNew(item){
     return this.create(item);
   },
+  findContact(userId, contactId){
+    return this.findOne({
+      $or : [
+        {
+          $and : [
+            {"userId": userId},
+            {"contactId": contactId}
+          ]
+        },
+        {
+          $and : [
+            {"userId": contactId},
+            {"contactId": userId}
+          ]
+        }
+      ]
+    }).exec();
+  },
   findAllContactWithStatusTrueByUserId(currentUserId){
     return this.find(
       {
@@ -71,6 +89,21 @@ contactSchema.statics = {
   },
   checkAndRemoveContact(userId, contactId) {
     return this.findOneAndDelete({"userId" : userId, "contactId" : contactId}).exec();
+  },
+  /**
+   * 
+   * @param {string} userId 
+   * get contact list with userId as sending request add contact
+   */
+  getContactByUserId(userId){
+    return this.find({"userId" : userId}).exec();
+  },
+  /**
+   * 
+   * @param {string: as contactId in database} userId 
+   */
+  getContactByContactId(userId){
+    return this.find({"contactId" : userId}).exec();
   }
 }
 

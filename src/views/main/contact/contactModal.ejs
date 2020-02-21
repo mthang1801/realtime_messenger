@@ -14,10 +14,10 @@
             <span class="text-dark-red" id="count-contact-users"><em>(5)</em></span>              
           </a>
           <a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận            
-             <span class="text-dark-red" id="count-request-contact-sent"><em>(12)</em></span>                        
+             <span class="text-dark-red" id="count-request-contact-sent"><em><%= usersContactSent.length <= 0 ? "" : (usersContactSent.length) %></em></span>                        
           </a>
           <a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn
-            <span class="text-dark-red" id="count-request-contact-received" ><em>(20)</em></span>
+            <span class="text-dark-red" id="count-request-contact-received" ><em><%= usersContactReceived.length <= 0 ? "" : (usersContactReceived.length) %></em></span>
           </a>
         </nav>
         <div class="tab-content">
@@ -112,53 +112,62 @@
           <div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-request-contact-sent" id="link-request-contact-sent">
             <div class="request-contact-sent-box">
               <ul class="request-contact-sent-list">
-                <!-- <li class="request-contact-sent-list__item" data-uid="<%= user._id %>">
-                  <div class="card-user">
-                    <div class="card-user__body">
-                      <div class="card-user__body-avatar">
-                        <img src="images/unknown_man.jpeg" class="card-user__body-avatar--image">
-                      </div>
-                      <div class="card-user__body-text">
-                        <div class="card-user__body-text--username">
-                          Nguyễn Hoàng Giang
+                <% if(usersContactSent.length) {%>
+                  <% usersContactSent.forEach( user => { %>
+                    <li class="request-contact-sent-list__item" data-uid="<%= user._id %>">
+                      <div class="card-user">
+                        <div class="card-user__body">
+                          <div class="card-user__body-avatar">
+                            <img src="images/users/<%= user.avatar%>" class="card-user__body-avatar--image">
+                          </div>
+                          <div class="card-user__body-text">
+                            <div class="card-user__body-text--username">
+                              <%= user.username %>
+                            </div>
+                            <div class="card-user__body-text-address">
+                              <%= user.address ? user.address : "" %>
+                            </div>
+                          </div>
                         </div>
-                        <div class="card-user__body-text-address">
-                          Cần Thơ
+                        <div class="card-user__footer">
+                          <button class="btn btn-danger btn-sm btn-cancel-request-contact-sent" data-uid="<%= user._id %>">Hủy yêu cầu</button>												
                         </div>
                       </div>
-                    </div>
-                    <div class="card-user__footer">
-                      <button class="btn btn-danger btn-sm">Hủy yêu cầu</button>												
-                    </div>
-                  </div>
-                </li> -->
+                    </li>
+                  <%})%>
+                <%}%>
+              
               </ul>
             </div>
           </div>
           <div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-request-contact-received" id="link-request-contact-received">
             <div class="request-contact-received-box">
               <ul class="request-contact-received-list">
-                <!-- <li class="request-contact-received-list__item">                
-                    <div class="card-user">
-                      <div class="card-user__body">
-                        <div class="card-user__body-avatar">
-                          <img src="images/unknown_man.jpeg" class="card-user__body-avatar--image">
-                        </div>
-                        <div class="card-user__body-text">
-                          <div class="card-user__body-text--username">
-                            Nguyễn Duy Tâm
+                <%if(usersContactReceived.length){ %>
+                  <% usersContactReceived.forEach( user => { %>
+                    <li class="request-contact-received-list__item" data-uid="<%= user._id %>">                
+                      <div class="card-user">
+                        <div class="card-user__body">
+                          <div class="card-user__body-avatar">
+                            <img src="images/users/<%= user.avatar %>" class="card-user__body-avatar--image">
                           </div>
-                          <div class="card-user__body-text-address">
-                            Long An
+                          <div class="card-user__body-text">
+                            <div class="card-user__body-text--username">
+                              <%= user.username %>
+                            </div>
+                            <div class="card-user__body-text-address">
+                              <%= user.address ? user.address : "" %>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="card-user__footer">
-                        <button class="btn btn-success btn-sm btn-accept-request-contact">Chấp nhận</button>
-                        <button class="btn btn-danger btn-sm btn-reject-request-contact">Xóa yêu cầu</button>												
-                      </div>
-                    </div>                  
-                </li> -->
+                        <div class="card-user__footer">
+                          <button class="btn btn-success btn-sm btn-accept-request-contact" data-uid="<%= user._id %>">Chấp nhận</button>
+                          <button class="btn btn-danger btn-sm btn-reject-request-contact" data-uid="<%= user._id %>">Từ chối</button>												
+                        </div>
+                      </div>                  
+                    </li>
+                  <%})%>
+                <%}%>             
               </ul>
             </div>
           </div>

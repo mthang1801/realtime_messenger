@@ -32,10 +32,22 @@ let removeAddContact = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
+};
+
+let rejectRequestContact = async (req, res) => {
+  try {
+    let userId = req.body.userId ;
+    let contactId = req.user._id ; //myself  
+    let resultReject = await contact.rejectRequestContact(userId, contactId);
+    return res.status(200).send({success : !!resultReject});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }
 
 module.exports = {
   findUsersContact : findUsersContact,
   addContact : addContact,
   removeAddContact : removeAddContact,
+  rejectRequestContact : rejectRequestContact,
 }

@@ -15,7 +15,9 @@ function callSearchUsers(event){
         $("#search-users-box").find("ul.search-users-box__list-users").empty().html(`<h5 class="mt-5 text-danger text-center"><i class="far fa-frown"></i> Không tìm thấy người dùng</h5>`)
       }
       addContact();
-      removeAddContact();
+      cancelRequestAddContact();
+      rejectRequestAddContact();
+      acceptRequestAddContact();
     }).fail(function(err){
       console.log(err);
     })

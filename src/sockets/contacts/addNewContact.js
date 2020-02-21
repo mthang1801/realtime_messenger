@@ -1,4 +1,4 @@
-import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/clientHelper";
+import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper";
 /**
  * 
  * @param  io from socket.io

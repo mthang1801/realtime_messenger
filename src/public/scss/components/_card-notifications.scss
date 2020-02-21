@@ -7,9 +7,17 @@
     display: flex ; 
     justify-content : flex-start;
     align-items: center;
+    margin-bottom: .25rem;
+    margin-left: .1rem;
+    padding: .3rem;
+    border-radius: .3rem;
+    &:hover{
+      cursor: pointer;
+      background-color : $color-dark-mode-gray-35 !important;
+    }
   }
   &__avatar{   
-    margin-right : .5rem;
+    margin : 0 .5rem;
     &-image{
       width : 3rem;
       height: 3rem;      
@@ -17,14 +25,16 @@
     }
   }
   &__text{
+    
     &--primary{
-      &--username{
-        font-weight: 700;
+      font-size : .8em;
+      &--username{        
+        font-weight: 700;       
         color : $color-dark-mode-gray-90;
       }
     }
-    &--sub{
-      font-size : .9rem;
+    &--sub{   
+      font-size : .7em;
       color : $color-dark-mode-gray-50;
     }    
   }

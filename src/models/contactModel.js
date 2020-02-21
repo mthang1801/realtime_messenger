@@ -13,13 +13,36 @@ contactSchema.statics = {
   createNew(item){
     return this.create(item);
   },
-  findAllContactByUserId(currentUserId){
+  findAllContactWithStatusTrueByUserId(currentUserId){
     return this.find(
       {
-        $or : [
-          {"userId": currentUserId},
-          {"contactId": currentUserId}
-        ]
+        $and :[
+          {
+            $or : [
+              {"userId": currentUserId},
+              {"contactId": currentUserId}
+            ]
+          },
+          { 
+            "status" : true 
+          }
+        ]        
+      }).exec()
+  },
+  findAllContactWithStatusFalseByUserId(currentUserId){
+    return this.find(
+      {
+        $and :[
+          {
+            $or : [
+              {"userId": currentUserId},
+              {"contactId": currentUserId}
+            ]
+          },
+          { 
+            "status" : false
+          }
+        ]        
       }).exec()
   },
   /**
@@ -34,7 +57,7 @@ contactSchema.statics = {
         { 
           $and : [
             {"userId" : userId,},
-            {"contactId" : contactId}
+            {"contactId" : contactId}            
           ]
         },
         { 

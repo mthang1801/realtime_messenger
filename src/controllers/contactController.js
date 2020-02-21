@@ -16,8 +16,8 @@ let addContact = async(req, res) => {
   try {
     let contactId = req.body.contactId;
     let userId = req.user._id;
-    let createContactStatus = await contact.addContact(userId, contactId);
-    return res.status(200).send({success: !!createContactStatus});
+    let contactInfor = await contact.addContact(userId, contactId);
+    return res.status(200).send({success: !!contactInfor, data : contactInfor});
   } catch (error) {
     return res.status(500).send(error);
   }
@@ -29,7 +29,6 @@ let removeAddContact = async (req, res) => {
     let userId = req.user._id ;
     let removeAddContactStatus = await contact.removeAddContact(userId, contactId) ;
     return res.status(200).send({success: !!removeAddContactStatus});
-    console.log(contactId);
   } catch (error) {
     return res.status(500).send(error);
   }

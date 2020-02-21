@@ -13,17 +13,20 @@ let sessionStore = new MongoStore({
  * Create a session middleware with the given options
  */
 
-let configSession = (app) => {
+let config = (app) => {
    app.use(session({
-      key : "express.sid",
-      secret : "mySecret",
-      store : sessionStore, 
-      resave : true ,
-      saveUninitialized : false ,
-      cookie : {
-        maxAge : 1000 * 3600 * 24
-      }
+    key : process.env.SESSION_KEY,
+    secret : process.env.SESSION_SECRET,
+    store : sessionStore, 
+    resave : true ,
+    saveUninitialized : false ,
+    cookie : {
+      maxAge : 1000 * 3600 * 24
+    }
    }))
 }
 
-module.exports = configSession;
+module.exports = {
+  config : config,
+  sessionStore : sessionStore
+};

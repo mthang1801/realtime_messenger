@@ -16,7 +16,7 @@
     @media (max-width : 479px){
       .auth-form{
         width : 80%;
-        height: 35rem;
+        height: 75%;
         top : 15%;
         left :10%;
       }
@@ -24,7 +24,7 @@
     @media(min-width : 480px) and (max-width: 767px){
       .auth-form{
         width : 70%;
-        height: 35rem;
+        height: 75%;
         top : 15%;
         left :15%;
       }
@@ -40,7 +40,7 @@
     @media (min-width :1024px){
       .auth-form{
         width : 32.5%;
-        height: 35rem;
+        height: 70%;
         top : 4rem;
         right : 12rem;
       }

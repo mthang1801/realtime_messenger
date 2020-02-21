@@ -14,9 +14,9 @@
         </div>
       </div>
     </div>
-    <div class="card-user__footer">
-      <button class="btn btn-success btn-sm btn-request-add-contact" data-uid="<%= user._id %>">Mời kết bạn</button>
-      <button class="btn btn-danger btn-sm btn-remove-request-add-contact" style="display:none" data-uid="<%= user._id %>">Hủy yêu cầu</button>
+    <div class="card-user__footer">    
+      <button class="btn btn-success btn-sm btn-request-add-contact" <% if(user.hasContact) {%>style="display:none"<%}else{%>style="display:inline-block"<%}%>  data-uid="<%= user._id %>" >Mời kết bạn</button>   
+      <button class="btn btn-danger btn-sm btn-remove-request-add-contact"  <% if(user.hasContact) {%>style="display:inline-block"<%}else{%>style="display:none"<%}%>  data-uid="<%= user._id %>">Hủy yêu cầu</button>      
     </div>
   </div>
 </li>      

@@ -1,23 +1,35 @@
 import mongoose from "mongoose";
 
 let notificationSchema = new mongoose.Schema({
-  sender: {
-    id : String ,
-    username : String, 
-    avatar : String
-  },
-  receiver : {
-    id : String ,
-    username : String , 
-    avatar : String 
-  },
-  type : String , 
-  content : String , 
+  senderId : String , 
+  receiverId : String ,
+  type : String ,   
   isRead : {type : Boolean, default : false},
   createdAt : {type : Number, default : Date.now},
-  updatedAt : {type : Number, default : null} ,
-  deletedAt : {type : Number, default : null} ,
+  deletedAt : {type : Number, default : null}
 })
 
-module.exports = mongoose.model("notification" , notificationSchema);
+notificationSchema.statics = {
+  createNew(item){
+    return this.create(item);
+  },
+  findNotificationByUserId(userId){
+    return this.find({"receiverId" : userId}).exec();
+  }
+}
+
+let NOTIFICATION_TYPES = {
+  ADD_CONTACT : "add_contact",
+  ACCEPT_CONTACT : "accept_contact"
+};
+
+let NOTIFICATION_CONTENTS = {
+
+}
+
+module.exports = {
+  model : mongoose.model("notification" , notificationSchema),
+  types : NOTIFICATION_TYPES, 
+  contents : NOTIFICATION_CONTENTS
+}
 

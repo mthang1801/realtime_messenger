@@ -1,6 +1,7 @@
 import userModel from "../models/userModel";
 import contactModel from "../models/contactModel";
 import {transErrors} from "../../lang/vi";
+import notificationModel from "../models/notificationModel";
 /**
  * 
  * @param {string} currentUserId 
@@ -61,7 +62,13 @@ let addContact = (userId, contactId) => {
       }
       let newContact = await contactModel.createNew(newContactItem);                      
       let getContactInfo = await userModel.findUserById(contactId);                  
-     
+      //notification 
+      let notificationItem = {
+        senderId : userId , 
+        receiverId : contactId ,
+        type : notificationModel.types.ADD_CONTACT ,        
+      }
+      await notificationModel.createNew(notificationItem);
       resolve({contactCreatedAt : newContact.createdAt, getContactInfo});
     } catch (error) {
       reject(error);

@@ -13,17 +13,30 @@ let findUsersContact = (currentUserId, searchKey) => {
   return new Promise( async (resolve, reject) => {
     try {
       let deprecatedUsersId = [currentUserId.toString()] ;      
-      let contactList = await contactModel.findAllContactByUserId(currentUserId);
-      contactList.forEach( contact => {
+      let listUserId = [];
+      let contactStatusTrueList = await contactModel.findAllContactWithStatusTrueByUserId(currentUserId);
+      contactStatusTrueList.forEach( contact => {
         if(contact.userId == currentUserId){
-          deprecatedUsersId.push(contact.contactId.toString());
+          deprecatedUsersId.push(contact.contactId.toString());         
           return;
         }
         deprecatedUsersId.push(contact.userId.toString());
       })    
-     
+      let contactStatusFalseList = await contactModel.findAllContactWithStatusFalseByUserId(currentUserId);       
       let usersList = await userModel.findUserWithDeprecatedUsersId(deprecatedUsersId, searchKey);
-      resolve(usersList);
+      let newUsersList = [];
+      usersList.forEach( (user, index) => {
+        user = user.toObject();
+        user.hasContact = false; // not contact
+        for(let i  = 0 ; i < contactStatusFalseList.length ; i++){
+          if(contactStatusFalseList[i].contactId == user._id || contactStatusFalseList[i].userId == user._id ){
+            user.hasContact = true; // has contact but false
+            break;
+          }          
+        }  
+        newUsersList.push(user);      
+      })        
+      resolve(newUsersList); 
     } catch (error) {
       reject(error);
     }
@@ -46,8 +59,10 @@ let addContact = (userId, contactId) => {
         userId : userId , 
         contactId : contactId
       }
-      let newContact = await contactModel.createNew(newContactItem);
-      resolve(true);
+      let newContact = await contactModel.createNew(newContactItem);                      
+      let getContactInfo = await userModel.findUserById(contactId);                  
+     
+      resolve({contactCreatedAt : newContact.createdAt, getContactInfo});
     } catch (error) {
       reject(error);
     }
@@ -57,8 +72,7 @@ let addContact = (userId, contactId) => {
 let removeAddContact = (userId, contactId) => {
   return new Promise( async(resolve, reject) => {
     try {
-      let checkAndRemoveContact = await contactModel.checkAndRemoveContact(userId, contactId);
-      console.log(checkAndRemoveContact);
+      let checkAndRemoveContact = await contactModel.checkAndRemoveContact(userId, contactId);      
       resolve(true);
     } catch (error) {
       reject(error);

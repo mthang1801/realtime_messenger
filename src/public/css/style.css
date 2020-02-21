@@ -217,13 +217,16 @@ a {
       background-color: #1a449c; }
   .navigation__nav-notification-count {
     position: absolute;
-    left: 3rem;
+    right: .2rem;
     top: 0rem;
     font-size: .75rem;
     background-color: #E1141E;
     padding: .05rem .1rem;
     border-radius: .2rem;
-    color: #fff; }
+    color: #fff;
+    width: 1.55rem;
+    height: 1.5rem;
+    text-align: center; }
 
 .card-user {
   position: relative;

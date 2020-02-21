@@ -9,7 +9,7 @@ function callSearchUsers(event){
     }
     
     $.get(`/contact/find-users?searchKey=${keyWord}`, function(data){
-      if(data){       
+      if(data){  
         $("#search-users-box").find("ul.search-users-box__list-users").empty().append(data);
       }else{
         $("#search-users-box").find("ul.search-users-box__list-users").empty().html(`<h5 class="mt-5 text-danger text-center"><i class="far fa-frown"></i> Không tìm thấy người dùng</h5>`)

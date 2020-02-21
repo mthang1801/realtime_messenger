@@ -15,3 +15,21 @@ export MAIL_USER=***
 export MAIL_PASS=***
 export MAIL_HOST=***
 export MAIL_PORT=***
+
+
+#config login facebook
+export FB_APP_ID=***
+export FB_APP_SECRET==***
+export FB_CALLBACK_URL==***
+
+#config login google+
+export GG_APP_ID==***
+export GG_APP_SECRET==***
+export GG_CALLBACK_URL==***
+
+#saltRounds
+export SALT_ROUNDS=10
+
+#config session
+export SESSION_KEY==***
+export SESSION_SECRET==***

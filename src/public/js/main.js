@@ -2,6 +2,8 @@
  * created by MVT on 13/02/2020
  */
 
+const socket = io();
+
 let niceScrollLeftSide = () => {
   $(".left-side").niceScroll({
     cursorcolor: "#828282", // change cursor color in hex  

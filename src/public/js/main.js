@@ -126,7 +126,7 @@ let enableEmojiChat = (dataID) => {
 let toggleNotificationBoard = () => {
   $("#button-notification").on("click" , function(){    
     $("#notification-board").fadeToggle("fast");
-    $("#notification-count").fadeOut("fast");
+    $("#notification-bell-count").fadeOut("fast");
     return false;
   })
   $(document).on("click" , () => {

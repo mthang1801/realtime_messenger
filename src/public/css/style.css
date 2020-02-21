@@ -101,6 +101,9 @@ a {
 .text-dark-red {
   color: #d62e18; }
 
+.card-unread {
+  background-color: #DADDE1 !important; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }
@@ -418,18 +421,27 @@ a {
   .card-notifications__item {
     display: flex;
     justify-content: flex-start;
-    align-items: center; }
+    align-items: center;
+    margin-bottom: .25rem;
+    margin-left: .1rem;
+    padding: .3rem;
+    border-radius: .3rem; }
+    .card-notifications__item:hover {
+      cursor: pointer;
+      background-color: #CCCCCC !important; }
   .card-notifications__avatar {
-    margin-right: .5rem; }
+    margin: 0 .5rem; }
     .card-notifications__avatar-image {
       width: 3rem;
       height: 3rem;
       border-radius: 50%; }
-  .card-notifications__text--primary--username {
-    font-weight: 700;
-    color: #282828; }
+  .card-notifications__text--primary {
+    font-size: .8em; }
+    .card-notifications__text--primary--username {
+      font-weight: 700;
+      color: #282828; }
   .card-notifications__text--sub {
-    font-size: .9rem;
+    font-size: .7em;
     color: #828282; }
   .card-notifications__footer {
     text-align: center;

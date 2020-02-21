@@ -1,4 +1,4 @@
-import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/clientHelper";
+import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper";
 
 let removeAddNewContact = (io) => {
   let clients = {};

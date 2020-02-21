@@ -1,6 +1,7 @@
 import userModel from "../models/userModel";
 import contactModel from "../models/contactModel";
 import {transErrors} from "../../lang/vi";
+import notificationModel from "../models/notificationModel";
 /**
  * 
  * @param {string} currentUserId 
@@ -27,12 +28,16 @@ let findUsersContact = (currentUserId, searchKey) => {
       let newUsersList = [];
       usersList.forEach( (user, index) => {
         user = user.toObject();
-        user.hasContact = false; // not contact
+        user.hasContact = 0; // no contact
         for(let i  = 0 ; i < contactStatusFalseList.length ; i++){
-          if(contactStatusFalseList[i].contactId == user._id || contactStatusFalseList[i].userId == user._id ){
-            user.hasContact = true; // has contact but false
+          if(contactStatusFalseList[i].userId == user._id ){
+            user.hasContact = 2; // has contact and currentUser request add contact
             break;
-          }          
+          }
+          if(contactStatusFalseList[i].contactId == user._id){
+            user.hasContact = 1 ; // has contact and currentUser is receiver request add contact
+            break;
+          }
         }  
         newUsersList.push(user);      
       })        
@@ -61,7 +66,13 @@ let addContact = (userId, contactId) => {
       }
       let newContact = await contactModel.createNew(newContactItem);                      
       let getContactInfo = await userModel.findUserById(contactId);                  
-     
+      //notification 
+      let notificationItem = {
+        senderId : userId , 
+        receiverId : contactId ,
+        type : notificationModel.types.ADD_CONTACT ,        
+      }
+      await notificationModel.model.createNew(notificationItem);
       resolve({contactCreatedAt : newContact.createdAt, getContactInfo});
     } catch (error) {
       reject(error);
@@ -78,10 +89,65 @@ let removeAddContact = (userId, contactId) => {
       reject(error);
     }
   })
-}
+};
+/**
+ * 
+ * @param {string} userId 
+ * get list users who have userId request add contact
+ */
+let getRequestContactSent = (userId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let contactList = await contactModel.getContactByUserId(userId);
+      let usersList = contactList.map( async contact => {
+        return await userModel.findUserById(contact.contactId);
+      }) 
+      resolve(await Promise.all(usersList));
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+/**
+ * 
+ * @param {string} userId 
+ * get list users who have userId received add contact 
+ */
+let getRequestContactReceived = (userId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let contactList = await contactModel.getContactByContactId(userId);
+      let contactUsersReceiver = contactList.map(async contact => {
+        return await userModel.findUserById(contact.userId);
+      });
+      resolve(await  Promise.all(contactUsersReceiver));
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+/**
+ * 
+ * @param {string} userId 
+ * @param {string: myselft} contactId 
+ * delete document in contact collection which contains userId and contactId
+ */
+let rejectRequestContact = (userId, contactId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let removeContact = await contactModel.checkAndRemoveContact(userId, contactId);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
 
 module.exports ={
   findUsersContact: findUsersContact,
   addContact : addContact,
-  removeAddContact : removeAddContact
+  removeAddContact : removeAddContact,
+  getRequestContactSent : getRequestContactSent,
+  getRequestContactReceived : getRequestContactReceived,
+  rejectRequestContact : rejectRequestContact,
 }

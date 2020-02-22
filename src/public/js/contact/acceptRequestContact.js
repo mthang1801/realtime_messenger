@@ -52,6 +52,8 @@ function acceptRequestAddContact(){
 
           //create socket 
           socket.emit("accept-request-contact-received", {userId, updatedAt: contact.updatedAt});
+
+          removeCurrentContact();
        }
       },
       error : function (error) {
@@ -95,9 +97,9 @@ socket.on("response-accept-request-contact-received", user => {
   //decrese number notification from contact down 1 because it move to contact list
   decreaseNotificationNumber("contact-count");
   //decrease number contact-request-sent 1 and remove it out of request-contact panel
-  decreaseNotificationNumber("count-request-contact-sent");
+  decreaseCountContactNumber("count-request-contact-sent");
   //incrase number of contacts at contact panel
-  increaseNotificationNumber("count-contact-users")  
+  increaseCountContactNumber("count-contact-users")  
   $("#link-request-contact-sent ul.request-contact-sent-list").find(`li[data-uid = ${user._id}]`).remove();
   //remove item at search contact 
   $("#search-users-box ul.search-users-box__list-users").find(`li[data-uid = ${user._id}]`).remove();
@@ -128,7 +130,7 @@ socket.on("response-accept-request-contact-received", user => {
   $("#contacts ul.contact-list").append(contactHTML);
   //#endregion
    //solve LeftSide and RightSide
-
+   removeCurrentContact();
 })
 
 $(document).ready(function () {

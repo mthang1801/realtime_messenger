@@ -10,14 +10,33 @@
       <div class="modal-body">
         <nav class="nav nav-tabs" role="tablist">
           <a href="#search-users" class="nav-item nav-link active" data-toggle="tab" role="tab" aria-controls="search-users" aria-selected="true">Tìm người dùng</a>
-          <a href="#contacts" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">Danh sách liên lạc            
-            <span class="text-dark-red" id="count-contact-users"><em></em></span>              
+          <a href="#contacts" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="contacts" aria-selected="false">Danh sách liên lạc                     
+            <span class="text-dark-red" id="count-contact-users">
+              <span class="text-dark-red" id="count-contact-users">
+                <% if(usersContactList.length <= 0) {%>
+                 <span></span>
+               <%}else{%>
+                 <em><strong>(<%= usersContactList.length %>)</strong></em> 
+               <%}%>
+             </span>      
           </a>
           <a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận            
-             <span class="text-dark-red" id="count-request-contact-sent"><em><%- usersContactSent.length <= 0 ? "" : (usersContactSent.length) %></em></span>                        
+             <span class="text-dark-red" id="count-request-contact-sent">
+               <% if(usersContactSent.length <= 0) {%>
+                <span></span>
+              <%}else{%>
+                <em><strong>(<%= usersContactSent.length %>)</strong></em> 
+              <%}%>
+            </span>                        
           </a>
           <a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn
-            <span class="text-dark-red" id="count-request-contact-received" ><em><%- usersContactReceived.length <= 0 ? "" : ( usersContactReceived.length ) %></em></span>
+            <span class="text-dark-red" id="count-request-contact-received" >
+              <% if(usersContactReceived.length <= 0) {%>
+                <span></span>
+              <%}else{%>
+                <em><strong>(<%= usersContactReceived.length %>)</strong></em> 
+              <%}%>
+            </span>
           </a>
         </nav>
         <div class="tab-content">
@@ -42,28 +61,33 @@
           </div>
           <div class="tab-pane fade" role="tabpanel" aria-labelledby="nav-contact" id="contacts">
             <div class="contact-box">
-              <ul class="contact-list">               
-                <!--<li class="contact-list__item" data-uid="${user._id}">
-                  <div class="card-user">
-                    <div class="card-user__body">
-                      <div class="card-user__body-avatar">
-                        <img src="images/users/${user.avatar}" class="card-user__body-avatar--image">
-                      </div>
-                      <div class="card-user__body-text">
-                        <div class="card-user__body-text--username">
-                          ${user.username}
+              <ul class="contact-list"> 
+                <% if(usersContactList.length) { %>
+                  <% usersContactList.forEach( user => { %>
+                    <li class="contact-list__item" data-uid="<%= user._id %>">
+                      <div class="card-user">
+                        <div class="card-user__body">
+                          <div class="card-user__body-avatar">
+                            <img src="images/users/<%= user.avatar %>" class="card-user__body-avatar--image">
+                          </div>
+                          <div class="card-user__body-text">
+                            <div class="card-user__body-text--username">
+                              <%- user.username %>
+                            </div>
+                            <div class="card-user__body-text-address">
+                              <%- user.address ? user.address : "" %>
+                            </div>
+                          </div>
                         </div>
-                        <div class="card-user__body-text-address">
-                          ${user.address ? user.address : ""}
+                        <div class="card-user__footer">
+                          <button class="btn btn-success btn-sm btn-chat" data-uid="<%= user._id %>">Trò Chuyện</button>
+                          <button class="btn btn-danger btn-sm btn-remove-contact" data-uid="<%= user._id %>">Xóa Quan hệ bạn bè</button>
                         </div>
                       </div>
-                    </div>
-                    <div class="card-user__footer">
-                      <button class="btn btn-success btn-sm btn-chat" data-uid="${user._id}">Trò Chuyện</button>
-                      <button class="btn btn-danger btn-sm btn-remove-contact" data-uid="${user._id}">Xóa Quan hệ bạn bè</button>
-                    </div>
-                  </div>
-                </li> -->
+                    </li>
+                  <%})%>
+                <%}%>
+                
               </ul>
             </div>
           </div>

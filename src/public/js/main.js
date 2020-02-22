@@ -135,7 +135,14 @@ let toggleNotificationBoard = () => {
 };
 
 let initialConfigure = () => {
-  $("#notification-board").hide();  
+  $("#notification-board").hide(); 
+  $("#navbar-right").find("li:first-child a").addClass("active");
+  $(".navigation__nav-item").on("click" , function(){
+    $(".navigation__nav-link").each( (index,elem) => {
+      $(elem).removeClass("active");
+    });
+    $(this).find("a.navigation__nav-link").addClass("active");
+  })
 };
 
 $("#select-type-chat").on("change" , function(){

@@ -15,8 +15,7 @@ function addContact(){
           $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${contactId}]`).show();          
           
           //show count-contact-request at nav
-          increaseCountContactNumber("count-request-contact-sent");
-          increaseNotificationNumber("contact-count");
+          increaseCountContactNumber("count-request-contact-sent");          
           //use socket to create realtime
           socket.emit("add-new-contact",{contactId: contactId, contactCreatedAt : contactCreatedAt});       
           //create card request-contact-sent html
@@ -48,7 +47,8 @@ function addContact(){
           //embed request-contact-sent-box at nav Contact
           $("#link-request-contact-sent").find("ul.request-contact-sent-list").append(cardRequestContactSentHTML);
           //after add contact, if we would like to cancel request , we embed cancel request function
-          cancelRequestAddContact();                     
+          cancelRequestAddContact();                    
+          removeCurrentContact(); 
         }
       },
       error : function(error){
@@ -120,10 +120,11 @@ socket.on("response-add-new-contact", function(user){
   ` ;
   //#endregion
   //embed card notification into box containing this one
-  $("#notification-dashboard-body").find("ul.card-notifications").append(cardNotificationHTML);
+  $("#notification-dashboard-body").find("ul.card-notifications").prepend(cardNotificationHTML);
   alertify.notify(`<b>${user.username}</b> đã gửi cho bạn một lời mời kết bạn`, "success", 5);
  
   rejectRequestAddContact();
   acceptRequestAddContact();
+  
 })
 

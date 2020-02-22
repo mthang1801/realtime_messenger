@@ -13,6 +13,7 @@ function cancelRequestAddContact(){
           $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${contactId}]`).show("fast");
           
           decreaseCountContactNumber("count-request-contact-sent");
+          decreaseNotificationNumber("contact-count");
           socket.emit("remove-add-new-contact", {contactId});
           //remove this html element in request-contact-sent-box at nav Contact
           $("#link-request-contact-sent ul.request-contact-sent-list").find(`li.request-contact-sent-list__item[data-uid = ${contactId}]`).remove();        

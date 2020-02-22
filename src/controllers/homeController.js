@@ -5,13 +5,16 @@ let getHome =async (req, res) => {
   let countUnreadNotifications = await notification.countUnreadNotifications(req.user._id);
   let getRequestContactSender = await contact.getRequestContactSent(req.user._id);
   let getRequestContactReceiver = await contact.getRequestContactReceived(req.user._id);
+  let getContactList = await contact.getContactList(req.user._id);
+
   return res.render("main/home/home",{
     activeSuccess : req.flash("activeSuccess"),
     user : req.user,  
     notifications : getNotifications,
     usersContactSent : getRequestContactSender ,
-    countUnreadNotifications : countUnreadNotifications,
+    unreadNotifications : countUnreadNotifications,
     usersContactReceived : getRequestContactReceiver,
+    usersContactList : getContactList
   });
 };
 

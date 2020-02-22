@@ -32,7 +32,9 @@ export const transErrors = {
   invalid_newpassword_and_currentpassword_are_the_same : "Mật khẩu mới không được giống với mật khẩu cũ",
   wrong_password : "Mật khẩu hiện tại không đúng",
   existed_contact : "Người này đã được lưu vào danh sách kết bạn",
-  unexisted_contact : "Người dùng liên lạc không tồn tại"
+  unexisted_contact : "Người dùng liên lạc không tồn tại",
+  empty_contact : "Danh sách liên lạc rỗng",
+  deleted_contact : "Liên hệ đã xóa trước đó"
 }
 
 export const transSuccess = {

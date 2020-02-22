@@ -173,6 +173,42 @@ let acceptRequestContact = (userId, contactId) => {
       reject(error);
     }
   })
+};
+/**
+ * 
+ * @param {string: either userId or contactId} userId 
+ * get contactList with userId is either userId or contactId and condition is status must be true
+ */
+let getContactList = userId => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contactList = await contactModel.getContactListByUserId(userId);   
+      let userContactPromise = contactList.map( async contact => {
+        if(contact._id == userId){
+          return await userModel.findUserById(contact.contactId);
+        }
+        return await userModel.findUserById(contact.userId);
+      })
+
+      resolve(await Promise.all(userContactPromise));
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+
+let removeContact = (userId, contactId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let removeContact = await contactModel.removeContact(userId, contactId);
+      if(removeContact.n == 0){
+        return reject(transErrors.deleted_contact);
+      }      
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 
 module.exports ={
@@ -183,4 +219,6 @@ module.exports ={
   getRequestContactReceived : getRequestContactReceived,
   rejectRequestContact : rejectRequestContact,
   acceptRequestContact : acceptRequestContact,
+  getContactList : getContactList,
+  removeContact : removeContact
 }

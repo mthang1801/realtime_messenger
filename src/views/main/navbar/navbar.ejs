@@ -16,15 +16,15 @@
           </div>				
       </div>
       <div class="col-12 col-md-6">
-        <ul class="navbar-nav mt-lg-0  navigation__nav justify-content-end">
+        <ul class="navbar-nav mt-lg-0  navigation__nav justify-content-end" id="navbar-right">
           <li class="nav-item navigation__nav-item">
-            <a class="nav-link  navigation__nav-link active" href="#"><i class="fas fa-home"></i></a>
+            <a class="nav-link  navigation__nav-link " href="#"><i class="fas fa-home"></i></a>
           </li>
           <li class="nav-item navigation__nav-item">
             <a class="nav-link  navigation__nav-link" data-toggle="modal" href="#modalContact"><i class="fas fa-user-plus"></i></a>
             <% if(usersContactReceived.length) { %>
             <span class="navigation__nav-notification-count" id="contact-count">
-              <%= usersContactReceived.length %>
+              <em><strong><%= usersContactReceived.length %></strong></em>
             </span>
             <%}else{%>
               <span class="navigation__nav-notification-count d-none" id="contact-count"> </span>
@@ -32,7 +32,13 @@
           </li>
           <li class="nav-item navigation__nav-item" id="button-notification">
             <a class="nav-link  navigation__nav-link" href="#"><i class="fas fa-bell"></i></a>
-            <span class="navigation__nav-notification-count" id="notification-bell-count"><%= countUnreadNotifications > 99 ? "99+" : countUnreadNotifications %></span>
+            <%if (unreadNotifications > 0 ) { %>
+            <span class="navigation__nav-notification-count" id="notification-bell-count"> 
+              <em><strong><%= unreadNotifications > 99 ? "99+" : unreadNotifications %></strong></em>
+            </span>
+            <%}else {%>
+              <span class="navigation__nav-notification-count d-none" id="notification-bell-count"></span>
+            <%}%>
             <!-- notification dashboard-->
             <div class="notification" id="notification-board">
               <div class="notification__header">

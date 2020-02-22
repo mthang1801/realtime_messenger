@@ -13,8 +13,7 @@ let getHome =async (req, res) => {
     countUnreadNotifications : countUnreadNotifications,
     usersContactReceived : getRequestContactReceiver,
   });
-}
-
+};
 
 module.exports = {
   getHome : getHome

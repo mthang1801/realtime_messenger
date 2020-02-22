@@ -16,7 +16,7 @@ function addContact(){
           
           //show count-contact-request at nav
           increaseCountContactNumber("count-request-contact-sent");
-          increaseNotificationNumber("notification-contact-count");
+          increaseNotificationNumber("contact-count");
           //use socket to create realtime
           socket.emit("add-new-contact",{contactId: contactId, contactCreatedAt : contactCreatedAt});       
           //create card request-contact-sent html
@@ -48,8 +48,7 @@ function addContact(){
           //embed request-contact-sent-box at nav Contact
           $("#link-request-contact-sent").find("ul.request-contact-sent-list").append(cardRequestContactSentHTML);
           //after add contact, if we would like to cancel request , we embed cancel request function
-          cancelRequestAddContact();    
-          rejectRequestAddContact();              
+          cancelRequestAddContact();                     
         }
       },
       error : function(error){
@@ -66,7 +65,7 @@ socket.on("response-add-new-contact", function(user){
   $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${user._id}]`).show();
   $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${user._id}]`).show();
   $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${user._id}]`).hide();          
-  increaseNotificationNumber("notification-contact-count");
+  increaseNotificationNumber("contact-count");
   increaseNotificationNumber("notification-bell-count");
   increaseCountContactNumber("count-request-contact-received");
   // #region create card-request-contact-receievd html

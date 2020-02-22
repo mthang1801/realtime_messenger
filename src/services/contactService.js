@@ -98,7 +98,7 @@ let removeAddContact = (userId, contactId) => {
 let getRequestContactSent = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let contactList = await contactModel.getContactByUserId(userId);
+      let contactList = await contactModel.getContactStatusFalseByUserId(userId);
       let usersList = contactList.map( async contact => {
         return await userModel.findUserById(contact.contactId);
       }) 
@@ -116,7 +116,7 @@ let getRequestContactSent = (userId) => {
 let getRequestContactReceived = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let contactList = await contactModel.getContactByContactId(userId);
+      let contactList = await contactModel.getContactStatusFalseByContactId(userId);
       let contactUsersReceiver = contactList.map(async contact => {
         return await userModel.findUserById(contact.userId);
       });
@@ -142,6 +142,38 @@ let rejectRequestContact = (userId, contactId) => {
     }
   })
 };
+/**
+ * 
+ * @param {string : user request contact} userId 
+ * @param {string : myself } contactId 
+ * update status contact as true 
+ * create notification to user who requested that add contact succesfully
+ */
+let acceptRequestContact = (userId, contactId) => {
+  return new Promise( async (resolve, reject)=>{
+    try {
+      let contact = await contactModel.updateContactStatusAsTrue(userId, contactId);
+      if(!contact){
+        return reject(transErrors.unexisted_contact);
+      }
+      let getUserRequestContactInfo = await userModel.findUserById(userId);     
+      //create notification 
+      let notificationItem = {
+        senderId : contactId , 
+        receiverId : userId ,
+        type : notificationModel.types.ACCEPT_CONTACT
+      }
+      await notificationModel.model.createNew(notificationItem);
+      let data = {
+        user : getUserRequestContactInfo, 
+        contact : contact
+      }
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 
 module.exports ={
   findUsersContact: findUsersContact,
@@ -150,4 +182,5 @@ module.exports ={
   getRequestContactSent : getRequestContactSent,
   getRequestContactReceived : getRequestContactReceived,
   rejectRequestContact : rejectRequestContact,
+  acceptRequestContact : acceptRequestContact,
 }

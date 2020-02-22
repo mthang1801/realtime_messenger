@@ -43,11 +43,23 @@ let rejectRequestContact = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
+
+let acceptRequestContact = async (req, res) => {
+  try {
+    let userId = req.body.userId ; 
+    let contactId = req.user._id ; //myself
+    let data = await contact.acceptRequestContact(userId, contactId);    
+    return res.status(200).send({success : !!data, data : data});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
 
 module.exports = {
   findUsersContact : findUsersContact,
   addContact : addContact,
   removeAddContact : removeAddContact,
   rejectRequestContact : rejectRequestContact,
+  acceptRequestContact : acceptRequestContact,
 }

@@ -35,7 +35,7 @@ socket.on("response-reject-request-add-contact", contactId =>{
   $("#link-request-contact-sent ul.request-contact-sent-list").find(`li.request-contact-sent-list__item[data-uid = ${contactId}]`).remove();
 
   decreaseCountContactNumber("count-request-contact-sent");
-  decreaseNotificationNumber("notification-contact-count");
+  decreaseNotificationNumber("contact-count");
   addContact();
 })
 

@@ -47,7 +47,7 @@ let ajaxLoading = () => {
 
 let showModalContacts = () => {
   $("#modalContact").on("show.bs.modal", () => {
-    $("#notification-contact-count").fadeOut("fast");
+    $("#contact-count").fadeOut("fast");
   })
 };
 

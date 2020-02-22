@@ -95,15 +95,18 @@ contactSchema.statics = {
    * @param {string} userId 
    * get contact list with userId as sending request add contact
    */
-  getContactByUserId(userId){
-    return this.find({"userId" : userId}).exec();
+  getContactStatusFalseByUserId(userId){
+    return this.find({"userId" : userId , "status" : false}).exec();
   },
   /**
    * 
    * @param {string: as contactId in database} userId 
    */
-  getContactByContactId(userId){
-    return this.find({"contactId" : userId}).exec();
+  getContactStatusFalseByContactId(userId){
+    return this.find({"contactId" : userId , "status" : false}).exec();
+  },
+  updateContactStatusAsTrue(userId, contactId){
+    return this.findOneAndUpdate({"userId" : userId, "contactId" : contactId},{"status" : true, updatedAt : Date.now()},{new :true}).exec();
   }
 }
 

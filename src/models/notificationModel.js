@@ -14,10 +14,10 @@ notificationSchema.statics = {
     return this.create(item);
   },
   findNotificationByReceiverId(userId){
-    return this.find({"receiverId" : userId}).exec();
+    return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).exec();
   },
   getUnreadNotificationByReceiverId(userId){
-    return this.find({"receiverId" : userId, "isRead" : false}).exec();
+    return this.find({"receiverId" : userId, "isRead" : false}).sort({"createdAt" : -1}).exec();
   }
 }
 
@@ -52,25 +52,70 @@ let NOTIFICATION_CONTENTS = {
               `
       }else{
         return `
-        <li class="card-notifications__item" data-notification-uid="${id}" data-uid="${userId}">
-          <div class="card-notifications__avatar">
-            <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
-          </div>
-          <div class="card-notifications__text">
-            <div class="card-notifications__text--primary">
-              <span class="card-notifications__text--primary--username">
-                ${userName}
-              </span>
-              <span class="Card-notifications__text--primary--content">
-                đã gửi cho bạn một lời mời kết bạn 
-              </span>
-            </div>
-            <div class="card-notifications__text--sub">
-              ${timer}
-            </div>
-          </div>
-        </li>
-      `
+                <li class="card-notifications__item" data-notification-uid="${id}" data-uid="${userId}">
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã gửi cho bạn một lời mời kết bạn 
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }
+    }
+    if(type == NOTIFICATION_TYPES.ACCEPT_CONTACT){
+      if(!isRead){
+        return `
+                <li class="card-notifications__item card-unread" data-notification-uid="${id}" data-uid="${userId}">
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã chấp nhận lời mời kết bạn của bạn
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }else{
+        return `
+                <li class="card-notifications__item" data-notification-uid="${id}" data-uid="${userId}">
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã chấp nhận lời mời kết bạn của bạn
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
       }
     }
    

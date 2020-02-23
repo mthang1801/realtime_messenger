@@ -13,11 +13,14 @@ notificationSchema.statics = {
   createNew(item){
     return this.create(item);
   },
-  findNotificationByReceiverId(userId){
-    return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).exec();
+  findNotificationByReceiverId(userId, limit){
+    return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).limit(limit).exec();
   },
   getUnreadNotificationByReceiverId(userId){
     return this.find({"receiverId" : userId, "isRead" : false}).sort({"createdAt" : -1}).exec();
+  },
+  readMoreNotification(userId, skipNumber, limit){
+    return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skipNumber).limit(limit).exec()
   }
 }
 

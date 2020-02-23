@@ -34,7 +34,10 @@ export const transErrors = {
   existed_contact : "Người này đã được lưu vào danh sách kết bạn",
   unexisted_contact : "Người dùng liên lạc không tồn tại",
   empty_contact : "Danh sách liên lạc rỗng",
-  deleted_contact : "Liên hệ đã xóa trước đó"
+  deleted_contact : "Liên hệ đã xóa trước đó",
+  empty_notification : "Không còn thông báo",
+  empty_request_contact_sent : "Bạn không còn yêu cầu kết bạn với người khác.",
+  empty_request_contact_received : "Bạn không còn lời mời kết bạn."
 }
 
 export const transSuccess = {

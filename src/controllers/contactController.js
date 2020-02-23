@@ -67,6 +67,40 @@ let removeContact = async (req, res) => {
   }
 };
 
+let readMoreSearchAllUsers = async (req, res) => {
+  try {
+    let skipNumber = +req.query.skipNumber;
+    let userId = req.user._id  ; 
+    let searchKey = req.query.searchKey;  
+    let listUsers = await contact.readMoreSearchAllUsers(userId, skipNumber, searchKey);
+    console.log(listUsers);
+    return res.status(200).render("server_render/contact/_findUserContact.ejs", {listUsers});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMoreRequestContactSent = async (req, res) => {
+  try {
+    let skipNumber = +req.query.skipNumber;
+    let userId = req.user._id;
+    let listUsers = await contact.readMoreRequestContactSent(userId, skipNumber);
+    return res.status(200).render("server_render/contact/_requestContactSent", {listUsers});
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMoreRequestContactReceived = async (req, res) => {
+  try {
+    let skipNumber = +req.query.skipNumber;
+    let userId = req.user._id;
+    let listUsers = await contact.readMoreRequestContactReceived(userId, skipNumber);
+    return res.status(200).render("server_render/contact/_requestContactReceived", {listUsers})
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
 module.exports = {
   findUsersContact : findUsersContact,
   addContact : addContact,
@@ -74,4 +108,7 @@ module.exports = {
   rejectRequestContact : rejectRequestContact,
   acceptRequestContact : acceptRequestContact,
   removeContact : removeContact,
+  readMoreSearchAllUsers : readMoreSearchAllUsers,
+  readMoreRequestContactSent : readMoreRequestContactSent,
+  readMoreRequestContactReceived : readMoreRequestContactReceived,
 }

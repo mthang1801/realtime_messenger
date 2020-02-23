@@ -2,6 +2,9 @@ import userModel from "../models/userModel";
 import contactModel from "../models/contactModel";
 import {transErrors} from "../../lang/vi";
 import notificationModel from "../models/notificationModel";
+
+const limit_contact_users = +process.env.LIMIT_CONTACT;
+
 /**
  * 
  * @param {string} currentUserId 
@@ -23,8 +26,10 @@ let findUsersContact = (currentUserId, searchKey) => {
         }
         deprecatedUsersId.push(contact.userId.toString());
       })    
-      let contactStatusFalseList = await contactModel.findAllContactWithStatusFalseByUserId(currentUserId);       
-      let usersList = await userModel.findUserWithDeprecatedUsersId(deprecatedUsersId, searchKey);
+      let contactStatusFalseList = await contactModel.findAllContactWithStatusFalseByUserId(currentUserId);  
+      
+      // let usersList = await userModel.findUserWithDeprecatedUsersId(deprecatedUsersId, searchKey);
+      let usersList = await userModel.findLimitedUserWithDeprecatedUsersId(deprecatedUsersId, searchKey, limit_contact_users);
       let newUsersList = [];
       usersList.forEach( (user, index) => {
         user = user.toObject();
@@ -40,7 +45,8 @@ let findUsersContact = (currentUserId, searchKey) => {
           }
         }  
         newUsersList.push(user);      
-      })        
+      })         
+      
       resolve(newUsersList); 
     } catch (error) {
       reject(error);
@@ -98,11 +104,11 @@ let removeAddContact = (userId, contactId) => {
 let getRequestContactSent = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let contactList = await contactModel.getContactStatusFalseByUserId(userId);
-      let usersList = contactList.map( async contact => {
+      let contactList = await contactModel.getLimitedContactStatusFalseByUserId(userId, limit_contact_users);
+      let listUsersPromise = contactList.map( async contact => {
         return await userModel.findUserById(contact.contactId);
       }) 
-      resolve(await Promise.all(usersList));
+      resolve(await Promise.all(listUsersPromise));
     } catch (error) {
       reject(error);
     }
@@ -116,7 +122,7 @@ let getRequestContactSent = (userId) => {
 let getRequestContactReceived = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let contactList = await contactModel.getContactStatusFalseByContactId(userId);
+      let contactList = await contactModel.getContactStatusFalseByContactId(userId, limit_contact_users);
       let contactUsersReceiver = contactList.map(async contact => {
         return await userModel.findUserById(contact.userId);
       });
@@ -209,6 +215,84 @@ let removeContact = (userId, contactId) => {
       reject(error);
     }
   })
+};
+
+let readMoreSearchAllUsers = (currentUserId, skipNumber, searchKey) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let deprecatedUsersId = [currentUserId.toString()] ;      
+      let listUserId = [];
+      let contactStatusTrueList = await contactModel.findAllContactWithStatusTrueByUserId(currentUserId);
+      contactStatusTrueList.forEach( contact => {
+        if(contact.userId == currentUserId){
+          deprecatedUsersId.push(contact.contactId.toString());         
+          return;
+        }
+        deprecatedUsersId.push(contact.userId.toString());
+      })    
+      let contactStatusFalseList = await contactModel.findAllContactWithStatusFalseByUserId(currentUserId);  
+      
+      // let usersList = await userModel.findUserWithDeprecatedUsersId(deprecatedUsersId, searchKey);
+      let usersList = await userModel.findUserWithDeprecatedUsersIdAndSkipNumber(deprecatedUsersId, searchKey, skipNumber);      
+      let newUsersList = [];
+      usersList.forEach( (user, index) => {
+        user = user.toObject();
+        user.hasContact = 0; // no contact
+        for(let i  = 0 ; i < contactStatusFalseList.length ; i++){
+          if(contactStatusFalseList[i].userId == user._id ){
+            user.hasContact = 2; // has contact and currentUser request add contact
+            break;
+          }
+          if(contactStatusFalseList[i].contactId == user._id){
+            user.hasContact = 1 ; // has contact and currentUser is receiver request add contact
+            break;
+          }
+        }  
+        newUsersList.push(user);      
+      })         
+      
+      resolve(newUsersList); 
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+
+let readMoreRequestContactSent = (userId, skipNumber) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contactList = await contactModel.getLimitedContactStatusFalseByUserId(userId, limit_contact_users, skipNumber);
+      let listUsersPromise = contactList.map( async contact => {
+        return await userModel.findUserById(contact.contactId);
+      }) 
+      let listUsers = await Promise.all(listUsersPromise);
+      if(!listUsers.length){
+        return reject(transErrors.empty_request_contact_sent)
+      }
+      resolve(listUsers);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+
+let readMoreRequestContactReceived = (userId, skipNumber) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let contactList = await contactModel.getContactStatusFalseByContactId(userId, limit_contact_users, skipNumber);
+      let contactUsersReceiverPromise = contactList.map(async contact => {
+        return await userModel.findUserById(contact.userId);
+      });
+      let contactUsersReceiver = await  Promise.all(contactUsersReceiverPromise);
+      if(!contactUsersReceiver.length){
+        return reject(transErrors.empty_request_contact_received);
+      }
+
+      resolve(contactUsersReceiver);
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 
 module.exports ={
@@ -220,5 +304,8 @@ module.exports ={
   rejectRequestContact : rejectRequestContact,
   acceptRequestContact : acceptRequestContact,
   getContactList : getContactList,
-  removeContact : removeContact
+  removeContact : removeContact,
+  readMoreSearchAllUsers : readMoreSearchAllUsers,
+  readMoreRequestContactSent : readMoreRequestContactSent,
+  readMoreRequestContactReceived : readMoreRequestContactReceived,
 }

@@ -1,0 +1,25 @@
+<% if(listUsers.length) { %>
+  <% listUsers.forEach(user => { %>
+    <li class="request-contact-received-list__item" data-uid="<%= user._id %>">                
+      <div class="card-user">
+        <div class="card-user__body">
+          <div class="card-user__body-avatar">
+            <img src="images/users/<%= user.avatar %>" class="card-user__body-avatar--image">
+          </div>
+          <div class="card-user__body-text">
+            <div class="card-user__body-text--username">
+              <%= user.username %>
+            </div>
+            <div class="card-user__body-text-address">
+              <%= user.address ? user.address : "" %>
+            </div>
+          </div>
+        </div>
+        <div class="card-user__footer">
+          <button class="btn btn-success btn-sm btn-accept-request-contact" data-uid="<%= user._id %>">Chấp nhận</button>
+          <button class="btn btn-danger btn-sm btn-reject-request-contact" data-uid="<%= user._id %>">Từ chối</button>												
+        </div>
+      </div>                  
+    </li>
+  <%})%>
+<%}%>

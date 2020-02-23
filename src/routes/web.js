@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, auth, user, contact} from "../controllers/index";
+import {home, auth, user, contact, notification} from "../controllers/index";
 import {authValid, userValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
@@ -59,6 +59,11 @@ let initRoutes = (app) => {
   router.delete("/contact/reject-request-contact", auth.checkLoggedIn, contact.rejectRequestContact);
   router.put("/contact/accept-request-contact-received", auth.checkLoggedIn, contact.acceptRequestContact);
   router.delete("/contact/remove-contact", auth.checkLoggedIn, contact.removeContact);
+  router.get("/contact/read-more-search-all-users", auth.checkLoggedIn, contact.readMoreSearchAllUsers);
+  router.get("/contact/read-more-request-contact-sent", auth.checkLoggedIn, contact.readMoreRequestContactSent);
+  router.get("/contact/read-more-request-contact-received", auth.checkLoggedIn, contact.readMoreRequestContactReceived);
+  //notification
+  router.get("/notification/read-more-notifications", auth.checkLoggedIn, notification.readMoreNotification);
   return app.use(router);
 }
 

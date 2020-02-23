@@ -1,23 +1,25 @@
 function callSearchUsers(event){
   if(event.which == 13 || event.type == "click"){
-    let keyWord = $("#input-search-users").val();
+    let searchKey = $("#input-search-users").val();
     
-    if(keyWord == ""){
+    if(searchKey == ""){
       alertify.notify("Để tìm kiếm người dùng khác, vui lòng nhập tên của họ", "error",7 )  ;
       $("#search-users-box").find("ul.search-users-box__list-users").empty();
       return false ;
     }
     
-    $.get(`/contact/find-users?searchKey=${keyWord}`, function(data){
+    $.get(`/contact/find-users?searchKey=${searchKey}`, function(data){
       if(data){  
         $("#search-users-box").find("ul.search-users-box__list-users").empty().append(data);
+        $(".search-users-box__read-more").show();
+        readMoreSearchAllUsers(searchKey);
+        addContact();
+        cancelRequestAddContact();
+        rejectRequestAddContact();
+        acceptRequestAddContact();
       }else{
         $("#search-users-box").find("ul.search-users-box__list-users").empty().html(`<h5 class="mt-5 text-danger text-center"><i class="far fa-frown"></i> Không tìm thấy người dùng</h5>`)
-      }
-      addContact();
-      cancelRequestAddContact();
-      rejectRequestAddContact();
-      acceptRequestAddContact();
+      }     
     }).fail(function(err){
       console.log(err);
     })

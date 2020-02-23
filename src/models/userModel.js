@@ -110,6 +110,38 @@ userSchema.statics = {
         }
       ]
     },{ "username" : 1, "local.email" : 1, "facebook.email": 1, "google.email" : 1, "address" : 1 , "phone" : 1, "avatar" : 1, "gender" : 1}).exec();
+  },
+  findLimitedUserWithDeprecatedUsersId(deprecatedUsersId, searchKey, limit){
+    return this.find({
+      $and : [
+        {"_id" : { $nin : deprecatedUsersId}},
+        {"local.isActive" : true},
+        {
+          $or : [
+            {"username" : { $regex : new RegExp(searchKey, "i")}},
+            {"local.email" : {$regex : new RegExp(searchKey, "i")}},
+            {"google.email" : {$regex : new RegExp(searchKey, "i")}},
+            {"facebook.email" : {$regex : new RegExp(searchKey, "i")}}
+          ]
+        }
+      ]
+    },{ "username" : 1, "local.email" : 1, "facebook.email": 1, "google.email" : 1, "address" : 1 , "phone" : 1, "avatar" : 1, "gender" : 1}).limit(limit).exec();
+  },
+  findUserWithDeprecatedUsersIdAndSkipNumber(deprecatedUsersId, searchKey, skipNumber){
+    return this.find({
+      $and : [
+        {"_id" : { $nin : deprecatedUsersId}},
+        {"local.isActive" : true},
+        {
+          $or : [
+            {"username" : { $regex : new RegExp(searchKey, "i")}},
+            {"local.email" : {$regex : new RegExp(searchKey, "i")}},
+            {"google.email" : {$regex : new RegExp(searchKey, "i")}},
+            {"facebook.email" : {$regex : new RegExp(searchKey, "i")}}
+          ]
+        }
+      ]
+    },{ "username" : 1, "local.email" : 1, "facebook.email": 1, "google.email" : 1, "address" : 1 , "phone" : 1, "avatar" : 1, "gender" : 1}).skip(skipNumber).exec();
   }
 };
 

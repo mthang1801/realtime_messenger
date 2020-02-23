@@ -142,7 +142,18 @@ let initialConfigure = () => {
       $(elem).removeClass("active");
     });
     $(this).find("a.navigation__nav-link").addClass("active");
-  })
+  });
+  //hide loading conctact
+  $(".search-users-box__loading").hide();
+  $(".request-contact-sent-box__loading").hide();
+  $(".request-contact-received-box__loading").hide();
+  //if request-contact-sent-box has contains at least an item, it will show request-contact-sent-box__read-more, else none
+  console.log($("#link-request-contact-sent ul.request-contact-sent-list").children().length);
+  if($("#link-request-contact-sent ul.request-contact-sent-list").children().length){
+    $(".request-contact-sent-box__read-more").show();
+  }else{
+    $(".request-contact-sent-box__read-more").hide();
+  }
 };
 
 $("#select-type-chat").on("change" , function(){

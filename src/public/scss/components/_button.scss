@@ -49,3 +49,12 @@
     color: $color-dark-mode-gray-100;
   }
 }
+
+.btn-link{
+  font-weight: 400;
+  color: $color-facebook-dark ;
+  text-decoration: none;
+  &:hover {
+    color: $color-facebook-dark-2;
+  }
+}

@@ -6,6 +6,7 @@ function addContact(){
       type: "post",
       url: "/contact/add-contact",
       data: {contactId : contactId},
+      global : false ,
       success: function (response) {
         if(response.success){                  
           let {getContactInfo, contactCreatedAt} = response.data ;          
@@ -45,7 +46,7 @@ function addContact(){
           //#endregion
         
           //embed request-contact-sent-box at nav Contact
-          $("#link-request-contact-sent").find("ul.request-contact-sent-list").append(cardRequestContactSentHTML);
+          $("#link-request-contact-sent").find("ul.request-contact-sent-list").prepend(cardRequestContactSentHTML);
           //after add contact, if we would like to cancel request , we embed cancel request function
           cancelRequestAddContact();                    
           removeCurrentContact(); 
@@ -94,7 +95,7 @@ socket.on("response-add-new-contact", function(user){
   `;
   // #endregion
   //embed card-request-contact-received into parent box
-  $("#link-request-contact-received").find("ul.request-contact-received-list").append(cardRequestContactReceivedHTML);
+  $("#link-request-contact-received").find("ul.request-contact-received-list").prepend(cardRequestContactReceivedHTML);
 
   //#region create card notification html 
   let timer = getTimelineOfNotificationItem(user.contactCreatedAt);  

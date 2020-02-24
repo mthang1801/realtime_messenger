@@ -45,7 +45,7 @@ function addContact(){
             </li>
           `;
           //#endregion
-        
+          
           //embed request-contact-sent-box at nav Contact
           $("#link-request-contact-sent").find("ul.request-contact-sent-list").prepend(cardRequestContactSentHTML);
           //after add contact, if we would like to cancel request , we embed cancel request function
@@ -57,7 +57,8 @@ function addContact(){
             $("body").removeClass("modal-open");
             $(".modal-backdrop").remove();
             $(`#modalUserInfor-${contactId}`).remove();
-          })                                    
+          })
+          
         }
       },
       error : function(error){

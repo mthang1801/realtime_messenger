@@ -78,3 +78,10 @@
 .card-unread{
   background-color : #DADDE1 !important;
 }
+
+.user-active{
+  background-color : $color-divider-on-white;
+  &:hover{
+    background-color : $color-disabled-icon;
+  }
+}

@@ -1,5 +1,5 @@
 import {notification, contact} from "../services";
-import {convertDateTimeToString} from "../helpers/clientHelper";
+import {convertDateTimeToString, convertToMessengerTimer} from "../helpers/clientHelper";
 let getHome =async (req, res) => {
 
   let getNotifications = await notification.getNotifications(req.user._id);
@@ -20,7 +20,9 @@ let getHome =async (req, res) => {
     usersContactReceived : getRequestContactReceiver,
     usersContactList : getContactList,
     countRequestContactSent : countRequestContactSent,
-    countRequestContactReceived : countRequestContactReceived
+    countRequestContactReceived : countRequestContactReceived,
+    convertDateTimeToString : convertDateTimeToString,
+    convertToMessengerTimer : convertToMessengerTimer
   });
 };
 

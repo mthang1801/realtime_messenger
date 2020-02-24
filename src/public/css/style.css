@@ -124,6 +124,11 @@ a {
 .card-unread {
   background-color: #DADDE1 !important; }
 
+.user-active {
+  background-color: #DADDE1; }
+  .user-active:hover {
+    background-color: #BEC3C9; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }

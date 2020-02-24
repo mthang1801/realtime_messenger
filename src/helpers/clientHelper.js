@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export let getTimelineOfNotificationItem = (timer) => {
   let now = Date.now();
   let dateDiff = now - timer  ; 
@@ -45,3 +47,12 @@ export let convertDateTimeToString = timer => {
   return `${hour}: ${minutes}, ${dayOfWeek} ngày ${date}/${month}/${year}`;
 }
 
+/**
+ * timer as string type
+ */
+export let convertToMessengerTimer = timeStamp => {
+  if(!timeStamp){
+    return "";
+  }
+  return moment(timeStamp).locale("vi").startOf("seconds").fromNow();
+}

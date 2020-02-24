@@ -120,7 +120,7 @@ contactSchema.statics = {
         },
         {"status" : true }
       ]
-    }).exec();
+    }).sort({"updatedAt" : -1}).exec();
   },
   /**
    * 

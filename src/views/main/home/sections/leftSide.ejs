@@ -7,120 +7,28 @@
       </select>
       <a href="#modalGroupChat" class="btn-create-group-chat" id="btn-create-group-chat" data-toggle="modal"><i class="fas fa-edit"></i></a>				
   </div>
-  <div class="left-side__content">
-    <ul class="list-messenger-users">					
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
+  <div class="left-side__content" id="left-side">
+    <ul class="list-messenger-users">				
+      <% if(usersContactList.length){ %>
+        <% usersContactList.forEach( user => { %>
+        <li class="list-messenger-users__item left-side-user-item" data-uid="<%= user._id %>" data-toggle="tab" data-target="#right-side-<%= user._id %>">
+          <div class="list-messenger-users__item-avatar">
+            <img src="images/users/<%= user.avatar %>" title="<%= user.username %>" alt="<%= user.username %>" class="list-messenger-users__item-avatar-image">
           </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
+          <div class="list-messenger-users__item-text">
+            <div class="list-messenger-users__item-text--username">
+              <%= user.username %>
+            </div>
+            <div class="list-messenger-users__item-text--chat">
+              
+            </div>						
           </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
+          <div class="list-messenger-users__item-timer">
+            <%= convertToMessengerTimer(user.contactUpdatedAt) %>
           </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
-          </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
-          </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
-          </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>
-      <li class="list-messenger-users__item">
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/bg_01.jpg" class="list-messenger-users__item-avatar-image">
-        </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
-            maivthang
-          </div>
-          <div class="list-messenger-users__item-text--chat">
-            Hello xin chao ban, rat vui duoc lam quen voi ban
-          </div>						
-        </div>
-        <div class="list-messenger-users__item-timer">
-          vài giây trước
-        </div>
-      </li>																														
+        </li>					
+      <%})%>																									
+    <%}%>>
     </ul>
   </div>			
 </div>

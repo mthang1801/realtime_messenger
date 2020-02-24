@@ -1,0 +1,68 @@
+<% if(senderInfo) {%>
+<div class="modal" id="modalUserInfor-<%=senderInfo._id %>" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Thông báo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">       
+        <% if(senderInfo.hasContact == 0) {%>
+        <div class="card" style="border:none">          
+          <div class="card-body">
+            <div class="text-center">
+              <img src="images/users/<%=senderInfo.avatar %>" alt="<%= senderInfo.username %>" style="height:6rem;width:6rem;border-radius:50%">
+            </div>
+            <div class="card-text my-3" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-senderInfo.username %></div>
+            <small class="card-text" style="color:#828282">Gia nhập vào ngày <%= convertDateTimeToString(senderInfo.createdAt) %></small>
+            <div class="card-text"><%= senderInfo.address %></div>
+            <button class="btn btn-success btn-request-add-contact mt-3" data-uid="<%= senderInfo._id %>" >Mời kết bạn</button>   
+          </div>
+        </div>
+        <%}else if(senderInfo.hasContact ==1) {%>
+          <% if(senderInfo.isSender) {%>
+            <div class="card" style="border:none">          
+              <div class="card-body">
+                <div class="text-center">
+                  <img src="images/users/<%=senderInfo.avatar %>" alt="<%= senderInfo.username %>" style="height:6rem;width:6rem;border-radius:50%">
+                </div>
+                <div class="card-text my-3" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-senderInfo.username %></div>             
+                <div class="card-text my-2"><%= senderInfo.address %></div>
+                <div class="card-text mb-4"><small style="color:#828282">Đã gửi lời mời kết bạn vào <%= convertDateTimeToString(senderInfo.createdAtContact) %></small></div>
+                <button class="btn btn-danger btn-cancel-request-contact-sent" data-uid="<%= senderInfo._id %>">Hủy yêu cầu</button>      
+              </div>
+            </div>
+          <% }else {%>        
+          <div class="card" style="border:none">          
+            <div class="card-body">
+              <div class="text-center">
+                <img src="images/users/<%=senderInfo.avatar %>" alt="<%= senderInfo.username %>" style="height:6rem;width:6rem;border-radius:50%">
+              </div>
+              <div class="card-text my-3" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-senderInfo.username %></div>             
+              <div class="card-text my-2"><%= senderInfo.address %></div>
+              <div class="card-text mb-4"><small style="color:#828282">Đã gửi lời mời kết bạn vào <%= convertDateTimeToString(senderInfo.createdAtContact) %></small></div>
+              <button class="btn btn-success  btn-accept-request-contact mr-5"  data-uid="<%= senderInfo._id %>">Chấp nhận</button> 
+              <button class="btn btn-danger  btn-reject-request-contact"  data-uid="<%= senderInfo._id %>">Từ chối</button>    
+            </div>
+          </div>
+          <%}%>
+        <%} else {%>
+          <div class="card" style="border:none">          
+            <div class="card-body">
+              <div class="text-center">
+                <img src="images/users/<%=senderInfo.avatar %>" alt="<%= senderInfo.username %>" style="height:6rem;width:6rem;border-radius:50%">
+              </div>
+              <div class="card-text my-3" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-senderInfo.username %></div>
+              <small class="card-text" style="color:#828282">Đã trở thành bạn bè vào <%= convertDateTimeToString(senderInfo.updatedAtContact) %></small>
+              <div class="card-text"><%= senderInfo.address %></div>            
+            </div>
+          </div>
+        <%}%>
+      </div>
+  
+    </div>
+  </div>
+</div>
+<%}%>

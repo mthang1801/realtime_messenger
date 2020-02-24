@@ -1,7 +1,8 @@
 //Request user to make friend
 function addContact(){
   $(".btn-request-add-contact").off("click").on("click" , function(){    
-    let contactId = $(this).data("uid");    
+    let contactId = $(this).data("uid");  
+    console.log(contactId)  ;
     $.ajax({
       type: "post",
       url: "/contact/add-contact",
@@ -9,7 +10,7 @@ function addContact(){
       global : false ,
       success: function (response) {
         if(response.success){                  
-          let {getContactInfo, contactCreatedAt} = response.data ;          
+          let {getContactInfo, contactCreatedAt, notificationId} = response.data ;          
           $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${contactId}]`).hide();
           $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${contactId}]`).hide();
           $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${contactId}]`).hide();
@@ -18,7 +19,7 @@ function addContact(){
           //show count-contact-request at nav
           increaseCountContactNumber("count-request-contact-sent");          
           //use socket to create realtime
-          socket.emit("add-new-contact",{contactId: contactId, contactCreatedAt : contactCreatedAt});       
+          socket.emit("add-new-contact",{contactId, contactCreatedAt , notificationId});       
           //create card request-contact-sent html
           // #region create card-request-contact-html
           let cardRequestContactSentHTML = `
@@ -49,7 +50,14 @@ function addContact(){
           $("#link-request-contact-sent").find("ul.request-contact-sent-list").prepend(cardRequestContactSentHTML);
           //after add contact, if we would like to cancel request , we embed cancel request function
           cancelRequestAddContact();                    
-          removeCurrentContact(); 
+          removeCurrentContact();         
+        
+          $(`#modalUserInfor-${contactId}`).modal("hide");
+          $(`#modalUserInfor-${contactId}`).on("hidden.bs.modal", function(){
+            $("body").removeClass("modal-open");
+            $(".modal-backdrop").remove();
+            $(`#modalUserInfor-${contactId}`).remove();
+          })                                    
         }
       },
       error : function(error){
@@ -100,7 +108,7 @@ socket.on("response-add-new-contact", function(user){
   //#region create card notification html 
   let timer = getTimelineOfNotificationItem(user.contactCreatedAt);  
   let cardNotificationHTML = `
-  <li class="card-notifications__item card-unread" data-uid="${user._id}">
+  <li class="card-notifications__item card-unread" data-notification-uid="${user.notificationId}" data-uid="${user._id}">
     <div class="card-notifications__avatar">
       <img src="images/users/${user.avatar}" class="card-notifications__avatar-image">
     </div>
@@ -123,7 +131,7 @@ socket.on("response-add-new-contact", function(user){
   //embed card notification into box containing this one
   $("#notification-dashboard-body").find("ul.card-notifications").prepend(cardNotificationHTML);
   alertify.notify(`<b>${user.username}</b> đã gửi cho bạn một lời mời kết bạn`, "success", 5);
- 
+  eventNotificationItem();
   rejectRequestAddContact();
   acceptRequestAddContact();
   

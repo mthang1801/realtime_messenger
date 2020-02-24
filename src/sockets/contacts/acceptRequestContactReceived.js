@@ -7,7 +7,7 @@ let acceptRequestContactReceived = (io) =>{
 
     socket.on("accept-request-contact-received", data => {      
       let {_id, username, avatar, address } = socket.request.user; 
-      let currentUserItem = {_id, username, avatar, address, contactUpdateAt : data.updatedAt }
+      let currentUserItem = {_id, username, avatar, address, notificationId : data.notificationId, contactUpdateAt : data.updatedAt}
       if(clients[data.userId]){
         clients[data.userId].forEach( socketId => {
           io.sockets.connected[socketId].emit("response-accept-request-contact-received", currentUserItem);

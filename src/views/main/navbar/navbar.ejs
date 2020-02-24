@@ -24,7 +24,7 @@
             <a class="nav-link  navigation__nav-link" data-toggle="modal" href="#modalContact"><i class="fas fa-user-plus"></i></a>
             <% if(usersContactReceived.length) { %>
             <span class="navigation__nav-notification-count" id="contact-count">
-              <em><strong><%= usersContactReceived.length %></strong></em>
+              <em><strong><%= countRequestContactReceived %></strong></em>
             </span>
             <%}else{%>
               <span class="navigation__nav-notification-count d-none" id="contact-count"> </span>
@@ -46,8 +46,8 @@
                   Thông báo
                 </div>
                 <div class="notification__header--link">
-                  <a href="javascript:void(0);" class="btn-link">Đánh dấu đọc Tất cả</a>
-                  <a href="javascript:void(0);" class="btn-link">Cài đặt</a>
+                  <a href="javascript:void(0);" id="btn-mark-as-read-all-notification" class="btn-link">Đánh dấu đọc Tất cả</a>
+                  <a href="javascript:void(0);" id="btn-setting-notification" class="btn-link">Cài đặt</a>
                 </div>
               </div>
               <hr class="hr-notification">
@@ -63,7 +63,7 @@
               </div>
               <hr class="hr-notification">
               <div class="card-notifications__footer">
-                <a href="javascript:void(0);" class="btn-link">Xem tất cả</a>
+                <a  class="btn-link" data-toggle="modal" href="#modalNotificationExtense" id="see-all-notifications">Xem tất cả</a>
               </div>
             </div>
           </li>

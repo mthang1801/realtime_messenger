@@ -64,6 +64,10 @@ let initRoutes = (app) => {
   router.get("/contact/read-more-request-contact-received", auth.checkLoggedIn, contact.readMoreRequestContactReceived);
   //notification
   router.get("/notification/read-more-notifications", auth.checkLoggedIn, notification.readMoreNotification);
+  router.get("/notification/info", auth.checkLoggedIn, notification.getNotificationInfo);
+  router.get("/notification/read-all", auth.checkLoggedIn, notification.readAllNotifications);
+  router.put("/notification/mark-as-read-all-notifications", auth.checkLoggedIn, notification.markAsReadAllNotifications);
+  router.get("/notification/get-notifications", auth.checkLoggedIn, notification.getNotifications);
   return app.use(router);
 }
 

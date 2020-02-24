@@ -53,8 +53,7 @@ let showModalContacts = () => {
 
 let photoSetGrid = (layoutNumber) => {
   let countRows = Math.ceil($("#modalImage").find("div.all-images>img").length / layoutNumber );
-  let layoutStr = new Array(countRows).fill(layoutNumber).join("");
-  console.log(layoutStr);;
+  let layoutStr = new Array(countRows).fill(layoutNumber).join("");  
   $("#modalImage").find("div.all-images").photosetGrid({
     gutter : "5px",
     layout : layoutStr,
@@ -129,7 +128,11 @@ let toggleNotificationBoard = () => {
     $("#notification-bell-count").fadeOut("fast");
     return false;
   })
-  $(document).on("click" , () => {
+  $("#notification-board").on("click", function(){    
+    return false ;
+  });
+  
+  $(document).on("click" , function() {
     $("#notification-board").fadeOut("fast");    
   })
 };
@@ -147,13 +150,12 @@ let initialConfigure = () => {
   $(".search-users-box__loading").hide();
   $(".request-contact-sent-box__loading").hide();
   $(".request-contact-received-box__loading").hide();
-  //if request-contact-sent-box has contains at least an item, it will show request-contact-sent-box__read-more, else none
-  console.log($("#link-request-contact-sent ul.request-contact-sent-list").children().length);
+  //if request-contact-sent-box has contains at least an item, it will show request-contact-sent-box__read-more, else none 
   if($("#link-request-contact-sent ul.request-contact-sent-list").children().length){
     $(".request-contact-sent-box__read-more").show();
   }else{
     $(".request-contact-sent-box__read-more").hide();
-  }
+  }  
 };
 
 $("#select-type-chat").on("change" , function(){
@@ -162,8 +164,7 @@ $("#select-type-chat").on("change" , function(){
 
 
 function flashMasterNotify(){
-  let notify = $(".alert-master-success").text();
-  console.log(notify);
+  let notify = $(".alert-master-success").text();  
   if(notify.length){
     alertify.set('notifier','position', 'right-bottom');
     alertify.success(notify);
@@ -199,5 +200,5 @@ $(document).ready(function () {
 
   //flash message at master screen
   flashMasterNotify();
-  
+   
 });

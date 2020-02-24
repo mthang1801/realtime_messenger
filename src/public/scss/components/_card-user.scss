@@ -8,6 +8,7 @@
   &__body{    
     margin-bottom : .25rem;
     display : flex;
+    flex-basis: 80%;
     &-avatar{
       float : left; 
       margin-right: 1.2rem;
@@ -23,9 +24,15 @@
       font-size : 1rem;
       font-weight: 700;
     }    
+    &-createdAt{
+      font-size : .9rem;
+      color : $color-dark-ui-primary-icon;
+      font-weight: 400;
+    }   
   }  
   &__footer{
-    display : flex;    
+    display : flex;   
+    flex-basis: 20%; 
     align-items: center;
     & > button:not(:last-child){
       margin-right: .5rem;

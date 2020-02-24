@@ -10,7 +10,7 @@ function readMoreNotification(){
     // console.log(`offset().top: ${$(this).find("li:last-child").offset().top}`)
     // console.log(`scrollTop: ${$(this).scrollTop()}`)
     // console.log(`scrollHeight: ${$(this)[0].scrollHeight}`);
-    let offsetPage =  $(this).scrollTop() + $(this)[0].clientHeight - 40;
+    let offsetPage =  $(this).scrollTop()  + 100;
     // console.log(offsetPage)
     if($(this)[0].scrollHeight - $(this)[0].clientHeight <= $(this).scrollTop()  + 20){      
       loading = true ;
@@ -27,6 +27,7 @@ function readMoreNotification(){
           
            $("#notification-dashboard-body").scrollTop(offsetPage);
            loading = false;
+           eventNotificationItem();
           }
         },
         error : function (error){

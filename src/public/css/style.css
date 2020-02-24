@@ -160,9 +160,9 @@ a {
     transform: translate(-50%, -50%); }
 
 .btn-dark-grey {
-  color: #373737; }
+  color: #373737 !important; }
   .btn-dark-grey:hover {
-    color: #1C1C1C; }
+    color: #1C1C1C !important; }
 
 .btn-link {
   font-weight: 400;
@@ -267,7 +267,8 @@ a {
   justify-content: space-between; }
   .card-user__body {
     margin-bottom: .25rem;
-    display: flex; }
+    display: flex;
+    flex-basis: 80%; }
     .card-user__body-avatar {
       float: left;
       margin-right: 1.2rem;
@@ -280,8 +281,13 @@ a {
     .card-user__body-text {
       font-size: 1rem;
       font-weight: 700; }
+    .card-user__body-createdAt {
+      font-size: .9rem;
+      color: #828282;
+      font-weight: 400; }
   .card-user__footer {
     display: flex;
+    flex-basis: 20%;
     align-items: center; }
     .card-user__footer > button:not(:last-child) {
       margin-right: .5rem; }

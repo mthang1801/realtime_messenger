@@ -16,7 +16,14 @@ function cancelRequestAddContact(){
           decreaseNotificationNumber("contact-count");
           socket.emit("remove-add-new-contact", {contactId});
           //remove this html element in request-contact-sent-box at nav Contact
-          $("#link-request-contact-sent ul.request-contact-sent-list").find(`li.request-contact-sent-list__item[data-uid = ${contactId}]`).remove();        
+          $("#link-request-contact-sent ul.request-contact-sent-list").find(`li.request-contact-sent-list__item[data-uid = ${contactId}]`).remove(); 
+          $(`#modalUserInfor-${contactId}`).modal("hide");
+          $(`#modalUserInfor-${contactId}`).on("hidden.bs.modal", function(){
+            $("body").removeClass("modal-open");
+            $(".modal-backdrop").remove();
+            $(`#modalUserInfor-${contactId}`).remove();
+          })          
+          eventNotificationItem();       
         }
       },
       error: function (error) {

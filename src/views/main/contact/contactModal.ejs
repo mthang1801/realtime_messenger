@@ -22,19 +22,19 @@
           </a>
           <a href="#link-request-contact-sent" class="nav-item nav-link" role="tab" data-toggle="tab" aria-controls="link-request-contact-sent" aria-selected="false">Đang chờ xác nhận            
              <span class="text-dark-red" id="count-request-contact-sent">
-               <% if(usersContactSent.length <= 0) {%>
+               <% if(countRequestContactSent <= 0) {%>
                 <span></span>
               <%}else{%>
-                <em><strong>(<%= usersContactSent.length %>)</strong></em> 
+                <em><strong>(<%= countRequestContactSent %>)</strong></em> 
               <%}%>
             </span>                        
           </a>
           <a href="#link-request-contact-received" class="nav-item nav-link" data-toggle="tab" role="tab" aria-controls="link-request-contact-received" aria-selected="false">Yêu cầu kết bạn
             <span class="text-dark-red" id="count-request-contact-received" >
-              <% if(usersContactReceived.length <= 0) {%>
+              <% if(countRequestContactReceived <= 0) {%>
                 <span></span>
               <%}else{%>
-                <em><strong>(<%= usersContactReceived.length %>)</strong></em> 
+                <em><strong>(<%= countRequestContactReceived %>)</strong></em> 
               <%}%>
             </span>
           </a>

@@ -152,6 +152,15 @@ contactSchema.statics = {
         }
       ]
     }).exec();
+  },
+  countContactSentByUserId(userId){
+    return this.countDocuments({"userId" :userId , "status" : false}).exec();
+  },
+  countContactReceivedByContactId(userId){
+    return this.countDocuments({"contactId" :userId , "status" : false}).exec();
+  },
+  findContactExactly(userId, contactId){
+    return this.findOne({"userId" : userId, "contactId" : contactId}).exec();
   }
 }
 

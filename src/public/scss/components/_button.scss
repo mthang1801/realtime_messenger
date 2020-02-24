@@ -44,9 +44,9 @@
 
 
 .btn-dark-grey{
-  color : $color-dark-mode-gray-80;
+  color : $color-dark-mode-gray-80 !important;
   &:hover{
-    color: $color-dark-mode-gray-100;
+    color: $color-dark-mode-gray-100 !important;
   }
 }
 

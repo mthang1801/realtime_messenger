@@ -39,10 +39,7 @@ function readMoreSearchAllUsers(searchKey=null){
 //read more for request-contact-sent-box panel
 function readMoreRequestContactSent(){
   $("#btn-read-more-request-contact-sent").off("click").on("click", function(){
-    let skipNumber = $("#link-request-contact-sent ul.request-contact-sent-list").children().length;
-    if(skipNumber==0){
-      return false ;
-    }
+    let skipNumber = $("#link-request-contact-sent ul.request-contact-sent-list").children().length;  
     $.ajax({
       type: "get",
       url: `/contact/read-more-request-contact-sent?skipNumber=${skipNumber}`,
@@ -76,10 +73,7 @@ function readMoreRequestContactSent(){
 //read more for request-contact-received-box panel
 function readMoreRequestContactReceived(){
   $("#btn-read-more-request-contact-received").off("click").on("click", function(){
-    let skipNumber = $("#link-request-contact-received").find("ul.request-contact-received-list").children().length ;
-    if(skipNumber==0){
-      return false ;
-    }
+    let skipNumber = $("#link-request-contact-received").find("ul.request-contact-received-list").children().length ;  
     $.ajax({
       type: "get",
       url: `/contact/read-more-request-contact-received?skipNumber=${skipNumber}`,

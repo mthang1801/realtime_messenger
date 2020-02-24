@@ -73,7 +73,6 @@ let readMoreSearchAllUsers = async (req, res) => {
     let userId = req.user._id  ; 
     let searchKey = req.query.searchKey;  
     let listUsers = await contact.readMoreSearchAllUsers(userId, skipNumber, searchKey);
-    console.log(listUsers);
     return res.status(200).render("server_render/contact/_findUserContact.ejs", {listUsers});
   } catch (error) {
     return res.status(500).send(error);

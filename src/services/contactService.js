@@ -78,8 +78,9 @@ let addContact = (userId, contactId) => {
         receiverId : contactId ,
         type : notificationModel.types.ADD_CONTACT ,        
       }
-      await notificationModel.model.createNew(notificationItem);
-      resolve({contactCreatedAt : newContact.createdAt, getContactInfo});
+      let notification = await notificationModel.model.createNew(notificationItem);
+
+      resolve({contactCreatedAt : newContact.createdAt, getContactInfo, notificationId : notification._id});
     } catch (error) {
       reject(error);
     }
@@ -169,10 +170,11 @@ let acceptRequestContact = (userId, contactId) => {
         receiverId : userId ,
         type : notificationModel.types.ACCEPT_CONTACT
       }
-      await notificationModel.model.createNew(notificationItem);
+      let notification = await notificationModel.model.createNew(notificationItem);
       let data = {
         user : getUserRequestContactInfo, 
-        contact : contact
+        contact : contact, 
+        notificationId : notification._id
       }
       resolve(data);
     } catch (error) {
@@ -189,14 +191,15 @@ let getContactList = userId => {
   return new Promise(async (resolve, reject) => {
     try {
       let contactList = await contactModel.getContactListByUserId(userId);   
+      
       let userContactPromise = contactList.map( async contact => {
-        if(contact._id == userId){
+        if(contact.userId == userId){
           return await userModel.findUserById(contact.contactId);
         }
         return await userModel.findUserById(contact.userId);
       })
-
-      resolve(await Promise.all(userContactPromise));
+      let userContact = await Promise.all(userContactPromise);   
+      resolve(userContact);
     } catch (error) {
       reject(error);
     }
@@ -293,6 +296,28 @@ let readMoreRequestContactReceived = (userId, skipNumber) => {
       reject(error);
     }
   })
+};
+
+let countRequestContactSent =(userId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let countContactSent = await contactModel.countContactSentByUserId(userId);      
+      resolve(countContactSent);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
+
+let countRequestContactReceived = (userId) => {
+  return new Promise(async(resolve, reject) => {
+    try {
+      let countContactReceived = await contactModel.countContactReceivedByContactId(userId);      
+      resolve(countContactReceived);
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 
 module.exports ={
@@ -308,4 +333,6 @@ module.exports ={
   readMoreSearchAllUsers : readMoreSearchAllUsers,
   readMoreRequestContactSent : readMoreRequestContactSent,
   readMoreRequestContactReceived : readMoreRequestContactReceived,
+  countRequestContactSent : countRequestContactSent,
+  countRequestContactReceived : countRequestContactReceived,
 }

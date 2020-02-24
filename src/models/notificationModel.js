@@ -21,6 +21,15 @@ notificationSchema.statics = {
   },
   readMoreNotification(userId, skipNumber, limit){
     return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skipNumber).limit(limit).exec()
+  },
+  findNotificationByIdAndUpdate(id){
+    return this.findByIdAndUpdate(id, {"isRead" : true}, {new : true}).exec();
+  },
+  getAllNotificationsByReceiverId(receiverId){
+    return this.find({receiverId: receiverId}).sort({"createdAt" : -1}).exec();
+  },
+  updateAllNotificationAsRead(userId){
+    return this.updateMany({"receiverId": userId}, {isRead: true},{new : true}).exec();
   }
 }
 

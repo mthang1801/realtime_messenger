@@ -17,6 +17,11 @@ function rejectRequestAddContact(){
           decreaseCountContactNumber("count-request-contact-received");          
           socket.emit("reject-request-add-contact", {userId});
           addContact(); //when user search users contact , it allows click add contact
+          //remove notification item
+          $(`#modalUserInfor-${userId}`).hide();
+          $("body").removeClass("modal-open");
+          $(".modal-backdrop").remove();
+          $(`#modalUserInfor-${userId}`).remove();
         }
       },
       error : function(error){

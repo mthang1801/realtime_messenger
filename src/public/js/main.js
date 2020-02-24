@@ -156,6 +156,15 @@ let initialConfigure = () => {
   }else{
     $(".request-contact-sent-box__read-more").hide();
   }  
+  $(".left-side-user-item").on("click", function(){
+    $(".left-side-user-item").each( function(index, elem){
+      $(elem).removeClass("user-active");
+    });
+    $(this).addClass("user-active");
+  })
+
+  $("#left-side ul.list-messenger-users").find("li:first-child").click();
+
 };
 
 $("#select-type-chat").on("change" , function(){

@@ -53,6 +53,29 @@ function acceptRequestAddContact(){
           `;
           $("#contacts ul.contact-list").append(contactHTML);
           //#endregion
+          
+          //#region create new user contact at left Side
+          let timer = getTimelineOfNotificationItem(contact.updatedAt)
+          let userContactLeftSideHTML =` 
+            <li class="list-messenger-users__item" data-uid=${user._id}>
+              <div class="list-messenger-users__item-avatar">
+                <img src="images/users/${user.avatar}" title="${user.username}" alt="${user.username}" class="list-messenger-users__item-avatar-image">
+              </div>
+              <div class="list-messenger-users__item-text">
+                <div class="list-messenger-users__item-text--username">
+                  ${user.username}
+                </div>
+                <div class="list-messenger-users__item-text--chat">
+                  
+                </div>						
+              </div>
+              <div class="list-messenger-users__item-timer">
+                ${timer}
+              </div>
+            </li>											
+          `;
+          $("#left-side").find("ul.list-messenger-users").prepend(userContactLeftSideHTML);
+          //#endregion
           //create notify accept successfully
           alertify.notify(`${user.username} đã được thêm vào danh sách liên lạc`, "success", 7);
           //solve LeftSide and RightSide
@@ -135,6 +158,26 @@ socket.on("response-accept-request-contact-received", user => {
   $("#contacts ul.contact-list").append(contactHTML);
   //#endregion
    //solve LeftSide and RightSide
+   //#region create new User Contact at LeftSide
+   let userContactLeftSideHTML =` 
+      <li class="list-messenger-users__item" data-uid=${user._id}>
+        <div class="list-messenger-users__item-avatar">
+          <img src="images/users/${user.avatar}" title="${user.username}" alt="${user.username}" class="list-messenger-users__item-avatar-image">
+        </div>
+        <div class="list-messenger-users__item-text">
+          <div class="list-messenger-users__item-text--username">
+            ${user.username}
+          </div>
+          <div class="list-messenger-users__item-text--chat">
+            
+          </div>						
+        </div>
+        <div class="list-messenger-users__item-timer">
+          ${timer}
+        </div>
+      </li>											
+    `;
+    $("#left-side").find("ul.list-messenger-users").prepend(userContactLeftSideHTML);
    removeCurrentContact();
    eventNotificationItem();
 })

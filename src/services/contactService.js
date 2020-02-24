@@ -192,11 +192,18 @@ let getContactList = userId => {
     try {
       let contactList = await contactModel.getContactListByUserId(userId);   
       
-      let userContactPromise = contactList.map( async contact => {
+      let userContactPromise = contactList.map( async contact => {        
         if(contact.userId == userId){
-          return await userModel.findUserById(contact.contactId);
+          let user = await userModel.findUserById(contact.contactId);
+          user = user.toObject();
+          user.contactUpdatedAt = contact.updatedAt;
+          return user;
         }
-        return await userModel.findUserById(contact.userId);
+
+        let user=  await userModel.findUserById(contact.userId);
+        user = user.toObject();
+        user.contactUpdatedAt = contact.updatedAt;
+        return user;
       })
       let userContact = await Promise.all(userContactPromise);   
       resolve(userContact);

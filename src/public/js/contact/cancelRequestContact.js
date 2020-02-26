@@ -14,7 +14,6 @@ function cancelRequestAddContact(){
           
           decreaseCountContactNumber("count-request-contact-sent");
           decreaseNotificationNumber("contact-count");
-          socket.emit("remove-add-new-contact", {contactId});
           //remove this html element in request-contact-sent-box at nav Contact
           $("#link-request-contact-sent ul.request-contact-sent-list").find(`li.request-contact-sent-list__item[data-uid = ${contactId}]`).remove(); 
           $(`#modalUserInfor-${contactId}`).modal("hide");
@@ -23,6 +22,10 @@ function cancelRequestAddContact(){
             $(".modal-backdrop").remove();
             $(`#modalUserInfor-${contactId}`).remove();
           })          
+          //remove user contact at leftSide
+          $("#left-side ul.list-messenger-users").find(`li[data-uid = ${contactId}]`).remove();
+          socket.emit("remove-add-new-contact", {contactId});
+          
           eventNotificationItem();       
         }
       },
@@ -41,6 +44,8 @@ socket.on("response-remove-add-new-contact", function(user){
   decreaseNotificationNumber("contact-count");
   decreaseCountContactNumber("count-request-contact-received");
   $("#link-request-contact-received ul.request-contact-received-list").find(`li.request-contact-received-list__item[data-uid = ${user._id}]`).remove();
+  //remove user contact at left side
+  $("#left-side ul.list-messenger-users").find(`li[data-uid = ${user._id}]`).remove();
 })
 
 $(document).ready(function () {

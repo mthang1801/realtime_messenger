@@ -154,12 +154,13 @@ let rejectRequestContact = (userId, contactId) => {
  * @param {string : user request contact} userId 
  * @param {string : myself } contactId 
  * update status contact as true 
+ * update time updatedAt in order to solve user contact at left side
  * create notification to user who requested that add contact succesfully
  */
 let acceptRequestContact = (userId, contactId) => {
   return new Promise( async (resolve, reject)=>{
     try {
-      let contact = await contactModel.updateContactStatusAsTrue(userId, contactId);
+      let contact = await contactModel.updateContactStatusAsTrueAndCreateTimeMessage(userId, contactId);
       if(!contact){
         return reject(transErrors.unexisted_contact);
       }
@@ -168,7 +169,7 @@ let acceptRequestContact = (userId, contactId) => {
       let notificationItem = {
         senderId : contactId , 
         receiverId : userId ,
-        type : notificationModel.types.ACCEPT_CONTACT
+        type : notificationModel.types.ACCEPT_CONTACT,        
       }
       let notification = await notificationModel.model.createNew(notificationItem);
       let data = {

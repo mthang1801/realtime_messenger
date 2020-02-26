@@ -4,27 +4,28 @@
 
 const socket = io();
 
-let niceScrollLeftSide = () => {
+function niceScrollLeftSide(){
   $(".left-side").niceScroll({
-    cursorcolor: "#828282", // change cursor color in hex  
-    scrollspeed: 50,
-    smoothscroll: true, // scroll with ease movement
-    cursormaxheight: 32,
+    smoothscroll: true,
     horizrailenabled: false,
-    autohidemode : "leave"
+    cursorcolor: '#4A4A4A',
+    cursorwidth: '7px',
+    scrollspeed: 50
   })
+ 
 };
 
-let niceScrollChatBox = () => {
-  $(".right-side__middle-content").niceScroll({
-    cursorcolor : "#828282", 
-    scrollspeed: 50,
-    smoothscroll: true, // scroll with ease movement
-    cursormaxheight: 32,
+function niceScrollChatBox(chatBoxId){   
+  console.log($(`.right-side__middle-content[data-chat = ${chatBoxId}]`)[0].scrollHeight);
+  $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).niceScroll({
+    smoothscroll: true,
     horizrailenabled: false,
-    autohidemode : "leave"
-  })
-  $(".right-side__middle-content").scrollTop($(".right-side__middle-content")[0].scrollHeight);
+    cursorcolor: '#4A4A4A',
+    cursorwidth: '7px',
+    scrollspeed: 50,
+    autohidemode : "leave",
+  });
+  $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).attr("zIndex", "1000").scrollTop($(`.right-side__middle-content[data-chat = ${chatBoxId}]`)[0].scrollHeight);
 };
 
 let spinLoaded = () => {
@@ -156,21 +157,32 @@ let initialConfigure = () => {
   }else{
     $(".request-contact-sent-box__read-more").hide();
   }  
-  $(".left-side-user-item").on("click", function(){
-    $(".left-side-user-item").each( function(index, elem){
-      $(elem).removeClass("user-active");
-    });
-    $(this).addClass("user-active");
-  })
+ 
 
   $("#left-side ul.list-messenger-users").find("li:first-child").click();
 
+  $("#select-type-chat").on("change", function(){
+    let targetId = $("option:selected", this).data("target");
+    $(".tab-pane").each( function(index, elem){
+      $(elem).removeClass("show active");
+    })    
+    $(`${targetId}`).addClass("show active");
+    $(".left-side").getNiceScroll().resize();   
+  })
 };
 
-$("#select-type-chat").on("change" , function(){
-  console.log($(this).val());
-})
-
+function switchTabConversation(){
+  $(".left-side__conversations-item").off("click").on("click", function(){
+    let targetId = $(this).find("a").data("chat");
+    $(".nav-link").removeClass("active");
+    $(`.a[data-chat = ${targetId}]`).addClass("active");
+   
+    $(this).find(".nav-link").tab("show");
+    let timer = setInterval(()=>{niceScrollChatBox(targetId.toString())},500)
+    clearInterval(timer);
+    
+  })
+}
 
 function flashMasterNotify(){
   let notify = $(".alert-master-success").text();  
@@ -186,9 +198,6 @@ $(document).ready(function () {
 
   //create nice scroll with smooth for left side
   niceScrollLeftSide();
-
-  //create nice scroll with smooth for right side middle
-  niceScrollChatBox();
 
   //init ajax Loadings
   ajaxLoading();
@@ -209,5 +218,11 @@ $(document).ready(function () {
 
   //flash message at master screen
   flashMasterNotify();
+
+  switchTabConversation();
    
+  if($(".left-side__conversations-item").length){
+    $(".left-side__conversations-item:first-child").find(".nav-link:first-child").click();
+  }
+
 });

@@ -1,5 +1,7 @@
 .left-side{
   background-color: $color-white;
+  height: 100%; 
+  overflow: auto;
   &__setting{
     display : flex ; 
     justify-content : center;
@@ -18,5 +20,53 @@
       background-color: $color-dark-mode-gray-35;
     }
   }
+  &__conversations{
+    height: calc(100% - 3.5rem) ;
+          
+    &-item{
+      padding : 0;        
+      border-radius : .2rem;
+      &:hover{
+        background-color : $color-divider-on-wash;
+      }
+    }
+  
+  }
+}
 
+.person{
+  display : flex ;
+  font-size : .9em;
+  padding : .6rem;
+  border-radius: .15rem;
+  color : $color-dark-ui-secondary-text;
+  &:hover{
+    color : $color-grey-light;
+    background-color: $color-dark-mode-gray-50;
+  }
+  &__avatar{
+    flex-basis : 15%;
+    margin-right : .5rem;
+    &-image{
+      height : 3.5rem;
+      width : 3.5rem;
+      border-radius: 50%;
+    }
+  }
+  &__infor{
+    flex-basis: 50%;
+    margin-right : .5rem;
+    &--username {
+      font-weight: 600;       
+    }
+    &--messenger{
+      opacity: .9;
+    }
+  }
+  &__timer{
+    flex-basis: 30%;    
+    text-align: right;
+    font-size : .8em;
+    opacity: .8;
+  }
 }

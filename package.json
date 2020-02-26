@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/server.js",
-    "sasstocss": "node-sass ./src/public/scss/main.scss ./src/public/css/style.css -w"
+    "start": "babel-node src/server.js & node-sass ./src/public/scss/main.scss ./src/public/css/style.css -w"
   },
   "repository": {
     "type": "git",

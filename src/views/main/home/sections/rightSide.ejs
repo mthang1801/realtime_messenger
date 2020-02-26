@@ -1,68 +1,237 @@
-<div class="col-12 col-sm-8 col-lg-8 col-xl-9 right-side" id="right-side-<%= user._id %>">
-  <div class="right-side__top">
-    <div class="right-side__top--leftside">
-      To :
-      <span class="right-side__top--leftside-username">
-        Mai Văn Thắng
-      </span>
+<div class="col-12 col-sm-8 col-lg-8 col-xl-9 right-side">
+  <div class="tab-content screen-chat">
+    <div class="right-side__screen tab-pane fade active show " id="to-1" >
+      <div class="right-side__top">
+        <div class="right-side__top--leftside">
+          To :
+          <span class="right-side__top--leftside-username">
+            Mai Văn Thắng
+          </span>
+        </div>
+        <div class="right-side__top--rightside">
+          <span class="right-side__top--rightside-item">
+            <a href="#modalImage" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+          </span>
+          <span class="right-side__top--rightside-item">
+            <a href="#modalAttachFile" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+          </span>
+        </div>
+      </div>
+      <div class="right-side__middle">
+        <div class="right-side__middle-content" data-chat="1">
+          <div class="right-side__middle-content--me bubble">
+            Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
+          </div>					
+          <div class="right-side__middle-content--you bubble">
+            Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
+          </div>
+          <div class="right-side__middle-content--me bubble">
+            Đây là thumbnail của mình!!
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/person1.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/calendar.jpeg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
+          </div>
+          <div class="right-side__middle-content--you bubble">
+            Còn đây là mình 
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <img src="../public/images/person2.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
+          </div>
+        </div>
+      </div>
+      <div class="right-side__bottom">
+        <input type="text" class="right-side__bottom-write write-chat" id="text-write-chat-1" data-chat="1234" style="display:none">
+        <div class="right-side__bottom-icons">
+          <div class="right-side__bottom-icons-item">
+            <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+          </div>					
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="image-chat">
+            <label for="image-chat"><i class="fas fa-image"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="attach-chat">
+            <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+          </div>				
+        </div>
+      </div>
     </div>
-    <div class="right-side__top--rightside">
-      <span class="right-side__top--rightside-item">
-        <a href="#modalImage" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
-      </span>
-      <span class="right-side__top--rightside-item">
-        <a href="#modalAttachFile" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
-      </span>
+
+    <div class="right-side__screen tab-pane fade" id="to-2">
+      <div class="right-side__top">
+        <div class="right-side__top--leftside">
+          To :
+          <span class="right-side__top--leftside-username">
+            Mai Văn Quốc
+          </span>
+        </div>
+        <div class="right-side__top--rightside">
+          <span class="right-side__top--rightside-item">
+            <a href="#modalImage" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+          </span>
+          <span class="right-side__top--rightside-item">
+            <a href="#modalAttachFile" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+          </span>
+        </div>
+      </div>
+      <div class="right-side__middle">
+        <div class="right-side__middle-content" data-chat="2">
+          <div class="right-side__middle-content--me bubble">
+            Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
+          </div>					
+          <div class="right-side__middle-content--you bubble">
+            Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
+          </div>
+          <div class="right-side__middle-content--me bubble">
+            Đây là thumbnail của mình!!
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/person1.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/calendar.jpeg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
+          </div>
+          <div class="right-side__middle-content--you bubble">
+            Còn đây là mình 
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <img src="../public/images/person2.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
+          </div>
+        </div>
+      </div>
+      <div class="right-side__bottom">
+        <input type="text" class="right-side__bottom-write write-chat" id="text-write-chat-2" data-chat="1234" style="display:none">
+        <div class="right-side__bottom-icons">
+          <div class="right-side__bottom-icons-item">
+            <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+          </div>					
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="image-chat">
+            <label for="image-chat"><i class="fas fa-image"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="attach-chat">
+            <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+          </div>				
+        </div>
+      </div>
+    </div>
+    <div class="right-side__screen tab-pane fade" id="to-3">
+      <div class="right-side__top">
+        <div class="right-side__top--leftside">
+          To :
+          <span class="right-side__top--leftside-username">
+            Mai Văn Hoàng
+          </span>
+        </div>
+        <div class="right-side__top--rightside">
+          <span class="right-side__top--rightside-item">
+            <a href="#modalImage" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+          </span>
+          <span class="right-side__top--rightside-item">
+            <a href="#modalAttachFile" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+          </span>
+        </div>
+      </div>
+      <div class="right-side__middle">
+        <div class="right-side__middle-content" data-chat="3">
+          <div class="right-side__middle-content--me bubble">
+            Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
+          </div>					
+          <div class="right-side__middle-content--you bubble">
+            Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
+          </div>
+          <div class="right-side__middle-content--me bubble">
+            Đây là thumbnail của mình!!
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/person1.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/calendar.jpeg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
+          </div>
+          <div class="right-side__middle-content--you bubble">
+            Còn đây là mình 
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <img src="../public/images/person2.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
+          </div>
+          <div class="right-side__middle-content--me bubble">
+            Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
+          </div>					
+          <div class="right-side__middle-content--you bubble">
+            Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
+          </div>
+          <div class="right-side__middle-content--me bubble">
+            Đây là thumbnail của mình!!
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/person1.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <img src="../public/images/calendar.jpeg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--me bubble bubble-image-file">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
+          </div>
+          <div class="right-side__middle-content--you bubble">
+            Còn đây là mình 
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <img src="../public/images/person2.jpg" class="show-image-file">
+          </div>
+          <div class="right-side__middle-content--you bubble-image-file bubble">
+            <a href="../public/fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
+          </div>
+        </div>
+      </div>
+      <div class="right-side__bottom">
+        <input type="text" class="right-side__bottom-write write-chat" id="text-write-chat-3" data-chat="1234" style="display:none">
+        <div class="right-side__bottom-icons">
+          <div class="right-side__bottom-icons-item">
+            <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+          </div>					
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="image-chat">
+            <label for="image-chat"><i class="fas fa-image"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="attach-chat">
+            <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+          </div>				
+        </div>
+      </div>
     </div>
   </div>
-  <div class="right-side__middle">
-    <div class="right-side__middle-content">
-      <div class="right-side__middle-content--me bubble">
-        Xin chào, rất vui được làm quen với bạn, mình tên là MVT, để biết thêm thông tin chi tiết về mình, bạn có thể truy cập https://www.facebook.com/
-      </div>					
-      <div class="right-side__middle-content--you bubble">
-        Hello, mình cũng rất vui khi được kết bạn với bạn, ồ, facebook của bạn thật thú vị!!! 
-      </div>
-      <div class="right-side__middle-content--me bubble">
-        Đây là thumbnail của mình!!
-      </div>
-      <div class="right-side__middle-content--me bubble bubble-image-file">
-        <img src="images/person1.jpg" class="show-image-file">
-      </div>
-      <div class="right-side__middle-content--me bubble bubble-image-file">
-        <img src="images/calendar.jpeg" class="show-image-file">
-      </div>
-      <div class="right-side__middle-content--me bubble bubble-image-file">
-        <a href="fileExample/Tệp văn bản - trungquandev.pdf" download="">File đính kèm</a>
-      </div>
-      <div class="right-side__middle-content--you bubble">
-        Còn đây là mình 
-      </div>
-      <div class="right-side__middle-content--you bubble-image-file bubble">
-        <img src="images/person2.jpg" class="show-image-file">
-      </div>
-      <div class="right-side__middle-content--you bubble-image-file bubble">
-        <a href="fileExample/Tệp văn bản - trungquandev.docx">Tệp văn bản</a>
-      </div>
-    </div>
-  </div>
-  <div class="right-side__bottom">
-    <input type="text" class="right-side__bottom-write write-chat" id="text-write-chat" data-chat="1234" style="display:none">
-    <div class="right-side__bottom-icons">
-      <div class="right-side__bottom-icons-item">
-        <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
-      </div>					
-      <div class="right-side__bottom-icons-item">
-        <input type="file" class="d-none" id="image-chat">
-        <label for="image-chat"><i class="fas fa-image"></i></label>
-      </div>
-      <div class="right-side__bottom-icons-item">
-        <input type="file" class="d-none" id="attach-chat">
-        <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
-      </div>
-      <div class="right-side__bottom-icons-item">
-        <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
-      </div>				
-    </div>
-  </div>
+ 
 </div>

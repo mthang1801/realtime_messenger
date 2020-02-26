@@ -44,7 +44,13 @@ export let convertDateTimeToString = timer => {
   let hour = dateTime.getHours();
   //get minutes
   let minutes = dateTime.getMinutes();
-  return `${hour}: ${minutes}, ${dayOfWeek} ngày ${date}/${month}/${year}`;
+  if(hour<10){
+    hour = "0"+hour;
+  }
+  if(minutes< 10){
+    minutes = "0"+minutes;
+  }
+  return `${hour}:${minutes}, ${dayOfWeek} ngày ${date}/${month}/${year}`;
 }
 
 /**

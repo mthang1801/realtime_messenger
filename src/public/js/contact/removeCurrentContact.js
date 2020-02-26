@@ -11,7 +11,8 @@ function removeCurrentContact(){
       confirmButtonText : "Xóa", 
       confirmButtonColor : "#E1141E",
       cancelbuttonColor : "#007bff",      
-      width : "40%"
+      width : "40%",
+      reverseButtons : true
     }).then( result => {
       if(result.value){
         $.ajax({
@@ -24,7 +25,8 @@ function removeCurrentContact(){
               decreaseCountContactNumber("count-contact-users");
               //remove out of contact list
               $("#contacts ul.contact-list").find(`li[data-uid = ${targetId}]`).remove();
-
+               //remove user contact at leftSide
+              $("#left-side ul.list-messenger-users").find(`li[data-uid = ${targetId}]`).remove();
               socket.emit("remove-current-contact", {targetId});
             }
           },
@@ -43,7 +45,8 @@ socket.on("response-remove-current-contact", user => {
   decreaseCountContactNumber("count-contact-users");
   //remove out of contact list
   $("#contacts ul.contact-list").find(`li[data-uid = ${user._id}]`).remove();
-    
+  //remove user contact at leftSide
+  $("#left-side ul.list-messenger-users").find(`li[data-uid = ${user._id}]`).remove();
 });
 
 $(document).ready(function () {

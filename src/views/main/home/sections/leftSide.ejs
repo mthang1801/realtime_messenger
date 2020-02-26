@@ -1,34 +1,71 @@
 <div class="col-12 col-sm-4 col-lg-4 col-xl-3 left-side">
   <div class="left-side__setting">
-      <select class="custom-select w-75" id="select-type-chat">
-        <option value="all-chat">Toàn bộ trò chuyện</option>
-        <option value="private-chat">Trò chuyện cá nhân</option>
-        <option value="group-chat">Trò chuyện nhóm</option>
-      </select>
-      <a href="#modalGroupChat" class="btn-create-group-chat" id="btn-create-group-chat" data-toggle="modal"><i class="fas fa-edit"></i></a>				
-  </div>
-  <div class="left-side__content" id="left-side">
-    <ul class="list-messenger-users">				
-      <% if(usersContactList.length){ %>
-        <% usersContactList.forEach( user => { %>
-        <li class="list-messenger-users__item left-side-user-item" data-uid="<%= user._id %>" data-toggle="tab" data-target="#right-side-<%= user._id %>">
-          <div class="list-messenger-users__item-avatar">
-            <img src="images/users/<%= user.avatar %>" title="<%= user.username %>" alt="<%= user.username %>" class="list-messenger-users__item-avatar-image">
-          </div>
-          <div class="list-messenger-users__item-text">
-            <div class="list-messenger-users__item-text--username">
-              <%= user.username %>
+    <select class="custom-select w-75" id="select-type-chat">
+      <option value="all-chat" data-toggle="tab" data-target="#all-conversations">Toàn bộ trò chuyện</option>
+      <option value="private-chat" data-toggle="tab" data-target="#private-conversations">Trò chuyện cá nhân</option>
+      <option value="group-chat" data-toggle="tab" data-target="#group-conversations">Trò chuyện nhóm</option>
+    </select>
+    <a href="#modalGroupChat" class="btn-create-group-chat" id="btn-create-group-chat" data-toggle="modal"><i class="fas fa-edit"></i></a>				
+  </div>  
+  <div class="left-side__conversations">
+    <div class="tab-content">
+      <ul class="left-side__conversations-list">
+        <li class="nav-item left-side__conversations-item">
+          <a class="nav-link active person"  href="#to-1" data-chat="1" data-target="#to-1">
+            <div class="person__avatar">
+              <img src="images/users/avatar-default-man.jpeg" class="person__avatar-image" >
             </div>
-            <div class="list-messenger-users__item-text--chat">
-              
-            </div>						
-          </div>
-          <div class="list-messenger-users__item-timer">
-            <%= convertToMessengerTimer(user.contactUpdatedAt) %>
-          </div>
-        </li>					
-      <%})%>																									
-    <%}%>>
-    </ul>
-  </div>			
+            <div class="person__infor">
+              <div class="person__infor--username">
+                maivthang1995
+              </div>
+              <div class="person__infor--messenger">
+                Xin chao ban
+              </div>
+            </div>
+            <div class="person__timer">
+              vài giây trước
+            </div>
+          </a>
+        </li>
+        <li class="nav-item left-side__conversations-item">
+          <a class="nav-link person "  href="#to-2" data-chat="2" data-target="#to-2">
+            <div class="person__avatar">
+              <img src="images/users/avatar-default-man.jpeg" class="person__avatar-image" >
+            </div>
+            <div class="person__infor">
+              <div class="person__infor--username">
+                maivthang2
+              </div>
+              <div class="person__infor--messenger">
+                Hello
+              </div>
+            </div>
+            <div class="person__timer">
+              vài phut trước
+            </div>
+          </a>
+        </li>
+        <li class="nav-item left-side__conversations-item">
+          <a class="nav-link person "  href="#to-3" data-chat="3" >
+            <div class="person__avatar">
+              <img src="images/users/avatar-default-man.jpeg" class="person__avatar-image" >
+            </div>
+            <div class="person__infor">
+              <div class="person__infor--username">
+                maivthang3
+              </div>
+              <div class="person__infor--messenger">
+                222222222
+              </div>
+            </div>
+            <div class="person__timer">
+              vài gio truoc
+            </div>
+          </a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
 </div>

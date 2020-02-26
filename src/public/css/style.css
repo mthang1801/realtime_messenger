@@ -176,15 +176,18 @@ a {
   .btn-link:hover {
     color: #04266e; }
 
-.navbar-dark .navbar-nav .nav-link {
-  color: white; }
-
 .navbar-dark .navbar-nav .nav-link:hover, .navbar-dark .navbar-nav .nav-link.active {
   background-color: #1a449c; }
 
 .modal .modal-content {
   height: 600px;
   overflow: auto; }
+
+.nav-link {
+  padding: .5rem; }
+
+.nav-link.active {
+  background-color: #CCCCCC; }
 
 .form__box {
   width: 80%;
@@ -306,7 +309,7 @@ a {
 .section-main {
   margin: 0;
   padding: 0;
-  height: calc(100% - 2.75rem); }
+  height: calc(100vh - 2.75rem); }
 
 .left-side {
   height: 100%;
@@ -512,7 +515,9 @@ a {
     font-size: 1rem; }
 
 .left-side {
-  background-color: #fff; }
+  background-color: #fff;
+  height: 100%;
+  overflow: auto; }
   .left-side__setting {
     display: flex;
     justify-content: center;
@@ -529,10 +534,47 @@ a {
       height: 1px;
       margin: 0;
       background-color: #CCCCCC; }
+  .left-side__conversations {
+    height: calc(100% - 3.5rem); }
+    .left-side__conversations-item {
+      padding: 0;
+      border-radius: .2rem; }
+      .left-side__conversations-item:hover {
+        background-color: #CCD0D5; }
+
+.person {
+  display: flex;
+  font-size: .9em;
+  padding: .6rem;
+  border-radius: .15rem;
+  color: #4A4A4A; }
+  .person:hover {
+    color: #f7f7f7;
+    background-color: #828282; }
+  .person__avatar {
+    flex-basis: 15%;
+    margin-right: .5rem; }
+    .person__avatar-image {
+      height: 3.5rem;
+      width: 3.5rem;
+      border-radius: 50%; }
+  .person__infor {
+    flex-basis: 50%;
+    margin-right: .5rem; }
+    .person__infor--username {
+      font-weight: 600; }
+    .person__infor--messenger {
+      opacity: .9; }
+  .person__timer {
+    flex-basis: 30%;
+    text-align: right;
+    font-size: .8em;
+    opacity: .8; }
 
 .list-messenger-users {
   margin-top: .1rem;
-  list-style: none; }
+  list-style: none;
+  margin-top: .5rem; }
   .list-messenger-users__item {
     display: flex;
     flex-wrap: nowrap;
@@ -573,10 +615,14 @@ a {
       cursor: pointer; }
 
 .right-side {
-  background-color: #fff; }
+  background-color: #fff;
+  height: 100%; }
+  .right-side__screen {
+    height: 100%;
+    width: 100%; }
   .right-side__top {
     background-color: #DADDE1;
-    height: 7%;
+    height: 8%;
     padding: .5rem 1.5rem; }
     .right-side__top--leftside {
       float: left; }
@@ -591,8 +637,10 @@ a {
       clear: both;
       display: table; }
   .right-side__middle {
-    height: 78%;
-    padding: .5rem; }
+    height: 76%;
+    padding: .5rem;
+    width: 100%;
+    position: relative; }
     .right-side__middle-content {
       border: 1px solid #CCCCCC;
       height: 100%;
@@ -619,7 +667,7 @@ a {
   .right-side__bottom {
     height: 15%;
     margin: 0 0.5rem;
-    padding: 0.05rem 0.5rem;
+    padding: 0.05rem;
     border-radius: .2rem;
     background-color: #F2F3F5; }
     .right-side__bottom-write {
@@ -668,6 +716,10 @@ a {
 .show-image-file {
   max-width: 90%;
   max-height: 25rem; }
+
+.screen-chat {
+  height: 100%;
+  width: 100%; }
 
 .emojionearea-button {
   opacity: 0 !important; }
@@ -777,3 +829,42 @@ a {
     .loading-contact div:nth-child(3) {
       left: 56px;
       animation-delay: 0; }
+
+.initial-conversation {
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+  background-color: #f7f7f7;
+  border-radius: .5rem;
+  border: 1px solid #828282; }
+  @media (max-width: 479px) {
+    .initial-conversation {
+      width: 80%; } }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .initial-conversation {
+      width: 65%; } }
+  @media (min-width: 1024px) {
+    .initial-conversation {
+      width: 40%; } }
+  .initial-conversation-top {
+    padding: .5rem; }
+    .initial-conversation-top::after {
+      content: "";
+      clear: both;
+      display: table; }
+    .initial-conversation-top__avatar img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      float: left;
+      margin-right: 1rem;
+      vertical-align: middle; }
+    .initial-conversation-top__content--username {
+      font-size: 1.1em;
+      font-weight: 600; }
+    .initial-conversation-top__content--intro {
+      font-size: .9em;
+      color: #BEC3C9; }
+  .initial-conversation-bottom__background img {
+    width: 100%;
+    height: 10rem; }

@@ -8,7 +8,7 @@ let contactSchema = new mongoose.Schema({
   blockList : [{type : String, default : null }],
   updatedAt : {type : Number, default : null},
   deletedAt : {type : Number, default : null}
-})
+}, {upsert :true, strict : false});
 
 contactSchema.statics = {
   createNew(item){
@@ -106,8 +106,17 @@ contactSchema.statics = {
   getContactStatusFalseByContactId(userId, limit, skip=0){
     return this.find({"contactId" : userId , "status" : false}).sort({"createdAt" : -1}).skip(skip).limit(limit).exec();
   },
-  updateContactStatusAsTrue(userId, contactId){
-    return this.findOneAndUpdate({"userId" : userId, "contactId" : contactId},{"status" : true, updatedAt : Date.now()},{new :true}).exec();
+  /**
+   * 
+   * @param {string} userId 
+   * @param {string} contactId 
+   * update status and updatedAt
+   */
+  updateContactStatusAsTrueAndCreateTimeMessage(userId, contactId){
+    return this.findOneAndUpdate(
+      {"userId" : userId, "contactId" : contactId},
+      {"status" : true, updatedAt : Date.now(), "msgUpdatedAt": Date.now()},
+      { new: true, upsert: true}).exec();
   },
   getContactListByUserId(userId){
     return this.find({
@@ -120,7 +129,7 @@ contactSchema.statics = {
         },
         {"status" : true }
       ]
-    }).sort({"updatedAt" : -1}).exec();
+    }).sort({"username" : 1}).exec();
   },
   /**
    * 
@@ -161,6 +170,20 @@ contactSchema.statics = {
   },
   findContactExactly(userId, contactId){
     return this.findOne({"userId" : userId, "contactId" : contactId}).exec();
+  },
+  getContactListFromMsgUpdatedAt(userId){
+    return this.find({
+      $and : [
+        { 
+          $or : [
+           {"userId" : userId},
+           {"contactId" : userId}
+          ]
+        },
+        {"status" : true },
+        {"msgUpdatedAt" : {$exists : true}}
+      ]
+    }).sort({"msgUpdatedAt" : -1}).exec();
   }
 }
 

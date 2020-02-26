@@ -1,0 +1,54 @@
+.initial-conversation{
+  position :relative;
+  margin : 0 auto;
+  margin-bottom : 3rem;
+  background-color : $color-grey-light;
+  border-radius : .5rem;
+  border: 1px solid $color-dark-ui-primary-icon;
+  @include mobile{
+    width : 80%;
+  }
+  @include tablet{
+    width : 65%;
+  }
+  @include desktop{
+    width : 40%
+  }
+  
+  &-top{
+    padding : .5rem;
+    &::after{
+      content : "";
+      clear : both;
+      display : table;
+    }
+    &__avatar{     
+      & img{
+        width : 4rem;
+        height : 4rem;
+        border-radius: 50%;
+        float : left ;
+        margin-right: 1rem;
+        vertical-align: middle;
+      }
+    }
+    &__content{   
+      &--username{
+        font-size : 1.1em;
+        font-weight: 600;
+      }
+      &--intro{
+        font-size : .9em;
+        color : $color-disabled-text;
+      }
+    }
+  }
+  &-bottom{    
+    &__background{
+      & img{
+        width:100%;
+        height:10rem;
+      }
+    }
+  }
+}

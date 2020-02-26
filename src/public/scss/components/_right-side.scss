@@ -1,8 +1,13 @@
 .right-side{
   background-color: $color-white;
+  height: 100%;
+  &__screen{
+    height : 100%;
+    width : 100%;
+  }
   &__top{
     background-color : $color-divider-on-white;
-    height :7%;
+    height :8%;
     padding : .5rem 1.5rem; 
     &--leftside{
       float : left ; 
@@ -23,13 +28,15 @@
     }
   }
   &__middle{
-    height: 78%;   
-    padding : .5rem;
+    height: 76%;
+    padding : .5rem;  
+    width : 100%;  
+    position : relative;
     &-content{
       border : 1px solid $color-dark-mode-gray-35;
       height: 100%;
-      padding : .5rem 1.25rem;
-      overflow: auto;
+      padding : .5rem 1.25rem;      
+      overflow : auto;
       &--me{
         float : right ;
         background-color :$color-facebook-bg-messenger;
@@ -61,7 +68,7 @@
   &__bottom{
     height: 15%;
     margin : 0 0.5rem;
-    padding: 0.05rem 0.5rem;    
+    padding: 0.05rem ;    
     border-radius: .2rem;
     background-color : $color-comment-background;
     &-write{
@@ -99,6 +106,7 @@
       }
     }
   }
+  
 }
 
 .bubble{
@@ -122,4 +130,9 @@
 .show-image-file{
   max-width : 90%;
   max-height: 25rem;
+}
+
+.screen-chat{
+  height: 100%;
+  width : 100%;
 }

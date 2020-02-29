@@ -25,6 +25,8 @@
     "photoset-grid": "^1.0.1",
     "alertify": "^0.3.10",
     "alertifyjs": "^1.0.11",
-    "sweetalert2": "^9.7.2"
+    "sweetalert2": "^9.7.2",
+    "emojione": "^4.5.0",
+    "moment": "^2.24.0"
   }
 }

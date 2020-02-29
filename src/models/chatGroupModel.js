@@ -19,6 +19,12 @@ chatGroupSchema.statics = {
   },
   findGroupConversationByUserId(userId) {
     return this.find({"members" : {$elemMatch : { "userId" : userId}}}).sort({"createdAt" : -1}).exec();
+  },
+  findGroupById(id){
+    return this.find(id).exec();
+  },
+  findGroupAndUpdateTimeWhenHasNewMessenger(id){
+    return this.findOneAndUpdate(id, {"msgUpdatedAt": Date.now()}, {new: true}).exec();
   }
 }
 module.exports = mongoose.model("chat-group", chatGroupSchema);

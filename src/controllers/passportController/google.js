@@ -56,9 +56,16 @@ let initPassportGoogle = () => {
   passport.deserializeUser( async (id, done) => {
     try {
       let user = await userModel.findUserById(id);
+      let listGroupsContainUser = await groupChatModel.findGroupConversationByUserId(id);
+      let listGroupsId  = [];
+      listGroupsContainUser.forEach( group => {
+        listGroupsId.push(group._id);
+      })
+      user = user.toObject();
+      user.listGroupsId = listGroupsId;      
       return done(null, user);
     } catch (error) {
-      return done(error,null);
+      return done(error, null);
     }
   })
 }

@@ -38,7 +38,10 @@ export const transErrors = {
   empty_notification : "Không còn thông báo",
   empty_request_contact_sent : "Bạn không còn yêu cầu kết bạn với người khác.",
   empty_request_contact_received : "Bạn không còn lời mời kết bạn.",
-  unable_updateNotification : "Tất cả các thông báo bạn đã đọc!"
+  unable_updateNotification : "Tất cả các thông báo bạn đã đọc!",
+  send_message_fail : "Gửi tin nhắn không thành công, có lỗi xảy ra",
+  unexisted_group : "Nhóm không tồn tại",
+  empty_update : "Không có tin nhắn để cập nhật"
 }
 
 export const transSuccess = {

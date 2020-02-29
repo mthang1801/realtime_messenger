@@ -1,5 +1,5 @@
 import {notification, contact, conversation} from "../services";
-import {convertDateTimeToString, convertToMessengerTimer} from "../helpers/clientHelper";
+import {convertDateTimeToString, convertToMessengerTimeStamp, getLastItemInArray, bufferToBase64, convertDateTimeMessenger} from "../helpers/clientHelper";
 let getHome =async (req, res) => {
 
   //get Notifcation list in order to render notification board
@@ -13,8 +13,18 @@ let getHome =async (req, res) => {
   let getRequestContactReceiver = await contact.getRequestContactReceived(req.user._id);
   let getContactList = await contact.getContactList(req.user._id);
   //get conversations
-  let getAllConversations = await conversation.getAllConversations(req.user._id);
-  let getAllMessengersContent = await conversation.getAllMessengersContent(req.user._id);
+  let getAllConversations = await conversation.getAllConversations(req.user._id);  
+  // console.log(req.user._id);
+  // getAllConversations.forEach(conversation => {   
+  //   conversation.messages.forEach(message => {
+  //     if(message.seenersInfo){
+  //       message.seenersInfo.forEach(seener => {
+          
+  //         console.log(seener._id.toString() == req.user._id.toString() );
+  //       })
+  //     }
+  //   })
+  // })
   return res.render("main/home/home",{
     activeSuccess : req.flash("activeSuccess"),
     user : req.user,  
@@ -26,9 +36,11 @@ let getHome =async (req, res) => {
     countRequestContactSent : countRequestContactSent,
     countRequestContactReceived : countRequestContactReceived,
     convertDateTimeToString : convertDateTimeToString,
-    convertToMessengerTimer : convertToMessengerTimer,
+    convertToMessengerTimeStamp : convertToMessengerTimeStamp,
     allConversations : getAllConversations,
-    allMessengers : getAllMessengersContent
+    getLastItemInArray : getLastItemInArray,
+    bufferToBase64 : bufferToBase64,
+    convertDateTimeMessenger : convertDateTimeMessenger
   });
 };
 

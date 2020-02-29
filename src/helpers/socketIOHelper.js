@@ -13,4 +13,5 @@ export const removeSocketIdOutOfArray = (clients, userId, socketId) => {
   if(!clients[userId].length){
     delete clients[userId];
   }
+  
 }

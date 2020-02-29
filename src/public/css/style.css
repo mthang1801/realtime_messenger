@@ -534,13 +534,17 @@ a {
       height: 1px;
       margin: 0;
       background-color: #CCCCCC; }
-  .left-side__conversations {
+  .left-side-conversations {
     height: calc(100% - 3.5rem); }
-    .left-side__conversations-item {
-      padding: 0;
-      border-radius: .2rem; }
-      .left-side__conversations-item:hover {
-        background-color: #CCD0D5; }
+    .left-side-conversations__content {
+      height: 100%; }
+      .left-side-conversations__content-list {
+        height: 100%; }
+      .left-side-conversations__content-item {
+        padding: 0;
+        border-radius: .2rem; }
+        .left-side-conversations__content-item:hover {
+          background-color: #CCD0D5; }
 
 .person {
   display: flex;
@@ -560,11 +564,16 @@ a {
       border-radius: 50%; }
   .person__infor {
     flex-basis: 50%;
-    margin-right: .5rem; }
+    margin-right: .5rem;
+    width: 40%; }
     .person__infor--username {
       font-weight: 600; }
     .person__infor--messenger {
-      opacity: .9; }
+      opacity: .9;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width: 100%; }
   .person__timer {
     flex-basis: 30%;
     text-align: right;
@@ -619,7 +628,9 @@ a {
   height: 100%; }
   .right-side__screen {
     height: 100%;
-    width: 100%; }
+    width: 100%;
+    background-color: #fff;
+    z-index: 10; }
   .right-side__top {
     background-color: #DADDE1;
     height: 8%;
@@ -645,11 +656,22 @@ a {
       border: 1px solid #CCCCCC;
       height: 100%;
       padding: .5rem 1.25rem;
-      overflow: auto; }
+      overflow: auto;
+      position: relative; }
+      .right-side__middle-content-avatar {
+        position: absolute;
+        height: 1.5rem;
+        width: 1.5rem;
+        border-radius: 50%; }
+        .right-side__middle-content-avatar--me {
+          top: 20%;
+          right: -2rem; }
+        .right-side__middle-content-avatar--you {
+          top: 20%;
+          left: -2rem; }
       .right-side__middle-content--me {
         float: right;
-        background-color: #09f;
-        color: #fff; }
+        margin-right: 2.5rem; }
         .right-side__middle-content--me.bubble a {
           float: right;
           border-bottom: 1.5px solid #c8d6e5;
@@ -657,13 +679,24 @@ a {
           margin: .5rem; }
       .right-side__middle-content--you {
         float: left;
-        background-color: #CCCCCC;
-        color: #000; }
+        margin-left: 2.5rem; }
         .right-side__middle-content--you.bubble a {
           float: left;
           border-bottom: 1.5px solid #c8d6e5;
           padding: .5rem;
           margin: .5rem; }
+      .right-side__middle-content-messenger-text {
+        padding: .5rem .75rem;
+        border-radius: .5rem;
+        display: inline-block; }
+        .right-side__middle-content-messenger-text--you {
+          background-color: #CCCCCC;
+          color: #000;
+          float: left; }
+        .right-side__middle-content-messenger-text--me {
+          background-color: #09f;
+          color: #fff;
+          float: right; }
   .right-side__bottom {
     height: 15%;
     margin: 0 0.5rem;
@@ -705,13 +738,20 @@ a {
   position: relative;
   display: inline-block;
   clear: both;
-  margin-top: .25rem;
-  margin-bottom: .25rem;
-  padding: 1rem;
+  margin-top: .5rem;
+  margin-bottom: .5rem;
   vertical-align: top;
   border-radius: .25rem; }
   .bubble-image-file {
     background-color: #fff; }
+  .bubble-gif-icon {
+    background-color: #fff !important;
+    margin-left: -1rem; }
+    .bubble-gif-icon::before {
+      background-color: #fff !important; }
+    .bubble-gif-icon img {
+      width: 8rem;
+      background-color: #fff !important; }
 
 .show-image-file {
   max-width: 90%;
@@ -719,7 +759,24 @@ a {
 
 .screen-chat {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  background-color: #CCCCCC; }
+
+.status-messenger {
+  display: inline-block;
+  margin: 0rem .3rem;
+  font-size: .8em;
+  color: #828282;
+  font-style: italic; }
+  .status-messenger--you {
+    text-align: left; }
+  .status-messenger--me {
+    float: right;
+    text-align: right; }
+  .status-messenger--avatar {
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%; }
 
 .emojionearea-button {
   opacity: 0 !important; }
@@ -831,23 +888,26 @@ a {
       animation-delay: 0; }
 
 .initial-conversation {
-  position: relative;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   margin: 0 auto;
   margin-bottom: 3rem;
-  background-color: #f7f7f7;
-  border-radius: .5rem;
-  border: 1px solid #828282; }
+  border-radius: 1rem;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.7); }
   @media (max-width: 479px) {
     .initial-conversation {
-      width: 80%; } }
+      width: 100%; } }
   @media (min-width: 768px) and (max-width: 1023px) {
     .initial-conversation {
-      width: 65%; } }
+      width: 80%; } }
   @media (min-width: 1024px) {
     .initial-conversation {
-      width: 40%; } }
+      width: 45%; } }
   .initial-conversation-top {
-    padding: .5rem; }
+    padding: .5rem;
+    background-color: #F2F3F5; }
     .initial-conversation-top::after {
       content: "";
       clear: both;
@@ -867,4 +927,4 @@ a {
       color: #BEC3C9; }
   .initial-conversation-bottom__background img {
     width: 100%;
-    height: 10rem; }
+    height: 15rem; }

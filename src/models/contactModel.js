@@ -184,6 +184,37 @@ contactSchema.statics = {
         {"msgUpdatedAt" : {$exists : true}}
       ]
     }).sort({"msgUpdatedAt" : -1}).exec();
+  },
+  updateTimeWhenHasNewMessage(userId, contactId){
+    return this.findOneAndUpdate(
+      {
+        $and : [
+          {
+            $or : [
+              {
+                $and : [
+                  {"userId" : userId},
+                  {"contactId" : contactId}
+                ]
+              },
+              {
+                $and : [
+                  {"userId" :contactId},
+                  {"contactId" : userId}
+                ]
+              }
+            ]
+          },
+          {"status" : true}
+        ]
+      },
+      {
+        "msgUpdatedAt" : Date.now()
+      },
+      {
+         new : true
+      }
+    ).exec();
   }
 }
 

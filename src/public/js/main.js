@@ -16,7 +16,6 @@ function niceScrollLeftSide(){
 };
 
 function niceScrollChatBox(chatBoxId){   
-  console.log($(`.right-side__middle-content[data-chat = ${chatBoxId}]`)[0].scrollHeight);
   $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -25,20 +24,21 @@ function niceScrollChatBox(chatBoxId){
     scrollspeed: 50,
     autohidemode : "leave",
   });
-  $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).attr("zIndex", "1000").scrollTop($(`.right-side__middle-content[data-chat = ${chatBoxId}]`)[0].scrollHeight);
+  $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).scrollTop($(`.right-side__middle-content[data-chat = ${chatBoxId}]`)[0].scrollHeight);
 };
 
-let spinLoaded = () => {
+
+function spinLoaded(){
   $("#loading").css("display" , "none");
   $(".modal-loading").css("display", "none");
 };
 
-let spinLoading = () => {
+function spinLoading(){
   $("#loading").css("display", "block");
-  $(".modal-loading").css("display", "block");
+  $(".modal-loading").css("display", "block"); 
 };
 
-let ajaxLoading = () => {
+function ajaxLoading(){
   $(document).ajaxStart(() =>{
     spinLoading();
   }).ajaxStop(() => {
@@ -46,13 +46,13 @@ let ajaxLoading = () => {
   })
 };
 
-let showModalContacts = () => {
+function showModalContacts(){
   $("#modalContact").on("show.bs.modal", () => {
     $("#contact-count").fadeOut("fast");
   })
 };
 
-let photoSetGrid = (layoutNumber) => {
+function photoSetGrid(layoutNumber){
   let countRows = Math.ceil($("#modalImage").find("div.all-images>img").length / layoutNumber );
   let layoutStr = new Array(countRows).fill(layoutNumber).join("");  
   $("#modalImage").find("div.all-images").photosetGrid({
@@ -83,8 +83,8 @@ let switchButtonGroupChat = () => {
   })
 }
 
-let enableEmojiChat = (dataID) => {
-  $(`.write-chat[data-chat=${dataID}]`).emojioneArea({
+function enableEmojiChat(targetId){
+  $(`#chat-text-${targetId}`).emojioneArea({
     standalone : false ,
     search : false ,
     pickerPosition : "top",
@@ -96,14 +96,21 @@ let enableEmojiChat = (dataID) => {
     shortnames : false ,
     events  : {
       keyup : function(editor, event) {
-        $(".write-chat").val(this.getText());
-      }    
+        $(`#chat-text-${targetId}`).val(this.getText());
+      },
+      focus : function(){
+        typingOn(targetId);                
+      },    
+      click : function(){
+        chatTextAndEmoji(targetId);
+      }
     }
   });
-
- 
-  
-  $(".icon-chat").on("click" ,  function(){  
+  //create auto focus when every click conversation item at left side, right side will auto click into input tag
+  $(`.right-side__bottom`).find(".emojionearea-editor").blur();
+  $(`.right-side__bottom[data-chat = ${targetId}]`).find(".emojionearea-editor").focus();
+  //when click this button, it will switch class "click-on" inorder to determine input has whether focus or not
+  $(".icon-chat").off("click").on("click" ,  function(){  
     $(".icon-chat").toggleClass("click-on");
     if($(".icon-chat").hasClass("click-on")){
       $(".emojionearea-button").trigger("click");
@@ -122,6 +129,7 @@ let enableEmojiChat = (dataID) => {
     }
   })
 };
+
 
 let toggleNotificationBoard = () => {
   $("#button-notification").on("click" , function(){    
@@ -171,18 +179,61 @@ let initialConfigure = () => {
   })
 };
 
+// let enableSeenGroup = false ;
+// let enableSeenPrivate = false ;
 function switchTabConversation(){
-  $(".left-side__conversations-item").off("click").on("click", function(){
+  $(".left-side-conversations__content-item").off("click").on("click", function(){
     let targetId = $(this).find("a").data("chat");
+    let isGroupChat = $(this).find("a").hasClass("group-chat");
     $(".nav-link").removeClass("active");
-    $(`.a[data-chat = ${targetId}]`).addClass("active");
+    $(`.a[data-chat = ${targetId}]`).addClass("active");   
+    $(this).find(".nav-link").tab("show");      
+    $(`#chat-text-${targetId}`).focus();
+    $(".initial-conversation").hide();
    
-    $(this).find(".nav-link").tab("show");
-    let timer = setInterval(()=>{niceScrollChatBox(targetId.toString())},500)
-    clearInterval(timer);
+    niceScrollChatBox(targetId);
+    enableEmojiChat(targetId);    
+    chatTextAndEmoji(targetId) ;  
+    if(!isGroupChat){
+      receiverHasSeenMessage(targetId);
+    }
+    
     
   })
+};
+//Have 2 cases occur: 
+//case 1 : receiver click conversation item
+//case 2 : receiver opened convesation before
+function receiverHasSeenMessage(senderId){  
+    $.ajax({
+      type: "put",
+      url: "/conversation/receiver-has-seen-message",
+      data: {senderId},
+      global :false ,
+      success: function (data) {
+       
+        if(data.success){             
+          let {receiverId} = data;
+          let dataToEmit = { senderId, receiverId };    
+          socket.emit("receiver-has-seen-message", dataToEmit);
+        }
+      },
+      error : function(err){
+       
+      }
+    });  
+};
+//check whether screen right side show or not, if show and message is sent, it status-message will be "seen"
+function checkScreenShow(receiverId, senderId){
+  if($(`#to-${receiverId}`).hasClass("active")){
+    receiverHasSeenMessage(receiverId)    
+  }
 }
+
+socket.on("response-receiver-has-seen-message", data => {  
+  $(`.right-side__middle-content[data-chat = ${data.receiverId}] div.bubble:last-child`).find(".status-messenger").text("Đã xem");
+  checkScreenShow(data.receiverId, data.senderId);
+}) 
 
 function flashMasterNotify(){
   let notify = $(".alert-master-success").text();  
@@ -190,6 +241,14 @@ function flashMasterNotify(){
     alertify.set('notifier','position', 'right-bottom');
     alertify.success(notify);
   }
+}
+
+function enableConverToImage(){
+  $(".convert-emoji").each( function(){
+    let original = $(this).html() ;     
+    let converted = emojione.toImage(original) ; 
+    $(this).html(converted);
+  })
 }
 
 
@@ -211,18 +270,22 @@ $(document).ready(function () {
   //set grid for photo at image Modal
   photoSetGrid(3);
 
-  //create emotion for chatbox 
-  enableEmojiChat("1234");
+  // //create emotion for chatbox 
+  // enableEmojiChat("1234");
 
   toggleNotificationBoard();
 
   //flash message at master screen
   flashMasterNotify();
 
-  switchTabConversation();
-   
-  if($(".left-side__conversations-item").length){
-    $(".left-side__conversations-item:first-child").find(".nav-link:first-child").click();
-  }
+  //Enable convert emoji to Images
+  enableConverToImage();
 
+  switchTabConversation();
+
+  checkScreenShow();
+   
+  $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
+  $(".initial-conversation").show();
+  $(".screen-chat").find(".tab-pane:first-child").removeClass("show active");
 });

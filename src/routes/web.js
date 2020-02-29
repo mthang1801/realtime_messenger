@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, auth, user, contact, notification} from "../controllers/index";
+import {home, auth, user, contact, notification, conversation} from "../controllers/index";
 import {authValid, userValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
@@ -68,6 +68,10 @@ let initRoutes = (app) => {
   router.get("/notification/read-all", auth.checkLoggedIn, notification.readAllNotifications);
   router.put("/notification/mark-as-read-all-notifications", auth.checkLoggedIn, notification.markAsReadAllNotifications);
   router.get("/notification/get-notifications", auth.checkLoggedIn, notification.getNotifications);
+  //conversation
+  router.post("/conversation/chat-text-and-emoji", auth.checkLoggedIn, conversation.chatTextAndEmoji);
+  router.put("/conversation/update-message-has-been-received", auth.checkLoggedIn, conversation.updateMessageHasBeenReceived);
+  router.put("/conversation/receiver-has-seen-message", auth.checkLoggedIn, conversation.receiverHasSeenMessage);
   return app.use(router);
 }
 

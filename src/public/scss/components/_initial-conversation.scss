@@ -1,22 +1,26 @@
 .initial-conversation{
-  position :relative;
+  position : absolute;
+  top : 45%;
+  left : 50% ;
+  transform : translate(-50%, -50%);
   margin : 0 auto;
   margin-bottom : 3rem;
-  background-color : $color-grey-light;
-  border-radius : .5rem;
-  border: 1px solid $color-dark-ui-primary-icon;
+  border-radius : 1rem;
+  box-shadow: 0 2rem 4rem rgba($color-black, .7);
   @include mobile{
-    width : 80%;
+    width : 100%;   ;
   }
   @include tablet{
-    width : 65%;
+    width : 80%;
+    
   }
   @include desktop{
-    width : 40%
+    width : 45%
   }
   
   &-top{
     padding : .5rem;
+    background-color: $color-comment-background;
     &::after{
       content : "";
       clear : both;
@@ -47,7 +51,7 @@
     &__background{
       & img{
         width:100%;
-        height:10rem;
+        height:15rem;
       }
     }
   }

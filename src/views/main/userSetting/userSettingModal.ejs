@@ -39,10 +39,10 @@
                   <% if(user.local.email) {%>
                     <h3>Local Account</h3>
                   <%}%>
-                  <% if(user.google.email) {%>
+                  <% if(user.google) {%>
                     <h3>Google Account</h3>
                   <% } %>
-                  <%if (user.facebook.email) {%>
+                  <%if (user.facebook) {%>
                     <h3>Facebook Account</h3>
                   <%}%>
                 </div>
@@ -53,10 +53,10 @@
                       <% if(user.local.email) {%>
                         <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.local.email %>" disabled>
                       <%}%>
-                      <% if(user.google.email) {%>
+                      <% if(user.google) {%>
                         <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.google.email %>" disabled>
                       <% } %>
-                      <%if (user.facebook.email) {%>
+                      <%if (user.facebook) {%>
                         <input type="email" class="form-control" id="input-disabled-email-profile" value="<%= user.facebook.email %>" disabled>
                       <%}%>
                      

@@ -20,16 +20,22 @@
       background-color: $color-dark-mode-gray-35;
     }
   }
-  &__conversations{
+  &-conversations{
     height: calc(100% - 3.5rem) ;
-          
-    &-item{
-      padding : 0;        
-      border-radius : .2rem;
-      &:hover{
-        background-color : $color-divider-on-wash;
+    &__content{
+      height: 100%; 
+      &-list{
+        height: 100%;
+      }  
+      &-item{
+        padding : 0;        
+        border-radius : .2rem;
+        &:hover{
+          background-color : $color-divider-on-wash;
+        }
       }
     }
+    
   
   }
 }
@@ -56,11 +62,17 @@
   &__infor{
     flex-basis: 50%;
     margin-right : .5rem;
+    
+    width: 40%;
     &--username {
       font-weight: 600;       
     }
     &--messenger{
       opacity: .9;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      width : 100%;
     }
   }
   &__timer{

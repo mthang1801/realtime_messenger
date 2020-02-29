@@ -54,14 +54,20 @@ let initPassportFacebook = () => {
   })
 
   //when make request, this get user info and generate req.user 
-  passport.deserializeUser( (id, done) =>{
-    userModel.findUserById(id)
-      .then(user => {
-        done(null, user);
+  passport.deserializeUser( async (id, done) =>{
+    try {
+      let user = await userModel.findUserById(id);
+      let listGroupsContainUser = await groupChatModel.findGroupConversationByUserId(id);
+      let listGroupsId  = [];
+      listGroupsContainUser.forEach( group => {
+        listGroupsId.push(group._id);
       })
-      .catch(err =>{
-        done(error,null);
-      })
+      user = user.toObject();
+      user.listGroupsId = listGroupsId;  
+      return done(null, user);
+    } catch (error) {
+      return done(error, null);
+    }
   })
 }
 

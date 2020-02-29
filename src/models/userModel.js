@@ -142,6 +142,9 @@ userSchema.statics = {
         }
       ]
     },{ "username" : 1, "local.email" : 1, "facebook.email": 1, "google.email" : 1, "address" : 1 , "phone" : 1, "avatar" : 1, "gender" : 1}).skip(skipNumber).exec();
+  },
+  findSeenerInfoById(id){
+    return this.findById(id, {"username" : 1, "avatar" : 1 , "_id" : 1}).exec();
   }
 };
 

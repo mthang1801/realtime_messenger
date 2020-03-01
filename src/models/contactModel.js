@@ -7,7 +7,8 @@ let contactSchema = new mongoose.Schema({
   createdAt : {type : Number, default : Date.now},
   blockList : [{type : String, default : null }],
   updatedAt : {type : Number, default : null},
-  deletedAt : {type : Number, default : null}
+  deletedAt : {type : Number, default : null},
+  msgUpdatedAt : {type :Number, default : null }
 }, {upsert :true, strict : false});
 
 contactSchema.statics = {
@@ -181,7 +182,7 @@ contactSchema.statics = {
           ]
         },
         {"status" : true },
-        {"msgUpdatedAt" : {$exists : true}}
+        {"msgUpdatedAt" : {$ne : null , $exists : true }}
       ]
     }).sort({"msgUpdatedAt" : -1}).exec();
   },
@@ -210,6 +211,37 @@ contactSchema.statics = {
       },
       {
         "msgUpdatedAt" : Date.now()
+      },
+      {
+         new : true
+      }
+    ).exec();
+  },
+  removeConversation(userId, contactId){
+    return this.findOneAndUpdate(
+      {
+        $and : [
+          {
+            $or : [
+              {
+                $and : [
+                  {"userId" : userId},
+                  {"contactId" : contactId}
+                ]
+              },
+              {
+                $and : [
+                  {"userId" :contactId},
+                  {"contactId" : userId}
+                ]
+              }
+            ]
+          },
+          {"status" : true}
+        ]
+      },
+      {
+        "msgUpdatedAt" :null
       },
       {
          new : true

@@ -133,6 +133,23 @@ messageSchema.statics = {
       {$push : {"groupSeen" : {userId}}},
       {new : true}
     ).exec();
+  },
+  removeAllMessenger(userId, contactId){
+    return this.deleteMany({
+      $or : [
+        {$and : [
+          {"senderId" : userId},
+          {"receiverId" :contactId}
+          ]
+        },
+        {
+          $and : [
+            {"senderId" : contactId},
+            {"receiverId" :userId}
+          ]
+        }
+      ]
+    }).exec();
   }
 }
 

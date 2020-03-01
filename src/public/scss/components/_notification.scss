@@ -9,6 +9,7 @@
   box-shadow: 0 .2rem .4rem rgba($color-black, .15);
   padding : .3rem .5rem;
   z-index : 99;
+  display : none;
   &__header{
     display :flex ; 
     justify-content: space-between;    

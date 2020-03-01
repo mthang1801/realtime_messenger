@@ -103,6 +103,9 @@ function enableEmojiChat(targetId){
       },    
       click : function(){
         chatTextAndEmoji(targetId);
+      },
+      blur : function(){
+        typingOff(targetId);
       }
     }
   });
@@ -133,8 +136,8 @@ function enableEmojiChat(targetId){
 
 let toggleNotificationBoard = () => {
   $("#button-notification").on("click" , function(){    
-    $("#notification-board").fadeToggle("fast");
-    $("#notification-bell-count").fadeOut("fast");
+    $("#notification-board").fadeToggle(200);
+    $("#notification-bell-count").fadeOut(200);
     return false;
   })
   $("#notification-board").on("click", function(){    
@@ -187,8 +190,7 @@ function switchTabConversation(){
     let isGroupChat = $(this).find("a").hasClass("group-chat");
     $(".nav-link").removeClass("active");
     $(`.a[data-chat = ${targetId}]`).addClass("active");   
-    $(this).find(".nav-link").tab("show");      
-    $(`#chat-text-${targetId}`).focus();
+    $(this).find(".nav-link").tab("show");         
     $(".initial-conversation").hide();
    
     niceScrollChatBox(targetId);
@@ -249,7 +251,7 @@ function enableConverToImage(){
     let converted = emojione.toImage(original) ; 
     $(this).html(converted);
   })
-}
+};
 
 
 $(document).ready(function () {
@@ -288,4 +290,6 @@ $(document).ready(function () {
   $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
   $(".initial-conversation").show();
   $(".screen-chat").find(".tab-pane:first-child").removeClass("show active");
+
+ 
 });

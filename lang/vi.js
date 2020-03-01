@@ -41,7 +41,9 @@ export const transErrors = {
   unable_updateNotification : "Tất cả các thông báo bạn đã đọc!",
   send_message_fail : "Gửi tin nhắn không thành công, có lỗi xảy ra",
   unexisted_group : "Nhóm không tồn tại",
-  empty_update : "Không có tin nhắn để cập nhật"
+  empty_update : "Không có tin nhắn để cập nhật",
+  can_not_remove_group : "Nhóm không thể xóa hội thoại",
+  failed_update : "Xóa hội thoại không thành công"
 }
 
 export const transSuccess = {

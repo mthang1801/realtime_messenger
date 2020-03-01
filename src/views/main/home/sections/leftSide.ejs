@@ -13,7 +13,7 @@
         <% allConversations.forEach( conversation => {%>                                        
           <% if(conversation.members) {%>
             <li class="nav-item left-side-conversations__content-item" >
-              <a class="nav-link person group-chat"  href="#uid-<%= conversation._id %>" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+              <a class="nav-link person group-chat"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
                 <div class="person__avatar">
                   <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
                 </div>
@@ -38,14 +38,22 @@
                     <%}%>
                   </div>
                 </div>
-                <div class="person__timer">
-                  <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
-                </div>
+                <div class="person__config" data-uid="<%= conversation._id %>">
+                  <div class="person__config--setting" >
+                    <span>...</span>                  
+                  </div>
+                  <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                    <div class="remove-conversation">Xóa hội thoại</div>
+                  </div>
+                  <div class="person__config--time" data-uid="<%= conversation._id %>">
+                    <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+                  </div>
+                </div>               
               </a>
             </li>              
           <%}else{%>
             <li class="nav-item left-side-conversations__content-item" >
-              <a class="nav-link person"  href="#uid-<%= conversation._id %>" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+              <a class="nav-link person"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
                 <div class="person__avatar">
                   <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
                 </div>
@@ -70,9 +78,17 @@
                     <%}%>
                   </div>
                 </div>
-                <div class="person__timer">
-                  <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
-                </div>
+                <div class="person__config" data-uid="<%= conversation._id %>">
+                  <div class="person__config--setting">
+                    <span>...</span>                   
+                  </div>
+                  <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                    <div class="remove-conversation">Xóa hội thoại</div>
+                  </div>
+                  <div class="person__config--time" data-uid="<%= conversation._id %>">
+                    <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+                  </div>
+                </div>                 
               </a>
             </li>            
           <%}%>
@@ -84,7 +100,7 @@
         <% allConversations.forEach( conversation => {%>      
           <% if(!conversation.members) {%>
             <li class="nav-item left-side-conversations__content-item" >
-              <a class="nav-link person"  href="#uid-<%= conversation._id %>" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+              <a class="nav-link person"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
                 <div class="person__avatar">
                   <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
                 </div>
@@ -109,9 +125,17 @@
                     <%}%>
                   </div>
                 </div>
-                <div class="person__timer">
-                  <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
-                </div>
+                <div class="person__config" data-uid="<%= conversation._id %>">
+                  <div class="person__config--setting">
+                    <span>...</span>                    
+                  </div>
+                  <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                    <div class="remove-conversation">Xóa hội thoại</div>
+                  </div>
+                  <div class="person__config--time" data-uid="<%= conversation._id %>">
+                    <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+                  </div>
+                </div>                         
               </a>
             </li>            
           <%}%>
@@ -123,7 +147,7 @@
         <ul class="left-side-conversations__content-list">                                 
           <% if(conversation.members) {%>
             <li class="nav-item left-side-conversations__content-item">
-              <a class="nav-link person group-chat"  href="#uid-<%= conversation._id %>" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+              <a class="nav-link person group-chat"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
                 <div class="person__avatar">
                   <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
                 </div>
@@ -148,9 +172,17 @@
                     <%}%>
                   </div>
                 </div>
-                <div class="person__timer">
-                  <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
-                </div>
+                <div class="person__config" data-uid="<%= conversation._id %>">
+                  <div class="person__config--setting">
+                    <span>...</span>                    
+                  </div>
+                  <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                    <div class="remove-conversation">Xóa hội thoại</div>
+                  </div>
+                  <div class="person__config--time" data-uid="<%= conversation._id %>">
+                    <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+                  </div>
+                </div>          
               </a>
             </li>
           <%}%>                          

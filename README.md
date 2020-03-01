@@ -1,4 +1,15 @@
 # realtime_messenger
+================= Plaining upgrade for project messenger ============
+1- create index for mongodb
+2- fix alert for auth-page
+3- fix @media (min-width:500) and (max-width:768): scroll form
+4- update search feature for contact
+5- #see-all-notifications when click not show modal, have to config in initialConfigure at main.js
+6- need to fix "seen" at group chat 
+
+====================== Tips And Tricks ==========================
+
+
 //chặn không cho người dùng click chuột nhiều lần khi submit form
 $("body").on("submit","form", function(){
     $(this).on("submit", function(){
@@ -35,11 +46,4 @@ VD: let contactSchema = new mongoose.Schema({
       { new: true, upsert: true}).exec();
   },
        Lưu ý: khi lấy dữ liệu xuống, thay vì contact.msgUpdatedAt thì ta dùng : contact.get("msgUpdatedAt")
-================= Plaining upgrade for project messenger ============
-1- create index for mongodb
-2- fix alert for auth-page
-3- fix @media (min-width:500) and (max-width:768): scroll form
-4- update search feature for contact
-5- #see-all-notifications when click not show modal, have to config in initialConfigure at main.js
-6- need to fix "seen" at group chat 
 

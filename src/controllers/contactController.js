@@ -1,5 +1,8 @@
 import {contact} from "../services";
-
+import {promisify} from "util";
+import ejs from "ejs";
+import {convertToMessengerTimeStamp, getLastItemInArray} from "../helpers/clientHelper";
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 let findUsersContact = async (req, res) => {
   try {
     let searchKey = req.query.searchKey;
@@ -49,7 +52,9 @@ let acceptRequestContact = async (req, res) => {
   try {
     let userId = req.body.userId ; 
     let contactId = req.user._id ; //myself
-    let data = await contact.acceptRequestContact(userId, contactId);    
+    let data = await contact.acceptRequestContact(userId, contactId);  
+    let user = data ; 
+    
     return res.status(200).send({success : !!data, data : data});
   } catch (error) {
     return res.status(500).send(error);

@@ -8,7 +8,6 @@
   &__body{    
     margin-bottom : .25rem;
     display : flex;
-    flex-basis: 80%;
     &-avatar{
       float : left; 
       margin-right: 1.2rem;
@@ -31,8 +30,7 @@
     }   
   }  
   &__footer{
-    display : flex;   
-    flex-basis: 20%; 
+    display : flex;       
     align-items: center;
     & > button:not(:last-child){
       margin-right: .5rem;

@@ -4,7 +4,6 @@ import chatGroupModel from "../models/chatGroupModel";
 import messengerModel from "../models/messageModel";
 import {transErrors} from "../../lang/vi";
 import _ from "lodash";
-import { chownSync } from "fs-extra";
 /**
  * 
  * @param {string} userId 
@@ -21,13 +20,13 @@ let getAllConversations = userId => {
         if(contact.userId == userId){
           let user = await userModel.findUserById(contact.contactId);
           user = user.toObject();
-          user.msgUpdatedAt = contact.get("msgUpdatedAt");
+          user.msgUpdatedAt = contact.msgUpdatedAt;
           return user;
         }
 
         let user=  await userModel.findUserById(contact.userId);
         user = user.toObject();
-        user.msgUpdatedAt = contact.get("msgUpdatedAt");
+        user.msgUpdatedAt = contact.msgUpdatedAt;
         return user;
       })    
       let usersConversation = await Promise.all(usersConversationPromise); 
@@ -262,11 +261,43 @@ let updateHasSeenMessage = (senderId, receiverId) => {
   })
 };
 
+let removeConversation = (userId, contactId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let checkContactIdIsGroup = await chatGroupModel.findGroupById(contactId);
+      if(checkContactIdIsGroup){
+        return reject(transErrors.can_not_remove_group);
+      }
+      
+      let updateContact = await contactModel.removeConversation(userId, contactId);
+      if(!updateContact){
+        return reject(transErrors.update)
+      }
+      let removeConversation = await messengerModel.model.removeAllMessenger(userId, contactId);
+      
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
+};
 
+let getUserConversation = targetId => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let userInfo = await userModel.findUserById(targetId);
+      resolve(userInfo);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 module.exports ={
   getAllConversations : getAllConversations,
   getAllMessengersContent : getAllMessengersContent,
   chatTextAndEmoji : chatTextAndEmoji,
   updateMessageHasBeenReceived : updateMessageHasBeenReceived,
   updateHasSeenMessage : updateHasSeenMessage,
+  removeConversation : removeConversation,
+  getUserConversation : getUserConversation,
 }

@@ -121,9 +121,9 @@
       &-item{
         float : left ;
         font-size: 1.25rem;       
-        color : $color-btn-success;        
+        color : $color-icon-chat;        
         & a{
-          color : $color-btn-success;
+          color : $color-icon-chat;
         }
         & label{
           cursor : pointer;        
@@ -132,7 +132,7 @@
           margin-right : 1rem;
         }        
         &:hover{
-          color :  $color-btn-background-success !important;
+          color :  $color-icon-chat!important;
         }
       }
     }
@@ -156,16 +156,47 @@
     background-color: $color-white;
   }
   &-gif-icon{
+    position :absolute;
+    bottom: -0.5rem;
+    left : -0.5rem;
     background-color : $color-white !important;
-    margin-left : -1rem;
-    &::before{
-      background-color : $color-white !important;
-    }
-    & img{
-      width : 8rem;
     
-      background-color : $color-white !important;
+    color : $color-facebook-dark;
+    &::before{
+      background-color : transparent !important;
     }
+    // & img{
+    //   position : absolute;
+    //   margin-left :-1.5rem;
+    //   width : 6rem;    
+    //   background-color : transparent !important;
+    // }
+    & span{
+      display : inline-block;
+      font-size :.8em
+    }
+    
+    &-dot{
+      font-size: 1em;    
+      position: absolute;
+      &--1{
+        animation: gif-icon-dot1 1s;
+        animation-iteration-count: infinite;
+      }
+      &--2{
+        animation: gif-icon-dot2 1s;
+        animation-fill-mode: backwards;
+        animation-delay: 1s;       
+        animation-iteration-count: infinite;
+      }
+      &--3{
+        animation: gif-icon-dot3 1s;
+        animation-delay: 2s;
+        animation-fill-mode: backwards;
+        animation-iteration-count: infinite;
+      }
+    }    
+  
   }
 }
 

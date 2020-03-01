@@ -6,6 +6,7 @@ import removeCurrentContact from "./contacts/removeCurrentContact";
 import chatTextAndEmoji from "./conversation/chatTextAndEmoji";
 import checkStatusConversation from "./conversation/checkStatusConversation";
 import typingOn from "./conversation/typingOn";
+import typingOff from "./conversation/typingOff";
 let initSockets = (io) => {
   addNewContact(io);
   removeAddNewContact(io);
@@ -15,6 +16,7 @@ let initSockets = (io) => {
   chatTextAndEmoji(io);
   checkStatusConversation(io);
   typingOn(io);
+  typingOff(io);
 };
 
 

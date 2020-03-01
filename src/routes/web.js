@@ -72,6 +72,8 @@ let initRoutes = (app) => {
   router.post("/conversation/chat-text-and-emoji", auth.checkLoggedIn, conversation.chatTextAndEmoji);
   router.put("/conversation/update-message-has-been-received", auth.checkLoggedIn, conversation.updateMessageHasBeenReceived);
   router.put("/conversation/receiver-has-seen-message", auth.checkLoggedIn, conversation.receiverHasSeenMessage);
+  router.put("/conversation/delete-conversation", auth.checkLoggedIn, conversation.removeConversation);
+  router.get("/conversation/get-user-conversation", auth.checkLoggedIn, conversation.getUserConversation);
   return app.use(router);
 }
 

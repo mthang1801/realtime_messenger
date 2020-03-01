@@ -1,3 +1,9 @@
+function convertTimerTitleMessenger(timeStamp){
+  if(!timeStamp){
+    return "";
+  }
+  return moment(timeStamp).locale("vi").format("LLLL");
+}
 function acceptRequestAddContact(){
   $(".btn-accept-request-contact").off("click").on("click", function(){
     let userId = $(this).data("uid");
@@ -57,29 +63,86 @@ function acceptRequestAddContact(){
           //#region create new user contact at left Side
           let timer = getTimelineOfNotificationItem(contact.updatedAt)
           let userContactLeftSideHTML =` 
-            <li class="list-messenger-users__item" data-uid=${user._id}>
-              <div class="list-messenger-users__item-avatar">
-                <img src="images/users/${user.avatar}" title="${user.username}" alt="${user.username}" class="list-messenger-users__item-avatar-image">
+          <li class="nav-item left-side-conversations__content-item" >
+            <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
+              <div class="person__avatar">
+                <img src="images/users/${user.avatar}" class="person__avatar-image" >
               </div>
-              <div class="list-messenger-users__item-text">
-                <div class="list-messenger-users__item-text--username">
+              <div class="person__infor">
+                <div class="person__infor--username">
                   ${user.username}
                 </div>
-                <div class="list-messenger-users__item-text--chat">
-                  
-                </div>						
+                <div class="person__infor--messenger convert-emoji">
+                  các bạn đã trở thành bạn bè của nhau
+                </div>
               </div>
-              <div class="list-messenger-users__item-timer">
-                ${timer}
+              <div class="person__config" data-uid="${ user._id }>
+                <div class="person__config--setting" ">
+                  <span>...</span>                  
+                </div>
+                <div class="person__config--menu" data-uid="${user._id}">
+                    <div class="remove-conversation" >Xóa hội thoại</div>
+                  </div>
+                <div class="person__config--time" data-uid="${user._id}">${timer}</div>
               </div>
-            </li>											
+            </a>
+          </li>            
           `;
-          $("#left-side").find("ul.list-messenger-users").prepend(userContactLeftSideHTML);
+         
           //#endregion
           //create notify accept successfully
           alertify.notify(`${user.username} đã được thêm vào danh sách liên lạc`, "success", 7);
-          //solve LeftSide and RightSide
-
+          //embed contact item into left side
+          $("#all-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);
+          $("#private-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);
+          //embed contact item into right side
+          //#region 
+          let userContactRightSideHTML=`
+          <div class="right-side__screen tab-pane" id="to-${user._id}" >
+            <div class="right-side__top">
+              <div class="right-side__top--leftside">
+                To :
+                <span class="right-side__top--leftside-username">
+                  ${user.username}
+                </span>
+              </div>
+              <div class="right-side__top--rightside">
+                <span class="right-side__top--rightside-item">
+                  <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+                </span>
+                <span class="right-side__top--rightside-item">
+                  <a href="#modalAttachFile-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+                </span>
+              </div>
+            </div>
+            <div class="right-side__middle ">
+              <div class="right-side__middle-content convert-emoji" data-chat="${user._id}">
+              </div>
+            </div>
+            <div class="right-side__bottom convert-emoji" data-chat="${user._id}">
+              <input type="text" class="right-side__bottom-write write-chat" id="chat-text-${user._id}" data-conversation-type="private"  data-chat="${user._id}" style="display:none">
+              <div class="right-side__bottom-icons">
+                <div class="right-side__bottom-icons-item">
+                  <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+                </div>					
+                <div class="right-side__bottom-icons-item">
+                  <input type="file" class="d-none" id="image-chat">
+                  <label for="image-chat"><i class="fas fa-image"></i></label>
+                </div>
+                <div class="right-side__bottom-icons-item">
+                  <input type="file" class="d-none" id="attach-chat">
+                  <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+                </div>
+                <div class="right-side__bottom-icons-item">
+                  <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+                </div>				
+              </div>
+            </div>
+          </div>
+          `
+          $("#screen-chat").prepend(userContactRightSideHTML);
+          switchTabConversation();      
+          //#endregion
           //create socket 
           socket.emit("accept-request-contact-received", {userId, updatedAt: contact.updatedAt, notificationId});
 
@@ -160,24 +223,80 @@ socket.on("response-accept-request-contact-received", user => {
    //solve LeftSide and RightSide
    //#region create new User Contact at LeftSide
    let userContactLeftSideHTML =` 
-      <li class="list-messenger-users__item" data-uid=${user._id}>
-        <div class="list-messenger-users__item-avatar">
-          <img src="images/users/${user.avatar}" title="${user.username}" alt="${user.username}" class="list-messenger-users__item-avatar-image">
+    <li class="nav-item left-side-conversations__content-item" >
+      <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
+        <div class="person__avatar">
+          <img src="images/users/${user.avatar}" class="person__avatar-image" >
         </div>
-        <div class="list-messenger-users__item-text">
-          <div class="list-messenger-users__item-text--username">
+        <div class="person__infor">
+          <div class="person__infor--username">
             ${user.username}
           </div>
-          <div class="list-messenger-users__item-text--chat">
-            
-          </div>						
+          <div class="person__infor--messenger convert-emoji">
+            các bạn đã trở thành bạn bè của nhau
+          </div>
         </div>
-        <div class="list-messenger-users__item-timer">
-          ${timer}
+        <div class="person__config" data-uid="${user._id }>
+          <div class="person__config--setting" ">
+            <span>...</span>            
+          </div>
+          <div class="person__config--menu" ata-uid="${user._id}">
+            <div class="remove-conversation" d>Xóa hội thoại</div>
+          </div>
+          <div class="person__config--time" ata-uid="${user._id}">${timer}</div>
         </div>
-      </li>											
+      </a>
+    </li>            
     `;
-    $("#left-side").find("ul.list-messenger-users").prepend(userContactLeftSideHTML);
+    $("#all-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);
+    $("#private-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);
+
+    //embed user to right side
+    let userContactRightSideHTML=`
+    <div class="right-side__screen tab-pane" id="to-${user._id}" >
+      <div class="right-side__top">
+        <div class="right-side__top--leftside">
+          To :
+          <span class="right-side__top--leftside-username">
+            ${user.username}
+          </span>
+        </div>
+        <div class="right-side__top--rightside">
+          <span class="right-side__top--rightside-item">
+            <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+          </span>
+          <span class="right-side__top--rightside-item">
+            <a href="#modalAttachFile-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+          </span>
+        </div>
+      </div>
+      <div class="right-side__middle ">
+        <div class="right-side__middle-content convert-emoji" data-chat="${user._id}">
+        </div>
+      </div>
+      <div class="right-side__bottom convert-emoji" data-chat="${user._id}">
+        <input type="text" class="right-side__bottom-write write-chat" id="chat-text-${user._id}" data-conversation-type="private"  data-chat="${user._id}" style="display:none">
+        <div class="right-side__bottom-icons">
+          <div class="right-side__bottom-icons-item">
+            <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+          </div>					
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="image-chat">
+            <label for="image-chat"><i class="fas fa-image"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <input type="file" class="d-none" id="attach-chat">
+            <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+          </div>
+          <div class="right-side__bottom-icons-item">
+            <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+          </div>				
+        </div>
+      </div>
+    </div>
+    `
+    $("#screen-chat").prepend(userContactRightSideHTML);
+    switchTabConversation();      
    removeCurrentContact();
    eventNotificationItem();
 })

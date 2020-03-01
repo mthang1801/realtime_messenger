@@ -1,4 +1,4 @@
-import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper.js";
+import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper.js";
 
 let chatTextAndEmoji = (io) => {
   let clients = {};
@@ -8,13 +8,11 @@ let chatTextAndEmoji = (io) => {
     socket.on("send-messenger-text-and-emoji", data => {
       let {targetId, message} = data; 
       if(clients[targetId]){
-        clients[targetId].forEach(socketId => {
-          io.sockets.connected[socketId].emit("response-send-messenger-text-and-emoji", message);
-        })
+        emitResponseToArray(io, clients, targetId, "response-send-messenger-text-and-emoji", message);
       }
     })
     socket.on("disconnect", () => {
-      removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id)
+      clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id)
     })
   })
 }

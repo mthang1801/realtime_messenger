@@ -26,7 +26,12 @@ function removeCurrentContact(){
               //remove out of contact list
               $("#contacts ul.contact-list").find(`li[data-uid = ${targetId}]`).remove();
                //remove user contact at leftSide
-              $("#left-side ul.list-messenger-users").find(`li[data-uid = ${targetId}]`).remove();
+              $(".left-side-conversations__content-list").find(`a.person[data-chat = ${targetId}]`).parent().remove();
+              //remove user contact at rightSide
+              $(`#to-${targetId}`).remove();
+              if( !$(".screen-chat").find(".tab-pane").hasClass("active")){
+                $(".initial-conversation").show();
+              }
               socket.emit("remove-current-contact", {targetId});
             }
           },
@@ -46,7 +51,13 @@ socket.on("response-remove-current-contact", user => {
   //remove out of contact list
   $("#contacts ul.contact-list").find(`li[data-uid = ${user._id}]`).remove();
   //remove user contact at leftSide
-  $("#left-side ul.list-messenger-users").find(`li[data-uid = ${user._id}]`).remove();
+  $(".left-side-conversations__content-list").find(`a.person[data-chat = ${user._id}]`).parent().remove();
+  //remove user contact at rightSide
+  $(`#to-${user._id}`).remove();
+  if( !$(".screen-chat").find(".tab-pane").hasClass("active")){
+    $(".initial-conversation").show();
+  }
+  switchTabConversation();
 });
 
 $(document).ready(function () {

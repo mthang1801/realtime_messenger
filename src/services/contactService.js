@@ -2,7 +2,7 @@ import userModel from "../models/userModel";
 import contactModel from "../models/contactModel";
 import {transErrors} from "../../lang/vi";
 import notificationModel from "../models/notificationModel";
-
+import messageModel from "../models/messageModel";
 const limit_contact_users = +process.env.LIMIT_CONTACT;
 
 /**
@@ -221,6 +221,8 @@ let removeContact = (userId, contactId) => {
       if(removeContact.n == 0){
         return reject(transErrors.deleted_contact);
       }      
+      //when remove contact, entire messenger will also be deleted
+      await messageModel.model.removeAllMessenger(userId,contactId);
       resolve(true);
     } catch (error) {
       reject(error);

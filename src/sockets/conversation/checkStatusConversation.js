@@ -1,4 +1,4 @@
-import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper";
+import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper";
 
 let checkStatusConversation = io => {
   let clients = {};
@@ -12,30 +12,25 @@ let checkStatusConversation = io => {
 
     socket.on("check-status-conversation", data => {
       let  {targetId, message} = data; 
-      if(!clients[targetId]){
-        clients[message.senderId].forEach( socketId => {
-          io.sockets.connected[socketId].emit("response-check-status-conversation-is-offline", message) ;
-        })
-      }else{
-        clients[message.senderId].forEach( socketId => {
-          io.sockets.connected[socketId].emit("response-check-status-conversation-is-online", message) ;
-        })
+      if(!clients[targetId]){        
+        emitResponseToArray(io, clients, message.senderId, "response-check-status-conversation-is-offline", message) ;        
+      }else{        
+        emitResponseToArray(io, clients, message.senderId, "response-check-status-conversation-is-online", message) ;        
       }      
     });
 
     socket.on("receiver-has-seen-message", data => { 
-      if(clients[data.senderId]){
-        clients[data.senderId].forEach( socketId => {
-          io.sockets.connected[socketId].emit("response-receiver-has-seen-message", {receiverId :data.receiverId , senderId : data.senderId});
-        })
+      if(clients[data.senderId]){    
+      emitResponseToArray(io, clients, data.senderId, "response-receiver-has-seen-message", {receiverId :data.receiverId , senderId : data.senderId});        
       }
     })
 
 
+
     socket.on("disconnect", () =>{
-      removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
+      clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
-        removeSocketIdOutOfArray(clients, group._id, socket.id);
+         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
       })
     })
   })

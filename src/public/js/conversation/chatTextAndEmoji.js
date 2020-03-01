@@ -50,7 +50,7 @@ function chatTextAndEmoji(targetId){
             //5: change person(group) info messenger and time
             let textMessenger = message.text.length  >  15 ? message.text.substring(0,12) + "..." : message.text;
             $(`.person[data-chat = ${targetId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html( emojione.toImage(textMessenger));
-            $(`.person[data-chat = ${targetId}]`).find(".person__timer").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).text( convertDateTimeMessenger(message.createdAt));
+            $(`.person[data-chat = ${targetId}]`).find(".person__config--time").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).text( convertDateTimeMessenger(message.createdAt));
 
             $(`.person[data-chat = ${targetId}]`).on("pushConversationItemToTop", function(){
               let dataToMove = $(this).parent();
@@ -66,7 +66,9 @@ function chatTextAndEmoji(targetId){
               socket.emit("send-messenger-text-and-emoji", dataToEmit);             
             }            
              //7: call function to check status
-             checkStatusConversation(dataToEmit);            
+             checkStatusConversation(dataToEmit); 
+             
+            typingOff(targetId);
           }
         },
         error : function(error){
@@ -94,7 +96,7 @@ socket.on("response-send-messenger-text-and-emoji", message => {
   //left side
   let messengerText = message.text.length > 15 ? message.text.substring(0, 12)+ "..." : message.text ;
   $(`.person[data-chat = ${message.senderId}]`).find(".person__infor--messenger").css({"color": "black", "fontWeight": "bold", "fontSize": "1em"}).html( emojione.toImage(messengerText));
-  $(`.person[data-chat = ${message.senderId}]`).find(".person__timer").css({"color": "#d62e18", "fontWeight": "bold"}).text( convertDateTimeMessenger(message.createdAt));
+  $(`.person[data-chat = ${message.senderId}]`).find(".person__config--time").css({"color": "#d62e18", "fontWeight": "bold"}).text( convertDateTimeMessenger(message.createdAt));
 
   
   $(`.person[data-chat = ${message.senderId}]`).on("pushConversationToTop", function(){
@@ -121,7 +123,7 @@ socket.on("response-send-messenger-text-and-emoji-group", message => {
   //4 : left side
   let messengerText = message.text.length > 15 ? message.text.substring(0, 12) + "..." : message.text ;
   $(`.person[data-chat = ${message.receiverId}]`).find(".person__infor--messenger").css({"color": "black", "fontWeight": "bold", "fontSize": "1em"}).html( emojione.toImage(messengerText));
-  $(`.person[data-chat = ${message.receiverId}]`).find(".person__timer").css({"color": "#d62e18", "fontWeight": "bold"}).text( convertDateTimeMessenger(message.createdAt));
+  $(`.person[data-chat = ${message.receiverId}]`).find(".person__config--time").css({"color": "#d62e18", "fontWeight": "bold"}).text( convertDateTimeMessenger(message.createdAt));
 
   $(`.person[data-chat = ${message.receiverId}]`).on("pushConversationToTop", function(){
     let dataToMove = $(this).parent();

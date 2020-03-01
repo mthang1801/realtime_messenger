@@ -27,3 +27,37 @@
   }
 }
 
+
+@keyframes gif-icon-dot1{
+  0%{
+    opacity: 0;
+  }  
+  50%{
+    opacity: .2;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes gif-icon-dot2{
+  0%{
+    opacity: 0;
+  }
+  50%{
+    opacity : 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+@keyframes gif-icon-dot3{
+  0%{
+    opacity: 0;
+  }  
+  50%{
+    opacity : 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}

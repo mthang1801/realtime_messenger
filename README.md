@@ -6,7 +6,7 @@
 4- update search feature for contact
 5- #see-all-notifications when click not show modal, have to config in initialConfigure at main.js
 6- need to fix "seen" at group chat 
-
+7- remove conversation , when remove convesation, both side will be removed, need to fix that only one side who request remove conversation, another one will be remain
 ====================== Tips And Tricks ==========================
 
 

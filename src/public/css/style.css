@@ -817,9 +817,9 @@ a {
   .bubble-image-file {
     background-color: #fff; }
   .bubble-gif-icon {
-    position: absolute;
-    bottom: -0.5rem;
-    left: -0.5rem;
+    position: relative;
+    bottom: -2rem;
+    left: -3.25rem;
     background-color: #fff !important;
     color: #1a449c; }
     .bubble-gif-icon::before {

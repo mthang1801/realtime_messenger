@@ -98,7 +98,7 @@ function enableEmojiChat(targetId){
       keyup : function(editor, event) {
         $(`#chat-text-${targetId}`).val(this.getText());
       },
-      focus : function(){
+      keypress : function(){
         typingOn(targetId);                
       },    
       click : function(){
@@ -183,37 +183,45 @@ let initialConfigure = () => {
 };
 
 // let enableSeenGroup = false ;
-// let enableSeenPrivate = false ;
+let enableSeenPrivate = false ;
+let currentNumberOfMessages = 0;
+let newNumberOfMessages = 0;
 function switchTabConversation(){
   $(".left-side-conversations__content-item").off("click").on("click", function(){
     let targetId = $(this).find("a").data("chat");
-    let isGroupChat = $(this).find("a").hasClass("group-chat");
     $(".nav-link").removeClass("active");
     $(`.a[data-chat = ${targetId}]`).addClass("active");   
     $(this).find(".nav-link").tab("show");         
     $(".initial-conversation").hide();
-   
+    
+    currentNumberOfMessages = +$(`.right-side__middle-content[data-chat = ${targetId}]`).find(".bubble").length;
+    
     niceScrollChatBox(targetId);
     enableEmojiChat(targetId);    
     chatTextAndEmoji(targetId) ;  
-    if(!isGroupChat){
-      receiverHasSeenMessage(targetId);
-    }
-    
-    
+    chatImage(targetId);
+    receiverHasSeenMessage(targetId);
+
   })
 };
+
+function updateNumberOfMessages(receiverId){
+  newNumberOfMessages = currentNumberOfMessages+1;
+  checkScreenShow(receiverId);
+}
+
+
 //Have 2 cases occur: 
 //case 1 : receiver click conversation item
 //case 2 : receiver opened convesation before
 function receiverHasSeenMessage(senderId){  
+  if(enableSeenPrivate){
     $.ajax({
       type: "put",
       url: "/conversation/receiver-has-seen-message",
       data: {senderId},
       global :false ,
-      success: function (data) {
-       
+      success: function (data) {       
         if(data.success){             
           let {receiverId} = data;
           let dataToEmit = { senderId, receiverId };    
@@ -223,18 +231,23 @@ function receiverHasSeenMessage(senderId){
       error : function(err){
        
       }
-    });  
+    });
+  }
+  enableSeenPrivate=true;  
 };
 //check whether screen right side show or not, if show and message is sent, it status-message will be "seen"
-function checkScreenShow(receiverId, senderId){
-  if($(`#to-${receiverId}`).hasClass("active")){
+function checkScreenShow(receiverId){
+  newNumberOfMessages = +$(`.right-side__middle-content[data-chat = ${receiverId}]`).find(".bubble").length;
+  if($(`#to-${receiverId}`).hasClass("active") && newNumberOfMessages > currentNumberOfMessages){
     receiverHasSeenMessage(receiverId)    
+    currentNumberOfMessages = newNumberOfMessages;
+    newNumberOfMessages = 0;
   }
 }
 
 socket.on("response-receiver-has-seen-message", data => {  
   $(`.right-side__middle-content[data-chat = ${data.receiverId}] div.bubble:last-child`).find(".status-messenger").text("Đã xem");
-  checkScreenShow(data.receiverId, data.senderId);
+  checkScreenShow(data.receiverId);
 }) 
 
 function flashMasterNotify(){
@@ -290,6 +303,6 @@ $(document).ready(function () {
   $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
   $(".initial-conversation").show();
   $(".screen-chat").find(".tab-pane:first-child").removeClass("show active");
-
+ 
  
 });

@@ -35,7 +35,7 @@ function chatTextAndEmoji(targetId){
             let {message} = response ;
             //1: get outerHTML item messenger at right side            
             let myMessageOuter= $(`<div class="right-side__middle-content--me bubble" title="${convertTimerTitleMessenger(message.createdAt)}" data-message-id="${message._id}"></div>`);
-            let myAvatar = `<img src="images/users/${message.sender.avatar}" class="right-side__middle-content-avatar right-side__middle-content-avatar--me" >`
+            let myAvatar = `<img src="images/users/${message.sender.avatar}" class="right-side__middle-content-avatar right-side__middle-content-avatar--me" >`;
             let myMessage = `<div class="right-side__middle-content-messenger-text right-side__middle-content-messenger-text--me" data-message-id="${message._id}">${message.text}</div>`              
             myMessageOuter.html(`${myAvatar} ${emojione.toImage(myMessage)}`);       
             //2 : append message at right side
@@ -58,13 +58,16 @@ function chatTextAndEmoji(targetId){
               $(this).off("pushConversationItemToTop");
             })
             $(`.person[data-chat = ${targetId}]`).trigger("pushConversationItemToTop");
-            let dataToEmit = { targetId , message}
+            let dataToEmit = { targetId , message}            
             //6: socket send message to convertion
             if(isGroup){
+              dataToEmit.groupId = targetId ; 
               socket.emit("send-messenger-text-and-emoji-group", dataToEmit);
             }else{
               socket.emit("send-messenger-text-and-emoji", dataToEmit);             
-            }            
+            }
+            //increase new number message more than current message is 1
+            updateNumberOfMessages(targetId);
              //7: call function to check status
              checkStatusConversation(dataToEmit); 
              
@@ -79,8 +82,7 @@ function chatTextAndEmoji(targetId){
   })
 };
 
-socket.on("response-send-messenger-text-and-emoji", message => {
-  console.log(message);
+socket.on("response-send-messenger-text-and-emoji", message => { 
   let yourMessageOuterHTML = $(`<div class="right-side__middle-content--you bubble" title="${convertTimerTitleMessenger(message.createdAt)}" data-message-id="${message._id}"></div>`);
   let yourAvatar = `<img src="images/users/${message.sender.avatar}" class="right-side__middle-content-avatar right-side__middle-content-avatar--you" >`;
   let yourMessage = `<div class="right-side__middle-content-messenger-text right-side__middle-content-messenger-text--you" data-message-id="${message._id}">${message.text}</div>`              

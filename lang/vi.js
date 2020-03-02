@@ -43,7 +43,9 @@ export const transErrors = {
   unexisted_group : "Nhóm không tồn tại",
   empty_update : "Không có tin nhắn để cập nhật",
   can_not_remove_group : "Nhóm không thể xóa hội thoại",
-  failed_update : "Xóa hội thoại không thành công"
+  failed_update : "Xóa hội thoại không thành công",
+  invalid_messenger_type : "Kiểu file không hợp lệ, file phải có đuôi png, jpg hoặc jpeg",
+  messenger_oversize : "Kích thược file quá lớn"
 }
 
 export const transSuccess = {

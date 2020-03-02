@@ -18,8 +18,11 @@ function chatWithUserContact(){
         type: "get",
         url: `/conversation/get-user-conversation?userId=${targetId}`,
         success: function (data) {     
+          let {user} = data ;
+          console.log(user);
           $(".initial-conversation").hide();    
-       
+          $(".person").removeClass("active");
+          $(".right-side__screen").removeClass("active");
           $(".left-side-conversations__content-list").prepend(data.userConversationLeftSide);
           $("#screen-chat").prepend(data.userConversationRightSide);
           
@@ -27,9 +30,9 @@ function chatWithUserContact(){
           enableEmojiChat(targetId); 
           $("#modalContact").modal("hide");
           $("#modalContact").on("hidden.bs.modal", function(){
-            $(`.right-side__bottom[data-chat = ${targetId}]`).find(".emojionearea-editor").focus();
-                   
-            chatTextAndEmoji();
+          $(`.right-side__bottom[data-chat = ${targetId}]`).find(".emojionearea-editor").focus();            
+            chatTextAndEmoji(targetId);
+            chatImage(targetId);
             switchTabConversation();
           })
          

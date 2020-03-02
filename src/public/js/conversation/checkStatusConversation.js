@@ -26,10 +26,10 @@ socket.on("response-check-status-conversation-is-online", message => {
   $.ajax({
     type : "put", 
     url : "/conversation/update-message-has-been-received", 
-    data : {message} ,
+    data : {messageId : message._id} ,
     global : false  ,
     success : function(data){
-     if(data.success){       
+     if(data.success){            
       let statusHTML = $(`<br><span class="status-messenger status-messenger--me" data-message-uid="${message.receiverId}">Đã nhận</span>`);  
       
       $(`.right-side__middle-content[data-chat = ${message.receiverId}] div.bubble:last-child`).prev().find(".status-messenger").remove();

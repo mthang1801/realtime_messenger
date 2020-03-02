@@ -50,29 +50,16 @@
                   <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                  
                   <span class="right-side__middle-content-messenger-text right-side__middle-content-messenger-text--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" data-message-id="<%= message._id %>">
                     <%- message.text %>
-                  </span> 
-                  <br>                 
-                    <% if(message.seenersInfo) { %>
-                      <span class="status-messenger status-messenger--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">
-                      <% message.seenersInfo.forEach( seener => {  %>
-                        <% if(seener._id.toString() !== user._id.toString() && seener._id.toString() != message.senderId.toString()) {%>
-                        
-                          <img src="images/users/<%= seener.avatar %>" title="<%= seener.username %>" class="status-messenger--avatar">
-                        <%}%>
-                      <%})%>
-                    <%}%>
-                  </span>
+                  </span>  
                 </div>		                
               <%}%>
               <%if (message.messageType == "image") {%>
-                <div class="group right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file <% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                  
-                  <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                  
-                  <span >
-                    <img src="data:<%= message.file.contentType%>;base64,<%= bufferToBase64(message.file.data)%>"  alt="<%= message.file.fileName %>" class="show-image-file">
-                  </span>
-                  <br>
-                  <span class="status-messenger status-message--me"></span>
-                </div>
+                <div class="right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">
+                  <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                    
+                  <span data-message-id="<%= message._id %>" >
+                    <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data)%>" class="show-image-file">
+                  </span>   
+                </div>              
               <%}%>
               <%if (message.messageType == "file") { %>
                 <div class="group right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file <% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                  
@@ -80,8 +67,7 @@
                   <span >
                     <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" download="<%= message.file.fileName %>"> <%= message.file.fileName %></a>
                   </span>
-                  <br>
-                  
+
                 </div>
               <%}%>             
             <%})%>
@@ -93,13 +79,12 @@
             <div class="right-side__bottom-icons-item">
               <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
             </div>					
-            <div class="right-side__bottom-icons-item">
-              <input type="file" class="d-none" id="image-chat">
-              <label for="image-chat"><i class="fas fa-image"></i></label>
+            <div class="right-side__bottom-icons-item">            
+              <label for="image-chat-<%= conversation._id %>" class="image-chat" data-chat="<%= conversation._id %>"> <input type="file" class="d-none chat-in-group" id="image-chat-<%= conversation._id %>" name="msg-image-chat"><i class="fas fa-image"></i></label>
             </div>
             <div class="right-side__bottom-icons-item">
-              <input type="file" class="d-none" id="attach-chat">
-              <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+              <input type="file" class="d-none chat-in-group" id="attach-chat">
+              <label for="attach-chat" data-chat="<%= conversation._id %>"><i class="fas fa-paperclip"></i></label>
             </div>
             <div class="right-side__bottom-icons-item">
               <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
@@ -189,7 +174,7 @@
                   </div>
                 <%}%>                               
               <%})%>
-            
+                  
             </div>
           </div>
           <div class="right-side__bottom convert-emoji" data-chat="<%= conversation._id %>">
@@ -198,13 +183,12 @@
               <div class="right-side__bottom-icons-item">
                 <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
               </div>					
-              <div class="right-side__bottom-icons-item">
-                <input type="file" class="d-none" id="image-chat">
-                <label for="image-chat"><i class="fas fa-image"></i></label>
+              <div class="right-side__bottom-icons-item">                
+                <label for="image-chat-<%= conversation._id %>" class="image-chat" data-chat="<%= conversation._id %>"><input type="file" class="d-none" id="image-chat-<%= conversation._id %>" name="msg-image-chat"><i class="fas fa-image"></i></label>
               </div>
               <div class="right-side__bottom-icons-item">
                 <input type="file" class="d-none" id="attach-chat">
-                <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+                <label for="attach-chat" data-chat="<%= conversation._id %>"><i class="fas fa-paperclip"></i></label>
               </div>
               <div class="right-side__bottom-icons-item">
                 <a href="#modalVideoCall"  data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>

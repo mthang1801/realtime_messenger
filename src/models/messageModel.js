@@ -118,10 +118,9 @@ messageSchema.statics = {
     return this.findByIdAndUpdate(id,{"hasReceived" : true}).exec();
   },
   updateHasSeenMessage(senderId, receiverId){
-    return this.update(
+    return this.updateMany(
       {"senderId": senderId, "receiverId": receiverId}, 
       {"hasSeen" : true, "seenAt" : Date.now()}, 
-      {new : true}
     ).exec();
   },
   findMessengerByGroupId(groupId){

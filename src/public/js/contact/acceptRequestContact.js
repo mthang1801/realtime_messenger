@@ -122,16 +122,15 @@ function acceptRequestAddContact(){
             <div class="right-side__bottom convert-emoji" data-chat="${user._id}">
               <input type="text" class="right-side__bottom-write write-chat" id="chat-text-${user._id}" data-conversation-type="private"  data-chat="${user._id}" style="display:none">
               <div class="right-side__bottom-icons">
-                <div class="right-side__bottom-icons-item">
+                <div class="right-side__bottom-icons-item" >
                   <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
                 </div>					
-                <div class="right-side__bottom-icons-item">
-                  <input type="file" class="d-none" id="image-chat">
-                  <label for="image-chat"><i class="fas fa-image"></i></label>
+                <div class="right-side__bottom-icons-item">                  
+                  <label for="image-chat-${user._id}" class="image-chat" data-chat="${user._id}"><input type="file" class="d-none" id="image-chat-${user._id}" name="msg-image-chat"><i class="fas fa-image"></i></label>
                 </div>
                 <div class="right-side__bottom-icons-item">
                   <input type="file" class="d-none" id="attach-chat">
-                  <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+                  <label for="attach-chat" data-chat="${user._id}"><i class="fas fa-paperclip"></i></label>
                 </div>
                 <div class="right-side__bottom-icons-item">
                   <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
@@ -280,13 +279,12 @@ socket.on("response-accept-request-contact-received", user => {
           <div class="right-side__bottom-icons-item">
             <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
           </div>					
-          <div class="right-side__bottom-icons-item">
-            <input type="file" class="d-none" id="image-chat">
-            <label for="image-chat"><i class="fas fa-image"></i></label>
+          <div class="right-side__bottom-icons-item">            
+            <label for="image-chat-${user._id}" class="image-chat" data-chat="${user._id}"><input type="file" class="d-none" id="image-chat-${user._id}" name="msg-image-chat"><i class="fas fa-image"></i></label>
           </div>
           <div class="right-side__bottom-icons-item">
             <input type="file" class="d-none" id="attach-chat">
-            <label for="attach-chat"><i class="fas fa-paperclip"></i></label>
+            <label for="attach-chat" data-chat="${user._id}"><i class="fas fa-paperclip"></i></label>
           </div>
           <div class="right-side__bottom-icons-item">
             <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>

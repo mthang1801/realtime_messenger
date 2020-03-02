@@ -3,6 +3,7 @@ import userModel from "../models/userModel";
 import chatGroupModel from "../models/chatGroupModel";
 import messengerModel from "../models/messageModel";
 import {transErrors} from "../../lang/vi";
+import fsExtra from "fs-extra";
 import _ from "lodash";
 /**
  * 
@@ -46,17 +47,17 @@ let getAllConversations = userId => {
         group = group.toObject();
        
         let getMessengerFromGroup = await messengerModel.model.getGroupMessengers(group._id , messengers_limitation);           
-        let seenersInfoPromise = getMessengerFromGroup.map( async group => {
-          group = group.toObject();
-          let seenersInfoPromise = group.groupSeen.map(async seener => {            
-              return await  userModel.findSeenerInfoById(seener.userId);            
-          })
-          let seenersInfo = await Promise.all(seenersInfoPromise);          
-          group.seenersInfo = seenersInfo;
-          return group;
-        })
-        let seenersInfo = await Promise.all(seenersInfoPromise);       
-        getMessengerFromGroup = _.reverse( seenersInfo);
+        // let seenersInfoPromise = getMessengerFromGroup.map( async group => {
+        //   group = group.toObject();
+        //   let seenersInfoPromise = group.groupSeen.map(async seener => {            
+        //       return await  userModel.findSeenerInfoById(seener.userId);            
+        //   })
+        //   let seenersInfo = await Promise.all(seenersInfoPromise);          
+        //   group.seenersInfo = seenersInfo;
+        //   return group;
+        // })
+        // let seenersInfo = await Promise.all(seenersInfoPromise);       
+        getMessengerFromGroup = _.reverse( getMessengerFromGroup);
         group.messages = getMessengerFromGroup;
         return group;
       })
@@ -234,11 +235,11 @@ let chatTextAndEmoji = (userId, userName, userAvatar, receiverId , messengerText
   })
 };
 
-let updateMessageHasBeenReceived = message => {
+let updateMessageHasBeenReceived = messageId => {
   return new Promise( async (resolve, reject) => {
     try {      
-      let updateStatus = await messengerModel.model.updateMessageHasBeenReceived(message._id);
-      resolve(updateStatus);
+      let updateStatus = await messengerModel.model.updateMessageHasBeenReceived(messageId);
+      resolve(true);
     } catch (error) {
       reject(error);
     }
@@ -253,7 +254,7 @@ let updateMessageHasBeenReceived = message => {
 let updateHasSeenMessage = (senderId, receiverId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let updateStatus = await messengerModel.model.updateHasSeenMessage(senderId, receiverId);  
+      let updateStatus = await messengerModel.model.updateHasSeenMessage(senderId, receiverId);       
       resolve(updateStatus);
     } catch (error) {
       reject(error);
@@ -291,6 +292,68 @@ let getUserConversation = targetId => {
       reject(error);
     }
   })
+};
+
+let chatImage = (senderId, sender, receiverId, isChatGroup, messengerValue) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+
+      let data = await fsExtra.readFile(messengerValue.path);
+      let contentType = messengerValue.mimetype;
+      let fileName = messengerValue.filename;
+      if(isChatGroup){
+        //find Group and update time when has new messenger    
+        let groupInfo = await chatGroupModel.findGroupById(receiverId);
+  
+        let newMessengerItem = {
+          senderId : senderId , 
+          receiverId : receiverId,
+          conversationType :  messengerModel.conversationType.GROUP,
+          messageType : messengerModel.messageType.IMAGE, 
+          sender : sender,
+          receiver : {
+            username : groupInfo.name , 
+            avatar : groupInfo.avatar
+          },
+          file : {data : data, contentType : contentType, fileName : fileName},
+          hasReceived : true,
+          groupSeen : [{userId : senderId}],         
+        }
+       
+      
+        //create new messenger
+        let newMessenger = await messengerModel.model.createNew(newMessengerItem); 
+        //remove file
+        await  fsExtra.remove(messengerValue.path) ;
+        return resolve(newMessenger);
+      }
+
+      //case  for private 
+      //1 : update contact msgUpdatedAt when has new messenger
+      let updateContact = await contactModel.updateTimeWhenHasNewMessage(senderId, receiverId);                 
+      let receiverInfo = await userModel.findUserById(receiverId);        
+      
+      let newMessengerItem = {
+            senderId : senderId , 
+            receiverId : receiverId,
+            conversationType :messengerModel.conversationType.PRIVATE,
+            messageType : messengerModel.messageType.IMAGE, 
+            sender : sender,
+            receiver : {
+              username : receiverInfo.username , 
+              avatar : receiverInfo.avatar 
+            },
+            file : {data : data, contentType : contentType, fileName : fileName}
+        };
+        
+        let newMessenger = await messengerModel.model.createNew(newMessengerItem);    
+        //remove file 
+        await fsExtra.remove(messengerValue.path);
+         resolve(newMessenger);
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 module.exports ={
   getAllConversations : getAllConversations,
@@ -300,4 +363,5 @@ module.exports ={
   updateHasSeenMessage : updateHasSeenMessage,
   removeConversation : removeConversation,
   getUserConversation : getUserConversation,
+  chatImage : chatImage,
 }

@@ -22,7 +22,7 @@
   <div class="tab-content screen-chat" id="screen-chat">
     <% allConversations.forEach( (conversation,index) => { %>
       <% if(conversation.members) {%>
-      <div class="right-side__screen tab-pane <% if(index == 0) {%>active show <%}%>" id="to-<%= conversation._id %>" >
+      <div class="right-side__screen tab-pane" id="to-<%= conversation._id %>" >
         <div class="right-side__top">
           <div class="right-side__top--leftside">
             To :
@@ -65,7 +65,7 @@
                 <div class="group right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file <% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                  
                   <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                  
                   <span >
-                    <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" download="<%= message.file.fileName %>"> <%= message.file.fileName %></a>
+                    <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" class="bubble-attachment-file" download="<%= message.file.fileName %>"> <%= message.file.fileName %></a>
                   </span>
 
                 </div>
@@ -82,9 +82,8 @@
             <div class="right-side__bottom-icons-item">            
               <label for="image-chat-<%= conversation._id %>" class="image-chat" data-chat="<%= conversation._id %>"> <input type="file" class="d-none chat-in-group" id="image-chat-<%= conversation._id %>" name="msg-image-chat"><i class="fas fa-image"></i></label>
             </div>
-            <div class="right-side__bottom-icons-item">
-              <input type="file" class="d-none chat-in-group" id="attach-chat">
-              <label for="attach-chat" data-chat="<%= conversation._id %>"><i class="fas fa-paperclip"></i></label>
+            <div class="right-side__bottom-icons-item">            
+              <label for="attach-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">  <input type="file" class="d-none chat-in-group" id="attach-chat-<%= conversation._id %>" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
             </div>
             <div class="right-side__bottom-icons-item">
               <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
@@ -93,7 +92,7 @@
         </div>
       </div>
       <%}else{%>
-        <div class="right-side__screen tab-pane <% if(index == 0) {%>active show <%}%>" id="to-<%= conversation._id %>" >
+        <div class="right-side__screen tab-pane" id="to-<%= conversation._id %>" >
           <div class="right-side__top">
             <div class="right-side__top--leftside">
               To :
@@ -157,7 +156,7 @@
                   <div class="right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                    
                     <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" >
                     <span data-message-id="<%= message._id %>">
-                      <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>"  download="<%=message.file.fileName %>"><%= message.file.fileName %></a>
+                      <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" class="bubble-attachment-file" download="<%=message.file.fileName %>"><%= message.file.fileName %></a>
                     </span>
                     <% if( message.senderId == user._id && index == conversation.messages.length -1) {%>
                       <br>
@@ -187,8 +186,7 @@
                 <label for="image-chat-<%= conversation._id %>" class="image-chat" data-chat="<%= conversation._id %>"><input type="file" class="d-none" id="image-chat-<%= conversation._id %>" name="msg-image-chat"><i class="fas fa-image"></i></label>
               </div>
               <div class="right-side__bottom-icons-item">
-                <input type="file" class="d-none" id="attach-chat">
-                <label for="attach-chat" data-chat="<%= conversation._id %>"><i class="fas fa-paperclip"></i></label>
+                <label for="attach-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">  <input type="file" class="d-none" id="attach-chat-<%= conversation._id %>" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
               </div>
               <div class="right-side__bottom-icons-item">
                 <a href="#modalVideoCall"  data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>

@@ -8,6 +8,7 @@ import checkStatusConversation from "./conversation/checkStatusConversation";
 import typingOn from "./conversation/typingOn";
 import typingOff from "./conversation/typingOff";
 import chatImage from "./conversation/chatImage";
+import chatAttachment from "./conversation/chatAttachment";
 let initSockets = (io) => {
   addNewContact(io);
   removeAddNewContact(io);
@@ -19,6 +20,7 @@ let initSockets = (io) => {
   typingOn(io);
   typingOff(io);
   chatImage(io);
+  chatAttachment(io);
 };
 
 

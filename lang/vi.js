@@ -45,7 +45,9 @@ export const transErrors = {
   can_not_remove_group : "Nhóm không thể xóa hội thoại",
   failed_update : "Xóa hội thoại không thành công",
   invalid_messenger_type : "Kiểu file không hợp lệ, file phải có đuôi png, jpg hoặc jpeg",
-  messenger_oversize : "Kích thược file quá lớn"
+  messenger_oversize : "Kích thước file quá lớn", 
+  not_attachment_chat : "Tập tin không phải dạng tệp đính kèm",
+  attachment_oversize : "Kich thước tệp quá lớn"
 }
 
 export const transSuccess = {

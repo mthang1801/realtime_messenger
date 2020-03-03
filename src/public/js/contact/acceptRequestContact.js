@@ -128,9 +128,8 @@ function acceptRequestAddContact(){
                 <div class="right-side__bottom-icons-item">                  
                   <label for="image-chat-${user._id}" class="image-chat" data-chat="${user._id}"><input type="file" class="d-none" id="image-chat-${user._id}" name="msg-image-chat"><i class="fas fa-image"></i></label>
                 </div>
-                <div class="right-side__bottom-icons-item">
-                  <input type="file" class="d-none" id="attach-chat">
-                  <label for="attach-chat" data-chat="${user._id}"><i class="fas fa-paperclip"></i></label>
+                <div class="right-side__bottom-icons-item">                
+                  <label for="attach-chat-${user._id}" data-chat="${user._id}">  <input type="file" class="d-none" id="attach-chat-${user._id}" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
                 </div>
                 <div class="right-side__bottom-icons-item">
                   <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
@@ -283,8 +282,7 @@ socket.on("response-accept-request-contact-received", user => {
             <label for="image-chat-${user._id}" class="image-chat" data-chat="${user._id}"><input type="file" class="d-none" id="image-chat-${user._id}" name="msg-image-chat"><i class="fas fa-image"></i></label>
           </div>
           <div class="right-side__bottom-icons-item">
-            <input type="file" class="d-none" id="attach-chat">
-            <label for="attach-chat" data-chat="${user._id}"><i class="fas fa-paperclip"></i></label>
+          <label for="attach-chat-${user._id}" data-chat="${user._id}">  <input type="file" class="d-none" id="attach-chat-${user._id}" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
           </div>
           <div class="right-side__bottom-icons-item">
             <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>

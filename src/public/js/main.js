@@ -16,6 +16,7 @@ function niceScrollLeftSide(){
 };
 
 function niceScrollChatBox(chatBoxId){   
+  $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).getNiceScroll().resize();
   $(`.right-side__middle-content[data-chat = ${chatBoxId}]`).niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -41,8 +42,10 @@ function spinLoading(){
 function ajaxLoading(){
   $(document).ajaxStart(() =>{
     spinLoading();
+    console.log("ajax Start");
   }).ajaxStop(() => {
     spinLoaded();        
+    console.log("ajax Stop")
   })
 };
 
@@ -170,7 +173,7 @@ let initialConfigure = () => {
   }  
  
 
-  $("#left-side ul.list-messenger-users").find("li:first-child").click();
+  // $("#left-side ul.list-messenger-users").find("li:first-child").click();
 
   $("#select-type-chat").on("change", function(){
     let targetId = $("option:selected", this).data("target");
@@ -186,22 +189,25 @@ let initialConfigure = () => {
 let enableSeenPrivate = false ;
 let currentNumberOfMessages = 0;
 let newNumberOfMessages = 0;
-function switchTabConversation(){
-  $(".left-side-conversations__content-item").off("click").on("click", function(){
-    let targetId = $(this).find("a").data("chat");
-    $(".nav-link").removeClass("active");
-    $(`.a[data-chat = ${targetId}]`).addClass("active");   
-    $(this).find(".nav-link").tab("show");         
-    $(".initial-conversation").hide();
-    
-    currentNumberOfMessages = +$(`.right-side__middle-content[data-chat = ${targetId}]`).find(".bubble").length;
-    
-    niceScrollChatBox(targetId);
-    enableEmojiChat(targetId);    
-    chatTextAndEmoji(targetId) ;  
-    chatImage(targetId);
-    receiverHasSeenMessage(targetId);
 
+//bỏ bước đầu click chuột
+let enableClickLeftSide = false ;
+function switchTabConversation(){
+  $(".left-side-conversations__content-item").off("click").on("click", function(){    
+      let targetId = $(this).find("a").data("chat");
+      $(".nav-link").removeClass("active");
+      $(`.a[data-chat = ${targetId}]`).addClass("active");   
+      $(this).find(".nav-link").tab("show");         
+      $(".initial-conversation").hide();
+      
+      currentNumberOfMessages = +$(`.right-side__middle-content[data-chat = ${targetId}]`).find(".bubble").length;
+      
+      niceScrollChatBox(targetId);
+      enableEmojiChat(targetId);    
+      chatTextAndEmoji(targetId) ;  
+      chatImage(targetId);
+      chatAttachment(targetId);
+      receiverHasSeenMessage(targetId);  
   })
 };
 
@@ -299,7 +305,9 @@ $(document).ready(function () {
   switchTabConversation();
 
   checkScreenShow();
-   
+  
+  let dataTarget = $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target");
+  // $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target","")
   $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
   $(".initial-conversation").show();
   $(".screen-chat").find(".tab-pane:first-child").removeClass("show active");

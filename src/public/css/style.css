@@ -746,16 +746,12 @@ a {
         margin-right: 2.5rem; }
         .right-side__middle-content--me.bubble a {
           float: right;
-          border-bottom: 1.5px solid #c8d6e5;
-          padding: .5rem;
           margin: .5rem; }
       .right-side__middle-content--you {
         float: left;
         margin-left: 2.5rem; }
         .right-side__middle-content--you.bubble a {
           float: left;
-          border-bottom: 1.5px solid #c8d6e5;
-          padding: .5rem;
           margin: .5rem; }
       .right-side__middle-content-messenger-text {
         padding: .5rem .75rem;
@@ -816,6 +812,11 @@ a {
   border-radius: .25rem; }
   .bubble-image-file {
     background-color: #fff; }
+  .bubble-attachment-file {
+    padding: 0;
+    text-decoration: underline; }
+    .bubble-attachment-file:hover {
+      text-decoration: none; }
   .bubble-gif-icon {
     position: relative;
     bottom: -2rem;
@@ -900,7 +901,7 @@ a {
     padding: 11px 0; }
 
 .loading-ring {
-  display: inline-block;
+  display: none;
   position: absolute;
   width: 6rem;
   height: 6rem;
@@ -952,7 +953,8 @@ a {
   background-color: #000;
   /* Fallback color */
   background-color: rgba(0, 0, 0, 0.3);
-  /* Black w/ opacity */ }
+  /* Black w/ opacity */
+  display: none; }
 
 .loading-contact {
   display: inline-block;

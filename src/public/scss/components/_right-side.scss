@@ -60,9 +60,7 @@
         margin-right : 2.5rem;        
         &.bubble{         
           & a{
-            float: right ;
-            border-bottom: 1.5px solid #c8d6e5;
-            padding: .5rem;
+            float: right ;           
             margin : .5rem;
           }          
         }
@@ -72,9 +70,7 @@
         margin-left :2.5rem;        
         &.bubble{                   
           & a{
-            float : left;            
-            border-bottom: 1.5px solid #c8d6e5;
-            padding: .5rem;
+            float : left;                        
             margin : .5rem;
           }
         }
@@ -154,6 +150,13 @@
   border-radius: .25rem;
   &-image-file{
     background-color: $color-white;
+  }
+  &-attachment-file{
+    padding : 0 ;
+    text-decoration: underline;
+    &:hover{
+      text-decoration: none;
+    }
   }
   &-gif-icon{
     position :relative;

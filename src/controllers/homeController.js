@@ -14,7 +14,7 @@ let getHome =async (req, res) => {
   let getContactList = await contact.getContactList(req.user._id);
   //get conversations
   let getAllConversations = await conversation.getAllConversations(req.user._id);  
-
+  
   return res.render("main/home/home",{
     activeSuccess : req.flash("activeSuccess"),
     user : req.user,  

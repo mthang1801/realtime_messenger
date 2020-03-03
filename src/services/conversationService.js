@@ -300,7 +300,7 @@ let chatImage = (senderId, sender, receiverId, isChatGroup, messengerValue) => {
 
       let data = await fsExtra.readFile(messengerValue.path);
       let contentType = messengerValue.mimetype;
-      let fileName = messengerValue.filename;
+      let fileName = messengerValue.originalname;
       if(isChatGroup){
         //find Group and update time when has new messenger    
         let groupInfo = await chatGroupModel.findGroupById(receiverId);
@@ -354,7 +354,67 @@ let chatImage = (senderId, sender, receiverId, isChatGroup, messengerValue) => {
       reject(error);
     }
   })
-}
+};
+
+let chatAttachment = (senderId, sender, receiverId, isChatGroup, messengerValue) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let data = await fsExtra.readFile(messengerValue.path);
+      let contentType = messengerValue.mimetype;
+      let fileName = messengerValue.originalname;
+    
+      if(isChatGroup){
+        //find Group and update time when has new messenger    
+        let groupInfo = await chatGroupModel.findGroupById(receiverId);  
+        let newMessengerItem = {
+          senderId : senderId , 
+          receiverId : receiverId,
+          conversationType :  messengerModel.conversationType.GROUP,
+          messageType : messengerModel.messageType.FILE, 
+          sender : sender,
+          receiver : {
+            username : groupInfo.name , 
+            avatar : groupInfo.avatar
+          },
+          file : {data : data, contentType : contentType, fileName : fileName},
+          hasReceived : true,
+          groupSeen : [{userId : senderId}],         
+        }
+        //create new messenger
+        let newMessenger = await messengerModel.model.createNew(newMessengerItem); 
+        //remove file
+        await  fsExtra.remove(messengerValue.path) ;
+        return resolve(newMessenger);
+      }
+
+      //case  for private 
+      //1 : update contact msgUpdatedAt when has new messenger
+      let updateContact = await contactModel.updateTimeWhenHasNewMessage(senderId, receiverId);                 
+      let receiverInfo = await userModel.findUserById(receiverId);        
+      
+      let newMessengerItem = {
+            senderId : senderId , 
+            receiverId : receiverId,
+            conversationType :messengerModel.conversationType.PRIVATE,
+            messageType : messengerModel.messageType.FILE, 
+            sender : sender,
+            receiver : {
+              username : receiverInfo.username , 
+              avatar : receiverInfo.avatar 
+            },
+            file : {data : data, contentType : contentType, fileName : fileName}
+        };
+        
+        let newMessenger = await messengerModel.model.createNew(newMessengerItem);    
+        //remove file 
+        await fsExtra.remove(messengerValue.path);
+         resolve(newMessenger);
+    } catch (error) {
+      reject(error);
+    }
+  
+  })
+};
 module.exports ={
   getAllConversations : getAllConversations,
   getAllMessengersContent : getAllMessengersContent,
@@ -364,4 +424,5 @@ module.exports ={
   removeConversation : removeConversation,
   getUserConversation : getUserConversation,
   chatImage : chatImage,
+  chatAttachment : chatAttachment
 }

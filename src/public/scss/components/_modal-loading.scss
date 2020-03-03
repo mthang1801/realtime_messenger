@@ -9,5 +9,5 @@
   overflow: auto; /* Enable scroll if needed */
   background-color: $color-black; /* Fallback color */
   background-color: rgba($color-black,0.3); /* Black w/ opacity */
-
+  display : none;
 }

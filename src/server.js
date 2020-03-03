@@ -14,6 +14,10 @@ import cookieParser from "cookie-parser";
 import passportSocketIo from "passport.socketio";
 import session from "./config/session";
 import configPassportIO from "./config/socketIO";
+import events from "events";
+import * as appConfig from "./config/app";
+
+events.EventEmitter.defaultMaxListeners = appConfig.app.max_events_listener;
 let app = express();
 //Init server with socket.io and express
 let server = http.createServer(app);

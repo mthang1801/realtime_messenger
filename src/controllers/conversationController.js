@@ -72,7 +72,7 @@ let getUserConversation = async(req, res) => {
     return res.status(500).send(error);
   }
 };
-
+//#region config messenger Image
 let messengerImageStorage = multer.diskStorage({
   destination : (req, file, cb) => {
     cb(null, app.messenger_chat_directory);
@@ -104,10 +104,7 @@ let chatImage =  (req, res) => {
         username : req.user.username , 
         avatar : req.user.avatar 
       }
-          
       let receiverId = req.body.targetId;
-    
-      
       let isChatGroup = req.body.isChatGroup == "true" ? true : false ;
       
       let messengerValue = req.file;
@@ -117,8 +114,51 @@ let chatImage =  (req, res) => {
       return res.status(500).send(error);
     }
   })
-}
+};
+//#endregion
 
+//#region config messenger Attachment
+let attachmentStorage = multer.diskStorage({
+  destination : (req, file, cb) => {
+    cb(null, app.attachment_chat_directory);
+  }, 
+  filename : (req, file, cb) => {
+    if(app.attachment_chat_type.includes(file.mimetype)){
+      return cb(transErrors.not_attachment_chat, null);
+    }
+    let fileName = `${Date.now()}-${(Math.random()*1000000).toString(16)}-${file.originalname}`;
+    cb(null, fileName);
+  }
+});
+
+let attachmentUploadFile = multer({
+  storage : attachmentStorage,
+  limits : {fileSize : app.attachment_chat_maxSize}
+}).single("msg-attachment-chat");
+
+let chatAttachment = (req, res) => {
+  attachmentUploadFile(req, res, async error =>{
+    if(error){
+      if(error.message){
+        return res.status(500).send(transErrors.attachment_oversize);
+      }
+      return res.status(500).send(error);
+    }
+    try {
+      let sender = {
+        username : req.user.username , 
+        avatar : req.user.avatar 
+      }
+      let messengerValue = req.file;
+      let receiverId = req.body.targetId;
+      let isChatGroup = req.body.isChatGroup;
+      let newMessengerAttachment = await conversation.chatAttachment(req.user._id, sender, receiverId, isChatGroup, messengerValue);
+      return res.status(200).send(newMessengerAttachment)
+    } catch (error) {
+      return res.status(500).send(error)
+    }
+  })
+}
 module.exports = {
   chatTextAndEmoji : chatTextAndEmoji,
   updateMessageHasBeenReceived : updateMessageHasBeenReceived,
@@ -126,4 +166,5 @@ module.exports = {
   removeConversation : removeConversation,
   getUserConversation : getUserConversation,
   chatImage : chatImage,
+  chatAttachment : chatAttachment
 }

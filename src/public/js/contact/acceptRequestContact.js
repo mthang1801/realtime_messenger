@@ -108,7 +108,7 @@ function acceptRequestAddContact(){
               </div>
               <div class="right-side__top--rightside">
                 <span class="right-side__top--rightside-item">
-                  <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+                  <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey image-libraries" data-uid="${user._id}">Hình ảnh <i class="fas fa-image"></i></a>
                 </span>
                 <span class="right-side__top--rightside-item">
                   <a href="#modalAttachFile-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
@@ -261,7 +261,7 @@ socket.on("response-accept-request-contact-received", user => {
         </div>
         <div class="right-side__top--rightside">
           <span class="right-side__top--rightside-item">
-            <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Hình ảnh <i class="fas fa-image"></i></a>
+            <a href="#modalImage-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey image-libraries" data-uid="${user._id}">Hình ảnh <i class="fas fa-image"></i></a>
           </span>
           <span class="right-side__top--rightside-item">
             <a href="#modalAttachFile-${user._id}" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>

@@ -55,6 +55,7 @@ function chatImage(targetId){
          $(`.right-side__middle-content[data-chat = ${targetId}]`).getNiceScroll().resize();
          niceScrollChatBox(targetId);
         switchTabConversation();
+        
         //4: change person(group) info messenger and time
         $(`.person[data-chat = ${targetId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html(`Tệp hình ảnh`);
         $(`.person[data-chat = ${targetId}]`).find(".person__config--time").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).text( convertDateTimeMessenger(message.createdAt));
@@ -76,6 +77,10 @@ function chatImage(targetId){
          //increase new number message more than current message is 1
          updateNumberOfMessages(targetId);
          checkStatusConversation(dataToEmit);
+         //update modal image
+         let imageItem = $(`<img src="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}" title="${message.file.fileName}" data-image-id="${message._id}">`)  
+         $(`#modalImage-${targetId}`).find(".all-images").append(imageItem);         
+         photoSetGrid();
       },
       error : function(error){
         alerttify.notify(error.responseText, "error", 7);
@@ -111,6 +116,11 @@ $(document).ready(function () {
       $(this).off("pushConversationItemToTop");
     });
     $(`.person[data-chat = ${message.senderId}]`).trigger("pushConversationItemToTop");
+
+    //update modal image
+    let imageItem = $(`<img src="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}" title="${message.file.fileName}" data-image-id="${message._id}">`)  
+    $(`#modalImage-${message.senderId}`).find(".all-images").append(imageItem);    
+    photoSetGrid();
   })
 
   socket.on("response-send-messenger-image-group", message => {
@@ -137,5 +147,10 @@ $(document).ready(function () {
       $(this).off("pushConversationItemToTop");
     });
     $(`.person[data-chat = ${message.receiverId}]`).trigger("pushConversationItemToTop");
+    //update modal image
+    let imageItem = $(`<img src="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}" title="${message.file.fileName}" data-image-id="${message._id}">`)  
+    $(`#modalImage-${message.receiverId}`).find(".all-images").append(imageItem);
+    
+    photoSetGrid();
   })
 });

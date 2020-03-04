@@ -66,8 +66,15 @@ let getUserConversation = async(req, res) => {
       convertToMessengerTimeStamp : convertToMessengerTimeStamp
     }
     let userConversationLeftSide = await renderFile("src/views/server_render/conversation/_userChatLeftSide.ejs", dataToRender);
-    let userConversationRightSide =await renderFile("src/views/server_render/conversation/_userChatRightSide.ejs", dataToRender)
-    return res.status(200).send({userConversationLeftSide: userConversationLeftSide, userConversationRightSide:userConversationRightSide, user : req.user});
+    let userConversationRightSide =await renderFile("src/views/server_render/conversation/_userChatRightSide.ejs", dataToRender);
+    let userConversationImageModal = await renderFile("src/views/server_render/conversation/_imageModal.ejs", dataToRender);
+    let userConversationAttachmentModal = await renderFile("src/views/server_render/conversation/_attachmentModal.ejs", dataToRender);
+    return res.status(200).send({
+      userConversationLeftSide: userConversationLeftSide,
+      userConversationRightSide:userConversationRightSide,
+      userConversationImageModal : userConversationImageModal,
+      userConversationAttachmentModal : userConversationAttachmentModal,
+      user : req.user});
   } catch (error) {
     return res.status(500).send(error);
   }

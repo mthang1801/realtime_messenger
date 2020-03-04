@@ -870,6 +870,18 @@ a {
     height: 1rem;
     border-radius: 50%; }
 
+.all-images {
+  background-color: #DADDE1;
+  height: 100%; }
+  .all-images > img {
+    background-color: transparent; }
+
+.modal-attachment-libraries a {
+  display: block;
+  text-decoration: underline;
+  margin-bottom: 1rem;
+  margin-left: 2rem; }
+
 .emojionearea-button {
   opacity: 0 !important; }
 

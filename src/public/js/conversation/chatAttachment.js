@@ -9,6 +9,7 @@ function convertTimerTitleMessenger(timeStamp){
   return moment(timeStamp).locale("vi").format("LLLL");
 }
 
+
 function chatAttachment(targetId){
   $(`#attach-chat-${targetId}`).off("change").on("change", function(){
     let fileData = $(this).prop("files")[0];
@@ -74,6 +75,9 @@ function chatAttachment(targetId){
          //increase new number message more than current message is 1
          updateNumberOfMessages(targetId);
          checkStatusConversation(dataToEmit);
+         //update modal attachment libraries
+         let attachmentItem = $(`<a href="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}"  download="${message.file.fileName}" title="upload vào lúc ${convertTimerTitleMessenger(message.createdAt)}">${message.file.fileName}</a>`);
+         $(`#modalAttachFile-${targetId}`).find(".modal-attachment-libraries").append(attachmentItem);
       },
       error : function(error){
         alertify.notify(error.responseText, "error", 7);
@@ -85,6 +89,7 @@ function chatAttachment(targetId){
 
 $(document).ready(function () {
   socket.on("response-send-messenger-attachment", message => {
+    console.log(message);
     let yourMessageOuter = $(`<div class="right-side__middle-content--you bubble" title="${convertTimerTitleMessenger(message.createdAt)}" data-message-id="${message._id}"></div>`);
     let yourAvatar = `<img src="images/users/${message.sender.avatar}" class="right-side__middle-content-avatar right-side__middle-content-avatar--you" >`;
     let yourAttachmentMessenger = ` 
@@ -100,14 +105,17 @@ $(document).ready(function () {
     niceScrollChatBox(message.senderId);
     switchTabConversation();
     //4: change person(group) info messenger and time
-    $(`.person[data-chat = ${message.senderId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html(`Tệp hình ảnh`);
-    $(`.person[data-chat = ${message.senderId}]`).find(".person__config--time").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).text( convertDateTimeMessenger(message.createdAt));
+    $(`.person[data-chat = ${message.senderId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html(`Tệp đính kèm văn bản`);
+    $(`.person[data-chat = ${message.senderId}]`).find(".person__config--time").text( convertDateTimeMessenger(message.createdAt)).css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"});
     $(`.person[data-chat = ${message.senderId}]`).on("pushConversationItemToTop", function(){
       let dataToMove = $(this).parent();
       $(this).closest("ul").prepend(dataToMove);
       $(this).off("pushConversationItemToTop");
     });
     $(`.person[data-chat = ${message.senderId}]`).trigger("pushConversationItemToTop");
+    //update modal attachment libraries
+    let attachmentItem = $(`<a href="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}"  download="${message.file.fileName}" title="upload vào lúc ${convertTimerTitleMessenger(message.createdAt)}">${message.file.fileName}</a>`);
+    $(`#modalAttachFile-${message.senderId}`).find(".modal-attachment-libraries").append(attachmentItem);
   })
 
   socket.on("response-send-messenger-attachment-group", message => {
@@ -127,13 +135,16 @@ $(document).ready(function () {
     niceScrollChatBox(message.receiverId);
     switchTabConversation();
     //4: change person(group) info messenger and time
-    $(`.person[data-chat = ${message.receiverId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html(`Tệp hình ảnh`);
-    $(`.person[data-chat = ${message.receiverId}]`).find(".person__config--time").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).text( convertDateTimeMessenger(message.createdAt));
+    $(`.person[data-chat = ${message.receiverId}]`).find(".person__infor--messenger").css("color", "#4A4A4A").html(`Tệp đính kèm văn bản`);
+    $(`.person[data-chat = ${message.receiverId}]`).find(".person__config--time").css({"color": "#4A4A4A", "fontWeight" : "400", "fontSize": ".8rem","opacity" : ".8"}).html( convertDateTimeMessenger(message.createdAt));
     $(`.person[data-chat = ${message.receiverId}]`).on("pushConversationItemToTop", function(){
       let dataToMove = $(this).parent();
       $(this).closest("ul").prepend(dataToMove);
       $(this).off("pushConversationItemToTop");
     });
     $(`.person[data-chat = ${message.receiverId}]`).trigger("pushConversationItemToTop");
+    //update modal attachment libraries
+    let attachmentItem = $(`<a href="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}"  download="${message.file.fileName}" title="upload vào lúc ${convertTimerTitleMessenger(message.createdAt)}">${message.file.fileName}</a>`);
+    $(`#modalAttachFile-${message.receiverId}`).find(".modal-attachment-libraries").append(attachmentItem);
   })
 });

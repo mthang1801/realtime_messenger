@@ -233,3 +233,21 @@
     border-radius: 50%;
   }
 }
+
+.all-images{
+  background-color : $color-divider-on-white;
+  height : 100%;
+  & > img{
+    background-color :transparent;
+  }
+}
+
+.modal-attachment-libraries{
+  & a{
+    display : block ; 
+    text-decoration: underline;
+    margin-bottom : 1rem;
+    margin-left : 2rem;
+
+  }
+}

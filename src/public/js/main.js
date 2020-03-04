@@ -55,34 +55,92 @@ function showModalContacts(){
   })
 };
 
-function photoSetGrid(layoutNumber){
-  let countRows = Math.ceil($("#modalImage").find("div.all-images>img").length / layoutNumber );
-  let layoutStr = new Array(countRows).fill(layoutNumber).join("");  
-  $("#modalImage").find("div.all-images").photosetGrid({
-    gutter : "5px",
-    layout : layoutStr,
-    highresLinks : true ,
-    rel: 'withhearts-gallery',
-    onInit : () => {}, 
-    onComplete : () => {
-      $(".all-images").attr("style", "");
-      $(".all-images a").colorbox({
-        photo: true,
-        scalePhotos: true,
-        maxHeight: '90%',
-        maxWidth: '90%'
-      });
-    }
+function photoSetGrid(){
+  $(".image-libraries").off("click").on("click", function(){
+    let targetId = $(this).data("uid");
+    //get number images per row
+
+    let originalPicture = $(`#modalImage-${targetId}`).find(".modal-body").html() ; 
+    let layoutNumber = 4;
+    let countRows = Math.ceil($(`#modalImage-${targetId}`).find("div.all-images>img").length / layoutNumber);
+    let layoutStr = new Array(countRows).fill(layoutNumber).join("");  
+    
+    $(`#modalImage-${targetId}`).find("div.all-images").photosetGrid({
+      gutter : "5px",
+      layout : layoutStr,
+      highresLinks : true ,
+      rel: 'withhearts-gallery',
+      onInit : () => {}, 
+      onComplete : () => {
+        $(`#modalImage-${targetId}`).find(".all-images").css({"visibility": "visible" }).attr("style" , "");
+        $(`#modalImage-${targetId}`).find(".all-images a").colorbox({
+          photo: true,
+          scalePhotos: true,
+          maxHeight: '60%',
+          maxWidth: '90%'
+        });
+      }
+    });
+    $(`#modalImage-${targetId}`).on("hidden.bs.modal", function(){
+      $(this).find(".modal-body").html(originalPicture);
+    })
   })
+ 
 };
 
 let switchButtonGroupChat = () => {
-  $("#select-type-chat").on("change" , function(e){
+  $("#select-type-chat").off("change").on("change" , function(e){
+    let tabPanelId = $("option:selected", this).data("target").replace("#","");
+    //remove all active class at left side, then addClass active to selected value
+    $(".left-side-conversations__content").removeClass("active");
+    $(`#${tabPanelId}`).addClass("active");
+    //resize niceScroll for left side after changing option value
+    $(".left-side").getNiceScroll().resize();
+    let targetId = "";
+    let isGroupChat = false ;
+    $(".person").each( function(index, element){
+      if($(this).hasClass("active")){
+        targetId = $(this).data("chat");
+        isGroupChat = $(this).hasClass("group-chat") ? true : false ;
+      }
+    })
+    
     if($(this).val() == "private-chat"){
-      $("#btn-create-group-chat").hide();
+      if(targetId != "" && !isGroupChat){
+        $(`.person[data-chat = ${targetId}]`).addClass("active");
+      }else{
+        $(".person").removeClass("active");
+        $(".right-side__screen").removeClass("active");
+        $(".initial-conversation").show();
+      }
+    }
+    else if($(this).val() == "group-chat"){
+      if(targetId != "" && isGroupChat){        
+        $(`.person[data-chat = ${targetId}]`).addClass("active");
+      }else{
+        $(".person").removeClass("active");
+        $(".right-side__screen").removeClass("active");
+        $(".initial-conversation").show();
+      }
+    }
+    else if($(this).val() == "all-chat"){
+    
+      if(targetId != ""){
+        $(`.person[data-chat = ${targetId}]`).addClass("active");
+      }else{
+        $(".person").removeClass("active");
+        $(".right-side__screen").removeClass("active");
+        $(".initial-conversation").show();
+      }
+    }
+
+    if($(this).val() == "private-chat"){
+      $("#btn-create-group-chat").hide();     
     }else{
       $("#btn-create-group-chat").show();
     }
+    
+    switchButtonGroupChat();
   })
 }
 
@@ -208,6 +266,7 @@ function switchTabConversation(){
       chatImage(targetId);
       chatAttachment(targetId);
       receiverHasSeenMessage(targetId);  
+      photoSetGrid();
   })
 };
 
@@ -287,9 +346,6 @@ $(document).ready(function () {
 
   //when show Modal contact, notification counter at contact toolbar in navagation will be hidden
   showModalContacts();
-
-  //set grid for photo at image Modal
-  photoSetGrid(3);
 
   // //create emotion for chatbox 
   // enableEmojiChat("1234");

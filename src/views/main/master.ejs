@@ -24,7 +24,8 @@
 	<div class="loading-ring" id="loading"><div></div><div></div><div></div><div></div></div>
 	<!-- Modal Loading -->
 	<div class="modal-loading"></div>
-
+	<!-- ICE serverlist secret -->
+	<input type="hidden" id="ice-server" value="<%= ICEServerList %>">
 	<!-- alert -->
 		<%- include("alert/alert") %>
 	<!-- Navigation bar -->
@@ -72,6 +73,7 @@
 	<script src="bower_components/moment/min/moment-with-locales.min.js"></script>
 	<script src="bower_components/moment/min/moment.min.js"></script>
 	<script src="bower_components/moment/min/locales.min.js"></script>
+	<script src="bower_components/peerjs/peer.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<!-- My script -->
 	<script src="js/main.js"></script>
@@ -97,5 +99,6 @@
 	<script src="js/conversation/conversationConfig.js"></script>
 	<script src="js/conversation/chatImage.js"></script>
 	<script src="js/conversation/chatAttachment.js"></script>
+	<script src="js/conversation/callVideo.js"></script>
 </body>
 </html>

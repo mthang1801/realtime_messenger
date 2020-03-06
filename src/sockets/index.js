@@ -9,6 +9,7 @@ import typingOn from "./conversation/typingOn";
 import typingOff from "./conversation/typingOff";
 import chatImage from "./conversation/chatImage";
 import chatAttachment from "./conversation/chatAttachment";
+import callVideo from "./conversation/callVideo";
 let initSockets = (io) => {
   addNewContact(io);
   removeAddNewContact(io);
@@ -21,6 +22,7 @@ let initSockets = (io) => {
   typingOff(io);
   chatImage(io);
   chatAttachment(io);
+  callVideo(io);
 };
 
 

@@ -266,6 +266,7 @@ function switchTabConversation(){
       chatImage(targetId);
       chatAttachment(targetId);
       receiverHasSeenMessage(targetId);  
+      callVideo(targetId);
       photoSetGrid();
   })
 };

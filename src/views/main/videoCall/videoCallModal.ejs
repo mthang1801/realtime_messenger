@@ -1,18 +1,17 @@
 <div class="modal fade" id="modalVideoCall" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg modal-xl" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Cuộc gọi video call</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+      <div class="modal-header text-center">
+        <h5 class="modal-title">Cuộc gọi video call</h5>          
       </div>
       <div class="modal-body">
-        Body
+        <div class="mx-4 my-4">
+          <video class="float-left" id="remote-stream" width="600" height="400" controls > </video>
+          <video class="float-left ml-4" id="local-stream" width="250" height="200" controls > </video>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+      <div class="modal-footer border-top-0">
+        <button type="button" class="btn btn-danger mx-auto" id="btn-end-call" alt="Kết thúc cuộc gọi" ><i class="fas fa-video-slash"></i></button>      
       </div>
     </div>
   </div>

@@ -84,10 +84,7 @@
             </div>
             <div class="right-side__bottom-icons-item">            
               <label for="attach-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">  <input type="file" class="d-none chat-in-group" id="attach-chat-<%= conversation._id %>" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
-            </div>
-            <div class="right-side__bottom-icons-item">
-              <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
-            </div>				
+            </div>           			
           </div>
         </div>
       </div>
@@ -189,7 +186,7 @@
                 <label for="attach-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">  <input type="file" class="d-none" id="attach-chat-<%= conversation._id %>" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
               </div>
               <div class="right-side__bottom-icons-item">
-                <a href="#modalVideoCall"  data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+                <a href="javascript:void(0)" id="video-chat-<%= conversation._id %>" id="video-chat"><i class="fas fa-video"></i></a>
               </div>				
             </div>
           </div>

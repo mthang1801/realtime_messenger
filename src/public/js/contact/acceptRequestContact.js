@@ -132,7 +132,7 @@ function acceptRequestAddContact(){
                   <label for="attach-chat-${user._id}" data-chat="${user._id}">  <input type="file" class="d-none" id="attach-chat-${user._id}" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
                 </div>
                 <div class="right-side__bottom-icons-item">
-                  <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+                  <a href="javascript:void(0)"  data-toggle="modal" id="video-chat-${user._id}"><i class="fas fa-video"></i></a>
                 </div>				
               </div>
             </div>
@@ -285,7 +285,7 @@ socket.on("response-accept-request-contact-received", user => {
           <label for="attach-chat-${user._id}" data-chat="${user._id}">  <input type="file" class="d-none" id="attach-chat-${user._id}" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
           </div>
           <div class="right-side__bottom-icons-item">
-            <a href="#modalVideoCall" data-toggle="modal" id="video-chat"><i class="fas fa-video"></i></a>
+            <a href="javascript:void(0)" data-toggle="modal" id="video-chat-${user._id}"><i class="fas fa-video"></i></a>
           </div>				
         </div>
       </div>

@@ -12,11 +12,13 @@
     height: 100%; }
   .auth-form {
     position: absolute;    
-    overflow: auto;}
+    overflow: auto;
+    box-shadow: .75rem .75rem .5rem 0 rgba(0,0,0,.65);
+  }
     @media (max-width : 479px){
       .auth-form{
         width : 80%;
-        height: 75%;
+        max-height: 90%;
         top : 15%;
         left :10%;
       }
@@ -24,7 +26,7 @@
     @media(min-width : 480px) and (max-width: 767px){
       .auth-form{
         width : 70%;
-        height: 75%;
+        max-height: 90%;
         top : 15%;
         left :15%;
       }
@@ -32,7 +34,7 @@
     @media (min-width : 768px) and (max-width: 1023px){
       .auth-form{
         width : 60%;
-        height: 35rem;
+        max-height: 80%;
         top : 15%;
         left :20%;
       }
@@ -40,7 +42,7 @@
     @media (min-width :1024px){
       .auth-form{
         width : 32.5%;
-        height: 70%;
+        max-height: 85%;
         top : 4rem;
         right : 12rem;
       }

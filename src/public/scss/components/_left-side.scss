@@ -51,12 +51,25 @@
     background-color: $color-dark-mode-gray-50;   
   }
   &__avatar{
-    flex-basis : 15%;
+    position : relative; 
+    width : 3.5rem ;
+    height : 3.5rem ; 
+    border-radius : 50% ;
+    border : 1px solid $color-icon-offline;
     margin-right : .5rem;
-    &-image{
-      height : 3.5rem;
-      width : 3.5rem;
+    &-image{    
+      height : 100%;
+      width : 100%;
       border-radius: 50%;
+    }
+    &--dot{
+      position : absolute;
+      bottom : 4%;
+      right :9%;
+      width : .55rem ;
+      height : .55rem;
+      border-radius : 50%;
+      background-color : $color-icon-offline;
     }
   }
   &__infor{

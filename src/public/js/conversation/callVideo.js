@@ -62,14 +62,14 @@ $(document).ready(function () {
     alertify.notify(`${data.listenerName} hiện không trực tuyến, vui lòng liên hệ sau!!!`, "error" , 8);
   })
 
-  let stringICEServer = $("#ice-server").val();
-  ICEServerList = JSON.parse(stringICEServer);
+  // let stringICEServer = $("#ice-server").val();
+  // ICEServerList = JSON.parse(stringICEServer);
   let peer = new Peer({
     key : "peerjs" , 
     host : "peerjs-server-trungquandev.herokuapp.com" ,
     port : 443 , 
     secure : true  ,
-    config : {'iceServers' : ICEServerList} ,
+    // config : {'iceServers' : ICEServerList} ,
     debug : 3
   });
   let getPeerId = "";

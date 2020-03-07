@@ -13,6 +13,7 @@ function chatWithUserContact(){
       <li class="nav-item left-side-conversations__content-item" >
         <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${targetId}" data-chat="${targetId}" >
           <div class="person__avatar">
+            <span class="person__avatar--dot"></span>
             <img src="images/users/${targetAvatar}" class="person__avatar-image" >
           </div>
           <div class="person__infor">

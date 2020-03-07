@@ -10,6 +10,7 @@ import typingOff from "./conversation/typingOff";
 import chatImage from "./conversation/chatImage";
 import chatAttachment from "./conversation/chatAttachment";
 import callVideo from "./conversation/callVideo";
+import userOnlineOffline from "./status/userOnlineOffline";
 let initSockets = (io) => {
   addNewContact(io);
   removeAddNewContact(io);
@@ -23,6 +24,7 @@ let initSockets = (io) => {
   chatImage(io);
   chatAttachment(io);
   callVideo(io);
+  userOnlineOffline(io);
 };
 
 

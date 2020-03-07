@@ -157,6 +157,9 @@ a {
   background-color: #26de81 !important;
   border-color: #26de81 !important; }
 
+.avatar-online {
+  border-color: #26de81 !important; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }
@@ -584,16 +587,18 @@ a {
     background-color: #828282; }
   .person__avatar {
     position: relative;
-    flex-basis: 15%;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    border: 1px solid #d1ccc0;
     margin-right: .5rem; }
     .person__avatar-image {
-      border: 1px solid #d1ccc0;
-      height: 3.5rem;
-      width: 3.5rem;
+      height: 100%;
+      width: 100%;
       border-radius: 50%; }
     .person__avatar--dot {
       position: absolute;
-      bottom: 21%;
+      bottom: 4%;
       right: 9%;
       width: .55rem;
       height: .55rem;

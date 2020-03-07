@@ -4,30 +4,31 @@ import  request from "request";
 let getICETurnServer = () => {
   return new Promise(async (resolve, reject) => {
     // Node Get ICE STUN and TURN list
-    let o = {
-      format: "urls"
-    };
+    // let o = {
+    //   format: "urls"
+    // };
 
-    let bodyString = JSON.stringify(o);  
-    let options = {
-      url: "https://global.xirsys.net/_turn/messenger",      
-      method: "PUT",
-      headers: {
-          "Authorization": "Basic " + Buffer.from("mthang1801:29d7bddc-5f78-11ea-acee-0242ac110004").toString("base64"),
-          "Content-Type": "application/json",
-          "Content-Length": bodyString.length
-      }
-    };
+    // let bodyString = JSON.stringify(o);  
+    // let options = {
+    //   url: "https://global.xirsys.net/_turn/messenger",      
+    //   method: "PUT",
+    //   headers: {
+    //       "Authorization": "Basic " + Buffer.from("mthang1801:29d7bddc-5f78-11ea-acee-0242ac110004").toString("base64"),
+    //       "Content-Type": "application/json",
+    //       "Content-Length": bodyString.length
+    //   }
+    // };
 
-    //Call request to get ICE 
-    request(options, (error, response, body) => {
-      if(error){
-        console.log("get ICE occurs error: ", );
-        return reject(error);
-      }
-      let bodyJSON = JSON.parse(body);     
-      resolve(bodyJSON.v.iceServers)
-    })
+    // //Call request to get ICE 
+    // request(options, (error, response, body) => {
+    //   if(error){
+    //     console.log("get ICE occurs error: ", );
+    //     return reject(error);
+    //   }
+    //   let bodyJSON = JSON.parse(body);     
+      // resolve(bodyJSON.v.iceServers)
+      resolve([]);
+    // })
   })
 };
 

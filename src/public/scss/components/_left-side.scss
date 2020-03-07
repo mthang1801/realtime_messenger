@@ -52,17 +52,19 @@
   }
   &__avatar{
     position : relative; 
-    flex-basis : 15%;
+    width : 3.5rem ;
+    height : 3.5rem ; 
+    border-radius : 50% ;
+    border : 1px solid $color-icon-offline;
     margin-right : .5rem;
-    &-image{
-      border : 1px solid $color-icon-offline;
-      height : 3.5rem;
-      width : 3.5rem;
+    &-image{    
+      height : 100%;
+      width : 100%;
       border-radius: 50%;
     }
     &--dot{
       position : absolute;
-      bottom : 21%;
+      bottom : 4%;
       right :9%;
       width : .55rem ;
       height : .55rem;

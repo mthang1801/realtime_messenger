@@ -66,6 +66,7 @@ function acceptRequestAddContact(){
           <li class="nav-item left-side-conversations__content-item" >
             <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
               <div class="person__avatar">
+                <span class="person__avatar--dot"></span>
                 <img src="images/users/${user.avatar}" class="person__avatar-image" >
               </div>
               <div class="person__infor">
@@ -224,6 +225,7 @@ socket.on("response-accept-request-contact-received", user => {
     <li class="nav-item left-side-conversations__content-item" >
       <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
         <div class="person__avatar">
+          <span class="person__avatar--dot"></span>
           <img src="images/users/${user.avatar}" class="person__avatar-image" >
         </div>
         <div class="person__infor">

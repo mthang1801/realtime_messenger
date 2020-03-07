@@ -153,6 +153,10 @@ a {
   .user-active:hover {
     background-color: #BEC3C9; }
 
+.online {
+  background-color: #26de81 !important;
+  border-color: #26de81 !important; }
+
 .btn-text:link, .btn-text:visited {
   color: #fff;
   text-decoration: none; }
@@ -579,12 +583,22 @@ a {
     color: #f7f7f7;
     background-color: #828282; }
   .person__avatar {
+    position: relative;
     flex-basis: 15%;
     margin-right: .5rem; }
     .person__avatar-image {
+      border: 1px solid #d1ccc0;
       height: 3.5rem;
       width: 3.5rem;
       border-radius: 50%; }
+    .person__avatar--dot {
+      position: absolute;
+      bottom: 21%;
+      right: 9%;
+      width: .55rem;
+      height: .55rem;
+      border-radius: 50%;
+      background-color: #d1ccc0; }
   .person__infor {
     flex-basis: 50%;
     margin-right: .5rem;

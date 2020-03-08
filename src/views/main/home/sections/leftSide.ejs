@@ -145,8 +145,9 @@
       </ul> 
      </div>
      <div class="tab-pane left-side-conversations__content" id="group-conversations">
-      <% allConversations.forEach( (conversation,index) => {%>
-        <ul class="left-side-conversations__content-list">                                 
+      
+      <ul class="left-side-conversations__content-list">    
+        <% allConversations.forEach( (conversation,index) => {%>                             
           <% if(conversation.members) {%>
             <li class="nav-item left-side-conversations__content-item">
               <a class="nav-link person group-chat"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >

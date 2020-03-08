@@ -1,0 +1,26 @@
+<li class="nav-item left-side-conversations__content-item">
+  <a class="nav-link person group-chat"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+    <div class="person__avatar">
+      <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
+    </div>
+    <div class="person__infor">
+      <div class="person__infor--username">
+        <%= conversation.name %>
+      </div>
+      <div class="person__infor--messenger convert-emoji">
+      
+      </div>
+    </div>
+    <div class="person__config" data-uid="<%= conversation._id %>">
+      <div class="person__config--setting">
+        <span>...</span>                    
+      </div>
+      <div class="person__config--menu" data-uid="<%= conversation._id %>">
+        <div class="remove-conversation">Xóa hội thoại</div>
+      </div>
+      <div class="person__config--time" data-uid="<%= conversation._id %>">
+        <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+      </div>
+    </div>          
+  </a>
+</li>

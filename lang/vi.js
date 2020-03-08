@@ -47,7 +47,9 @@ export const transErrors = {
   invalid_messenger_type : "Kiểu file không hợp lệ, file phải có đuôi png, jpg hoặc jpeg",
   messenger_oversize : "Kích thước file quá lớn", 
   not_attachment_chat : "Tập tin không phải dạng tệp đính kèm",
-  attachment_oversize : "Kich thước tệp quá lớn"
+  attachment_oversize : "Kich thước tệp quá lớn",
+  lengthCreateNewGroup : "Độ dài tối thiểu 3 ký tự, tối đa 50 ký tự",
+  empty_array_userId : "Để tạo nhóm cần ít nhất 1 thành viên"
 }
 
 export const transSuccess = {

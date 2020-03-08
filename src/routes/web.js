@@ -1,6 +1,6 @@
 import express from 'express';
 import {home, auth, user, contact, notification, conversation, groupChat} from "../controllers/index";
-import {authValid, userValid} from "../validation";
+import {authValid, userValid, groupChatValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
 import initPassportGoogle from "../controllers/passportController/google";
@@ -78,7 +78,8 @@ let initRoutes = (app) => {
   router.post("/conversation/chat-attachment", auth.checkLoggedIn, conversation.chatAttachment);
   router.get("/conversation/read-more-messengers", auth.checkLoggedIn, conversation.readMoreMessengers);
   //group-chat
-  router.get("/group-chat/search-users" , auth.checkLoggedIn, groupChat.searchUsers)
+  router.get("/group-chat/search-users" , auth.checkLoggedIn, groupChat.searchUsers);
+  router.post("/group-chat/create-new-group-chat", auth.checkLoggedIn, groupChatValid.createNewGroup, groupChat.createNewGroup);
   return app.use(router);
 }
 

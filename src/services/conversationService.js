@@ -91,6 +91,7 @@ let getAllMessengersContent = userId => {
       listGroups.forEach( group => {
         listGroupsId.push(group._id);
       })      
+    
       //step 2 : find all private messages without groupChat id as receiver
       let listPrivateMessengers = await messengerModel.model.findAllPrivateMessages(userId, listGroupsId);
       let listConversationsId = [];
@@ -177,7 +178,7 @@ let chatTextAndEmoji = (userId, userName, userAvatar, receiverId , messengerText
     try {
       //case for group
       if(isGroup){
-        //find Group and update time when has new messenger
+        //find Group and update time when has new messenger     
         let groupInfo = await chatGroupModel.findGroupAndUpdateTimeWhenHasNewMessenger(receiverId);                        
         if(Object.entries(groupInfo).length==0){
           return reject(transErrors.send_message_fail);

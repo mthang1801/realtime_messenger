@@ -1,43 +1,34 @@
 import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} from "../../helpers/socketIOHelper";
 
-let userOnlineOffline = io => {
-  let clients = {} ;
-  let newGroupArray = [];
-  io.on("connection", socket => {
+let createNewGroup = io => {
+  let clients = {};
+  io.on("connection",  socket => {
     clients = pushSocketIdIntoArray(clients, socket.request.user._id, socket.id);
     socket.request.user.listGroupsId.forEach( group => {
       clients = pushSocketIdIntoArray(clients, group._id, socket.id);
-    });
-       
+    })
+   
     socket.on("create-new-group", data => {
-      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
-      newGroupArray.push(data.group._id);
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);      
+      data.group.members.forEach( member => {
+        if(clients[member.userId] && member.userId != socket.request.user._id){                    
+          emitResponseToArray(io, clients, member.userId, "response-create-new-group", data);
+        }
+        
+      })
     });
 
     socket.on("user-received-new-group", data => {
       clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)      
-    });
-
-    socket.on("check-status", () => {
-      let listUsersIdOnline = Object.keys(clients);       
-      socket.emit("server-send-list-users-online", listUsersIdOnline);
-
-      socket.broadcast.emit("server-send-new-user-is-online", socket.request.user._id);
     })
-    
+
     socket.on("disconnect", () => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
-      });
-      newGroupArray.forEach( groupId => {
-        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
       })
-      
-      socket.broadcast.emit("server-send-user-is-offline", socket.request.user._id );
     })
   })
-
 }
 
-module.exports = userOnlineOffline; 
+module.exports = createNewGroup;

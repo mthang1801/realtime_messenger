@@ -1,0 +1,40 @@
+<div class="right-side__screen tab-pane" id="to-<%= conversation._id %>" >
+  <div class="right-side__top">
+    <div class="right-side__top--leftside">
+      To :
+      <span class="right-side__top--leftside-username">
+        <%= conversation.name %>
+      </span>
+    </div>
+    <div class="right-side__top--rightside">
+      <span class="right-side__top--rightside-item">
+        <a href="#modalCountMessengers" data-toggle="modal" class="btn-link btn-dark-grey"><i class="fab fa-facebook-messenger"><%= conversation.messageAmount %></i></a>
+      </span>
+      <span class="right-side__top--rightside-item">
+        <a href="#modalImage-<%=conversation._id %>" data-toggle="modal" class="btn-link btn-dark-grey image-libraries" data-uid="<%= conversation._id %>">Hình ảnh <i class="fas fa-image"></i></a>
+      </span>
+      <span class="right-side__top--rightside-item">
+        <a href="#modalAttachFile-<%= conversation._id %>" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+      </span>
+    </div>
+  </div>
+  <div class="right-side__middle">
+    <div class="right-side__middle-content convert-emoji" data-chat="<%= conversation._id %>">            
+      
+    </div>
+  </div>
+  <div class="right-side__bottom convert-emoji" data-chat="<%= conversation._id %>">
+    <input type="text" class="right-side__bottom-write write-chat chat-in-group" id="chat-text-<%= conversation._id %>" data-conversation-type="group" data-chat="<%= conversation._id %>" style="display:none">
+    <div class="right-side__bottom-icons">
+      <div class="right-side__bottom-icons-item">
+        <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+      </div>					
+      <div class="right-side__bottom-icons-item">            
+        <label for="image-chat-<%= conversation._id %>" class="image-chat" data-chat="<%= conversation._id %>"> <input type="file" class="d-none chat-in-group" id="image-chat-<%= conversation._id %>" name="msg-image-chat"><i class="fas fa-image"></i></label>
+      </div>
+      <div class="right-side__bottom-icons-item">            
+        <label for="attach-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">  <input type="file" class="d-none chat-in-group" id="attach-chat-<%= conversation._id %>" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
+      </div>           			
+    </div>
+  </div>
+</div>

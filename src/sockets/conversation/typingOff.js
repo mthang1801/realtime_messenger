@@ -2,12 +2,25 @@ import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} fr
 
 let typingOff = io => {
   let clients = {};
+  let newGroupArray = [];
   io.on("connection", socket => {
     clients = pushSocketIdIntoArray(clients, socket.request.user._id, socket.id);
     socket.request.user.listGroupsId.forEach( group => {
       clients = pushSocketIdIntoArray(clients, group._id, socket.id);
     })
-    socket.on("user-blur-typing", data => {     
+
+   
+    socket.on("create-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
+      newGroupArray.push(data.group._id);
+    });
+
+    socket.on("user-received-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)      
+    });
+
+    
+    socket.on("user-blur-typing", data => {          
       if(data.groupId){
         let dataToEmit ={ 
           user : socket.request.user, 
@@ -30,6 +43,9 @@ let typingOff = io => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+      })
+      newGroupArray.forEach( groupId => {
+        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
       })
     })
   });

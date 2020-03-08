@@ -1,3 +1,4 @@
+socket.emit("check-status");
 
 socket.on("server-send-list-users-online", listUsersId => {
   console.log(listUsersId);

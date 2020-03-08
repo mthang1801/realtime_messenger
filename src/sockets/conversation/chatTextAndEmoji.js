@@ -2,14 +2,26 @@ import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} fr
 
 let chatTextAndEmoji = (io) => {
   let clients = {};
+  let newGroupArray = [];
   io.on("connection", socket => {
     clients = pushSocketIdIntoArray(clients, socket.request.user._id, socket.id);
     socket.request.user.listGroupsId.forEach( group => {
       clients = pushSocketIdIntoArray(clients, group._id, socket.id);
     });
+
+    
+    socket.on("create-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
+      newGroupArray.push(data.group._id);
+    });
+
+    socket.on("user-received-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)
+    });
+
     socket.on("send-messenger-text-and-emoji-group", data => {
-      let {targetId, message, groupId} = data; 
-      if(clients[data.groupId]){
+      let {targetId, message, groupId} = data;       
+      if(clients[data.groupId]){       
         let socketGroup = clients[data.groupId].filter( socketId => socketId != socket.id );
         socketGroup.forEach(socketId => {
           io.sockets.connected[socketId].emit("response-send-messenger-text-and-emoji-group", message)
@@ -27,6 +39,9 @@ let chatTextAndEmoji = (io) => {
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
       });
+      newGroupArray.forEach( groupId => {
+        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+      })
     })
   })
 }

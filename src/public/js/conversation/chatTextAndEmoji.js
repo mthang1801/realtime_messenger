@@ -23,8 +23,7 @@ function chatTextAndEmoji(targetId){
       if(messengerValue.trim()==""){
         return ; 
       }
-      let data = {targetId, messenger : messengerValue, isGroup};
-      
+      let data = {targetId, messenger : messengerValue, isGroup};      
       $.ajax({
         type: "post",
         url: "/conversation/chat-text-and-emoji",
@@ -61,7 +60,7 @@ function chatTextAndEmoji(targetId){
             let dataToEmit = { targetId , message}            
             //6: socket send message to convertion
             if(isGroup){
-              dataToEmit.groupId = targetId ; 
+              dataToEmit.groupId = targetId ;              
               socket.emit("send-messenger-text-and-emoji-group", dataToEmit);
             }else{
               socket.emit("send-messenger-text-and-emoji", dataToEmit);             
@@ -70,7 +69,7 @@ function chatTextAndEmoji(targetId){
             updateNumberOfMessages(targetId);
              //7: call function to check status
              checkStatusConversation(dataToEmit); 
-             
+             socket.emit("chect-status");
             typingOff(targetId);
           }
         },

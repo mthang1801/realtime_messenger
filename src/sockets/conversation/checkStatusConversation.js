@@ -31,7 +31,7 @@ let checkStatusConversation = io => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
          clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
-      })
+      });
     })
   })
 }

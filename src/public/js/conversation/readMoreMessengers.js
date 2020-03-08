@@ -1,13 +1,10 @@
-let loadingMessengers = true ;
-function readMoreMessengers(){
-  $(".right-side__middle-content").off("scroll").on("scroll", function(){
-   if(loadingMessengers){
-    let targetId = $(this).data("chat");
+function readMoreMessengers(targetId){
+  $(`.right-side__middle-content[data-chat = ${targetId}]`).off("scroll").on("scroll", function(){
+  
     let skipNumber = $(this).children().length;
     let firstMessage = $(this).find("div.bubble:first");
     let currentOffsetTop = firstMessage.offset().top - $(this).scrollTop() ; 
-    if($(this).scrollTop() == 0){ 
-      loadingMessengers = false ;     
+    if($(this).scrollTop() == 0){           
       $.ajax({
         type: "get",
         url: `/conversation/read-more-messengers?skipNumber=${skipNumber}&targetId=${targetId}`,
@@ -19,15 +16,10 @@ function readMoreMessengers(){
           $(`.right-side__middle-content[data-chat = ${targetId}]`).prepend(data);
           $(`.right-side__middle-content[data-chat = ${targetId}]`).find(".loading-read-more-messengers").remove();
           let scrollPage =  $(`.right-side__middle-content[data-chat = ${targetId}]`);     
-          scrollPage.scrollTop(firstMessage.offset().top - currentOffsetTop);
-          loadingMessengers=true;
+          scrollPage.scrollTop(firstMessage.offset().top - currentOffsetTop);       
         },
       });
-    }
    }
   })
 }
 
-$(document).ready(function () {
-  readMoreMessengers();
-});

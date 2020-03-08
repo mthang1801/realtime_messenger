@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, auth, user, contact, notification, conversation} from "../controllers/index";
+import {home, auth, user, contact, notification, conversation, groupChat} from "../controllers/index";
 import {authValid, userValid} from "../validation";
 import initPassportLocal from "../controllers/passportController/local";
 import initPassportFacebook from "../controllers/passportController/fb";
@@ -77,6 +77,8 @@ let initRoutes = (app) => {
   router.post("/conversation/chat-image", auth.checkLoggedIn, conversation.chatImage);
   router.post("/conversation/chat-attachment", auth.checkLoggedIn, conversation.chatAttachment);
   router.get("/conversation/read-more-messengers", auth.checkLoggedIn, conversation.readMoreMessengers);
+  //group-chat
+  router.get("/group-chat/search-users" , auth.checkLoggedIn, groupChat.searchUsers)
   return app.use(router);
 }
 

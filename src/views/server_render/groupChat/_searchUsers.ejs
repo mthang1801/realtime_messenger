@@ -1,0 +1,19 @@
+<% usersList.forEach( user => { %>
+  <li class="list-users-item" data-chat="<%= user._id %>">
+    <div class="list-users-item__avatar">
+      <img src="images/users/<%= user.avatar %>" class="list-users-item__avatar-image">
+    </div>
+    <div class="list-users-item__info">
+      <div class="list-users-item__info-username">
+        <%= user.username %>
+      </div>
+      <div class="list-users-item__info-address">
+        <%= user.address ? user.address : "" %>
+      </div>
+    </div>
+    <div class="list-users-item__button">
+    <button class="list-users-item__button-add" data-chat="<%= user._id %>">Thêm vào nhóm</button>
+    <button class="list-users-item__button-remove" data-chat="<%= user.id %>">Xóa khỏi nhóm</button>
+    </div>
+  </li>   
+<%})%>

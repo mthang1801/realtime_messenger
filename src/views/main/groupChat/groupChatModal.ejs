@@ -1,49 +1,38 @@
 <div class="modal fade" id="modalGroupChat" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-  <div class="modal-dialog modal-xl" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Tạo nhóm</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <h5 class="modal-title">Tạo nhóm</h5>         
       </div>
       <div class="modal-body">
-       <div class="row">
-         <div class="col-12 col-md-7 col-xl-6">
-           <div class="input-group">
-             <input type="text" class="form-control" placeholder="Tìm kiếm người dùng" id="search-users">
-             <div class="input-group-append">
-               <button class="btn btn-light border-secondary"><i class="fas fa-search"></i></button>
-             </div>
+        <div class="input-group search-users-new-group">
+          <input type="text" class="form-control" placeholder="Tìm kiếm người dùng" id="search-users-new-group">
+          <div class="input-group-append">
+            <button class="btn btn-light border-secondary" id="btn-search-users-new-group"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+       <div class="row" style="height:90%">
+         <div class="col-12 col-lg-6" style="border-right:1px solid lightgrey">                         
+            <ul class="list-users" id="list-users-searching">
+             
+            </ul>                         
+        </div>
+          
+         <div class="col-12 col-lg-6" >
+          <div class="row form-new-group" style="margin-top:0.5rem">
+            <div class="col-12 col-lg-8 mb-3">
+             <input type="text" class="form-control" placeholder="Nhập tên nhóm" style="font-size:.9em;height:2rem"> 
+            </div>                         
+            <div class="col-12 col-lg-4 mb-3">
+              <button class="btn btn-success btn-sm">Tạo nhóm</button>
+            </div>
            </div>
-           <ul class="list-users">
-             <li class="list-users-item">
-               <div class="list-users-item__avatar">
-                 <img src="images/person1.jpg" class="list-users-item__avatar-image">
-               </div>
-               <div class="list-users-item__info">
-                 <div class="list-user-item__info-username">
-                   maivthang2
-                 </div>
-                 <div class="list-user-item__info-address">
-                   Can Tho
-                 </div>
-               </div>
-               <div class="list-user-item__button">
-                 <button class="btn btn-success btn-small">Thêm vào nhóm</button>
-               </div>
-             </li>
-           </div>
-          </ul>
-         <div class="col-12 col-md-5 col-xl-6">
-
+          <ul class="list-users" id="list-users-group">
+            
+           </ul>                    
          </div>
        </div> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
-      </div>
+      </div>     
     </div>
   </div>
 </div>

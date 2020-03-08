@@ -415,6 +415,20 @@ let chatAttachment = (senderId, sender, receiverId, isChatGroup, messengerValue)
   
   })
 };
+
+let readMoreMessengers = (userId, targetId, skipNumber) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let messengersList = await messengerModel.model.readMoreMessengers(userId,targetId,skipNumber,messengers_limitation);
+      if(!messengersList.length){
+        return reject(error);
+      }
+      resolve(messengersList.reverse());
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 module.exports ={
   getAllConversations : getAllConversations,
   getAllMessengersContent : getAllMessengersContent,
@@ -424,5 +438,6 @@ module.exports ={
   removeConversation : removeConversation,
   getUserConversation : getUserConversation,
   chatImage : chatImage,
-  chatAttachment : chatAttachment
+  chatAttachment : chatAttachment,
+  readMoreMessengers : readMoreMessengers
 }

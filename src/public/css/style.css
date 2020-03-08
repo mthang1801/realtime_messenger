@@ -81,6 +81,22 @@ a {
   100% {
     opacity: 1; } }
 
+@keyframes loading-read-more-messengers {
+  0% {
+    top: 8px;
+    height: 2rem; }
+  50%, 100% {
+    top: 24px;
+    height: 1.25rem; } }
+
+@keyframes loading-search-user-new-group {
+  0% {
+    top: 8px;
+    height: 64px; }
+  50%, 100% {
+    top: 24px;
+    height: 32px; } }
+
 .bg-transparent {
   background-color: transparent; }
 
@@ -901,6 +917,35 @@ a {
   margin-bottom: 1rem;
   margin-left: 2rem; }
 
+.loading-read-more-messengers {
+  display: block;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 2rem; }
+
+.loading-read-more-messengers div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #09f;
+  animation: loading-read-more-messengers 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite; }
+
+.loading-read-more-messengers div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s; }
+
+.loading-read-more-messengers div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s; }
+
+.loading-read-more-messengers div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0; }
+
 .emojionearea-button {
   opacity: 0 !important; }
 
@@ -1049,6 +1094,101 @@ a {
     .initial-conversation-top__content--intro {
       font-size: .9em;
       color: #BEC3C9; }
-  .initial-conversation-bottom__background img {
-    width: 100%;
-    height: 15rem; }
+
+.carousel-item img {
+  height: 15rem;
+  width: 100%; }
+
+.list-users {
+  list-style: none;
+  margin-top: .5rem; }
+  .list-users-item {
+    height: 5rem;
+    padding: 1rem .5rem; }
+    .list-users-item:hover {
+      border-radius: .2rem;
+      background-color: #DADDE1; }
+    .list-users-item__avatar {
+      float: left;
+      display: block;
+      width: 3rem;
+      height: 100%;
+      margin-right: 1rem; }
+      .list-users-item__avatar-image {
+        border-radius: 50%;
+        width: 100%;
+        height: 100%; }
+    .list-users-item__info {
+      float: left; }
+      .list-users-item__info-username {
+        font-weight: 700; }
+      .list-users-item__info-address {
+        color: #828282; }
+    .list-users-item__button {
+      float: right;
+      display: flex;
+      height: 100%;
+      align-items: center; }
+      .list-users-item__button-add {
+        font-size: .85em;
+        background-color: #27ae60;
+        color: #fff;
+        padding: .2rem .5rem;
+        border: none;
+        border-radius: .25rem; }
+        .list-users-item__button-add:hover {
+          background-color: #15c860; }
+      .list-users-item__button-remove {
+        display: none;
+        font-size: .85em;
+        background-color: #e74c3c;
+        color: #fff;
+        padding: .2rem .5rem;
+        border: none;
+        border-radius: .25rem; }
+        .list-users-item__button-remove:hover {
+          background-color: #c0392b; }
+
+.search-users-new-group {
+  margin-bottom: .25rem; }
+  @media (max-width: 479px) {
+    .search-users-new-group {
+      width: 100%; } }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .search-users-new-group {
+      width: 80%; } }
+  @media (min-width: 1024px) {
+    .search-users-new-group {
+      width: 50%; } }
+
+.loading-search-user-new-group {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4rem;
+  height: 4rem; }
+
+.loading-search-user-new-group div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: .7rem;
+  background: #1a449c;
+  animation: loading-search-user-new-group 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite; }
+
+.loading-search-user-new-group div:nth-child(1) {
+  left: .5rem;
+  animation-delay: -0.24s; }
+
+.loading-search-user-new-group div:nth-child(2) {
+  left: 1.5rem;
+  animation-delay: -0.12s; }
+
+.loading-search-user-new-group div:nth-child(3) {
+  left: 2.5rem;
+  animation-delay: 0; }
+
+.form-new-group {
+  display: none; }

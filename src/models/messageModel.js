@@ -149,6 +149,14 @@ messageSchema.statics = {
         }
       ]
     }).exec();
+  },
+  readMoreMessengers(senderId, receiverId, skipNumber, limit){
+    return this.find({
+      $or : [
+        {"senderId" : senderId, "receiverId" : receiverId},
+        {"senderId" : receiverId, "receiverId" : senderId}
+      ]
+    }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
   }
 }
 

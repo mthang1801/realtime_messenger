@@ -145,6 +145,14 @@ userSchema.statics = {
   },
   findSeenerInfoById(id){
     return this.findById(id, {"username" : 1, "avatar" : 1 , "_id" : 1}).exec();
+  },
+  findUsersToAddNewGroup(userId, searchKey){
+    return this.find({
+      $and : [
+        {"_id": {$ne : userId}} ,
+        {"username" : {$regex : new RegExp(searchKey, "i")}}
+      ]
+    },{"local.password" : 0}).exec();
   }
 };
 

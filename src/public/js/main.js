@@ -5,6 +5,7 @@
 const socket = io();
 
 function niceScrollLeftSide(){
+  $(".left-side").getNiceScroll().resize();
   $(".left-side").niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -366,7 +367,7 @@ $(document).ready(function () {
   
   let dataTarget = $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target");
   // $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target","")
-  // $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
+  $(".left-side-conversations__content-item").eq(0).find(".nav-link").click().removeClass("active");
   $(".initial-conversation").show();
   $(".screen-chat").find(".tab-pane:first-child").removeClass("show active");
  

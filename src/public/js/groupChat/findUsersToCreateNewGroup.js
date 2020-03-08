@@ -18,7 +18,7 @@ function findUsersToCreateNewGroup(event){
         $("#list-users-searching").find(".loading-search-user-new-group").remove();
         $("#list-users-searching").append(data);
         addUserIntoNewGroup();
-        removeUserOutOfNewGroup();
+        removeUserOutOfNewGroup();        
       },
       error : function(error){
         console.log(error);
@@ -34,11 +34,13 @@ $(document).ready(function () {
 
   $("#modalGroupChat").on("shown.bs.modal", function(){
     $("#search-users-new-group").focus();
+    $("#btn-create-new-group").attr("disabled", "disabled");
+    createGroupChat();
   })
 
   $("#modalGroupChat").on("hidden.bs.modal", function(){
     $("#list-users-group").empty();
     $("#list-users-searching").empty();
-    $("#search-users-new-group").val("");
+    $("#search-users-new-group").val("");  
   })
 });

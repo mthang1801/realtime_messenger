@@ -101,7 +101,7 @@ $(document).ready(function () {
       width : "50%" ,
       allowOutsideClick : false ,
       backdrop : "rgba(85,85,85,0.4)",
-      timer : 5000,
+      timer : 30000,
       onBeforeOpen : function(){              
         timerInterval = setInterval(() => {
           Swal.getContent().querySelector("strong").textContent = Math.floor(Swal.getTimerLeft() / 1000 )
@@ -153,7 +153,7 @@ $(document).ready(function () {
       width : "50%" ,
       allowOutsideClick : false ,
       backdrop : "rgba(85,85,85,0.4)",
-      timer : 5000,
+      timer : 30000,
       onOpen : function(){
         timerInterval = setInterval(() => {
           Swal.getContent().querySelector("strong").textContent = Math.floor(Swal.getTimerLeft() / 1000 )

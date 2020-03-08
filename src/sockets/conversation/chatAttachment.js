@@ -2,10 +2,20 @@ import {pushSocketIdIntoArray, emitResponseToArray, removeSocketIdOutOfArray} fr
 
 let chatAttachment = (io) => {
   let clients = {};
+  let newGroupArray = [];
   io.on("connection", socket => {
     clients = pushSocketIdIntoArray(clients, socket.request.user._id, socket.id);
     socket.request.user.listGroupsId.forEach( group => {
       clients = pushSocketIdIntoArray(clients, group._id, socket.id);
+    });
+
+    socket.on("create-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
+      newGroupArray.push(data.group._id);
+    });
+
+    socket.on("user-received-new-group", data => {
+      clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)      
     });
 
     socket.on("send-messenger-attachment-group", data => {
@@ -28,6 +38,9 @@ let chatAttachment = (io) => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+      });
+      newGroupArray.forEach( groupId => {
+        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
       })
     })
   })

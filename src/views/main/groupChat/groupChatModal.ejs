@@ -1,5 +1,5 @@
 <div class="modal fade" id="modalGroupChat" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Tạo nhóm</h5>
@@ -8,7 +8,37 @@
           </button>
       </div>
       <div class="modal-body">
-        
+       <div class="row">
+         <div class="col-12 col-md-7 col-xl-6">
+           <div class="input-group">
+             <input type="text" class="form-control" placeholder="Tìm kiếm người dùng" id="search-users">
+             <div class="input-group-append">
+               <button class="btn btn-light border-secondary"><i class="fas fa-search"></i></button>
+             </div>
+           </div>
+           <ul class="list-users">
+             <li class="list-users-item">
+               <div class="list-users-item__avatar">
+                 <img src="images/person1.jpg" class="list-users-item__avatar-image">
+               </div>
+               <div class="list-users-item__info">
+                 <div class="list-user-item__info-username">
+                   maivthang2
+                 </div>
+                 <div class="list-user-item__info-address">
+                   Can Tho
+                 </div>
+               </div>
+               <div class="list-user-item__button">
+                 <button class="btn btn-success btn-small">Thêm vào nhóm</button>
+               </div>
+             </li>
+           </div>
+          </ul>
+         <div class="col-12 col-md-5 col-xl-6">
+
+         </div>
+       </div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

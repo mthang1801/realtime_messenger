@@ -1,7 +1,7 @@
 import {conversation} from "../services";
 import {promisify} from "util";
 import ejs from "ejs";
-import {getLastItemInArray, convertToMessengerTimeStamp} from "../helpers/clientHelper";
+import {getLastItemInArray, convertToMessengerTimeStamp, bufferToBase64, convertDateTimeMessenger} from "../helpers/clientHelper";
 import multer from "multer";
 import {app} from "../config/app";
 import {transErrors} from "../../lang/vi";
@@ -165,6 +165,24 @@ let chatAttachment = (req, res) => {
       return res.status(500).send(error)
     }
   })
+};
+
+let readMoreMessengers = async (req, res) => {
+  try {
+    let skipNumber = +req.query.skipNumber ; 
+    let targetId = req.query.targetId;
+    let userId = req.user._id ; 
+    let messengersList = await conversation.readMoreMessengers(userId, targetId, skipNumber);
+    let dataToRender=  {
+      messages : messengersList,
+      user : req.user, 
+      bufferToBase64 : bufferToBase64,
+      convertDateTimeMessenger : convertDateTimeMessenger
+    }    
+    return res.status(200).render("server_render/conversation/_readMoreMessengers", dataToRender);
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }
 module.exports = {
   chatTextAndEmoji : chatTextAndEmoji,
@@ -173,5 +191,6 @@ module.exports = {
   removeConversation : removeConversation,
   getUserConversation : getUserConversation,
   chatImage : chatImage,
-  chatAttachment : chatAttachment
+  chatAttachment : chatAttachment,
+  readMoreMessengers : readMoreMessengers
 }

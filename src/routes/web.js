@@ -76,6 +76,7 @@ let initRoutes = (app) => {
   router.get("/conversation/get-user-conversation", auth.checkLoggedIn, conversation.getUserConversation);
   router.post("/conversation/chat-image", auth.checkLoggedIn, conversation.chatImage);
   router.post("/conversation/chat-attachment", auth.checkLoggedIn, conversation.chatAttachment);
+  router.get("/conversation/read-more-messengers", auth.checkLoggedIn, conversation.readMoreMessengers);
   return app.use(router);
 }
 

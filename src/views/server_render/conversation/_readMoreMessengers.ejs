@@ -1,0 +1,27 @@
+<% messages.forEach( (message, index) => { %>
+  <%if (message.messageType == "text") {%>
+    <div class="group right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble <% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                  
+      <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                  
+      <span class="right-side__middle-content-messenger-text right-side__middle-content-messenger-text--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" data-message-id="<%= message._id %>">
+        <%- message.text %>
+      </span>  
+    </div>		                
+  <%}%>
+  <%if (message.messageType == "image") {%>
+    <div class="right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">
+      <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                    
+      <span data-message-id="<%= message._id %>" >
+        <img src="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data)%>" class="show-image-file">
+      </span>   
+    </div>              
+  <%}%>
+  <%if (message.messageType == "file") { %>
+    <div class="group right-side__middle-content--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%> bubble bubble-image-file <% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" title="<%= convertDateTimeMessenger(message.createdAt) %>" data-message-id="<%= message._id %>">                  
+      <img src="images/users/<%= message.sender.avatar %>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>" class="right-side__middle-content-avatar right-side__middle-content-avatar--<% if(message.senderId == user._id){%>me<%}else{%>you<%}%>">                  
+      <span >
+        <a href="data:<%= message.file.contentType %>;base64,<%= bufferToBase64(message.file.data) %>" class="bubble-attachment-file" download="<%= message.file.fileName %>"> <%= message.file.fileName %></a>
+      </span>
+
+    </div>
+  <%}%>             
+<%})%>

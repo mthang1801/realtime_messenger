@@ -10,8 +10,9 @@ let searchUsers = async (req, res) => {
   try {
     let searchKey = req.query.searchKey;
     let userId = req.user._id ; 
-    
-    let usersList = await groupChat.searchUsers(userId, searchKey);   
+    let contactList = req.query.contactList;
+    console.log(contactList);
+    let usersList = await groupChat.searchUsers(userId,contactList, searchKey);   
     let dataToRender = {
       usersList : usersList
     }   

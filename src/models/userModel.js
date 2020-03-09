@@ -146,11 +146,19 @@ userSchema.statics = {
   findSeenerInfoById(id){
     return this.findById(id, {"username" : 1, "avatar" : 1 , "_id" : 1}).exec();
   },
-  findUsersToAddNewGroup(userId, searchKey){
+  findUsersToAddNewGroup(listId, searchKey){
     return this.find({
       $and : [
-        {"_id": {$ne : userId}} ,
-        {"username" : {$regex : new RegExp(searchKey, "i")}}
+        {"_id": {$nin : listId}} ,
+        { 
+          $or : [
+            {"username" : {$regex : new RegExp("^" + searchKey + "$","i")}},
+            {"local.email" : {$regex : new RegExp("^" + searchKey + "$", "i")}} ,
+            {"facebook.email" : {$regex : new RegExp("^" + searchKey + "$", "i")}} ,
+            {"google.email" : {$regex : new RegExp("^" + searchKey + "$", "i")}} ,
+            {"phone" : searchKey}
+          ]
+        }
       ]
     },{"local.password" : 0}).exec();
   }

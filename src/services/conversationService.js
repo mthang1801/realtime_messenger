@@ -12,11 +12,13 @@ import _ from "lodash";
  * step 2 : filter contact list deprecate userId out of array
  */
 const messengers_limitation = +process.env.LIMIT_MESENGERS;
+const conversations_limitation = +process.env.LIMIT_CONVERSIONS;
 let getAllConversations = userId => {
   return new Promise(async (resolve, reject) => {
     try {
-      let contacts = await contactModel.getContactListFromMsgUpdatedAt(userId);    
-      
+       
+      //get Messages from Users
+      let contacts = await contactModel.getContactListFromMsgUpdatedAt(userId, conversations_limitation);          
       let usersConversationPromise = contacts.map( async contact => {        
         if(contact.userId == userId){
           let user = await userModel.findUserById(contact.contactId);
@@ -30,42 +32,32 @@ let getAllConversations = userId => {
         user.msgUpdatedAt = contact.msgUpdatedAt;
         return user;
       })    
-      let usersConversation = await Promise.all(usersConversationPromise); 
-      let groupsConversation = await chatGroupModel.findGroupConversationByUserId(userId);      
-      
+      let usersConversation = await Promise.all(usersConversationPromise);                 
       let updateStatusIsReceived = messengerModel.model.updateStatusMessengerIsReceived(userId);
-      
-      //get Messages From users and group conversation      
+     
       let usersConversationWithMessengersPromise = usersConversation.map( async user => {                
         let getMessengerFromUser = await messengerModel.model.getPrivateMessengers(userId, user._id, messengers_limitation);
         getMessengerFromUser = _.reverse(getMessengerFromUser);
         user.messages = getMessengerFromUser;
         return user;
       })
-      let userConversationWithMessengers = await  Promise.all(usersConversationWithMessengersPromise);     
+      let userConversationWithMessengers = await  Promise.all(usersConversationWithMessengersPromise);    
+
+      //get Messages from Groups
+      let groupsConversation = await chatGroupModel.findGroupConversationByUserId(userId, conversations_limitation);
       let groupsConversationWithMessengersPromise = groupsConversation.map( async group => {
         group = group.toObject();
        
-        let getMessengerFromGroup = await messengerModel.model.getGroupMessengers(group._id , messengers_limitation);           
-        // let seenersInfoPromise = getMessengerFromGroup.map( async group => {
-        //   group = group.toObject();
-        //   let seenersInfoPromise = group.groupSeen.map(async seener => {            
-        //       return await  userModel.findSeenerInfoById(seener.userId);            
-        //   })
-        //   let seenersInfo = await Promise.all(seenersInfoPromise);          
-        //   group.seenersInfo = seenersInfo;
-        //   return group;
-        // })
-        // let seenersInfo = await Promise.all(seenersInfoPromise);       
+        let getMessengerFromGroup = await messengerModel.model.getGroupMessengers(group._id , messengers_limitation);                      
         getMessengerFromGroup = _.reverse( getMessengerFromGroup);
         group.messages = getMessengerFromGroup;
         return group;
       })
       let groupsConversationWithMessengers = await Promise.all(groupsConversationWithMessengersPromise);          
       let allConversations = [...userConversationWithMessengers, ...groupsConversationWithMessengers];
-      
-      
+            
       allConversations=  _.sortBy(allConversations, item => -item.msgUpdatedAt);       
+      console.log(allConversations);
       resolve(allConversations);
     } catch (error) {
       reject(error);

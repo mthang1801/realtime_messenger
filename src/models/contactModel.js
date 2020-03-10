@@ -172,7 +172,7 @@ contactSchema.statics = {
   findContactExactly(userId, contactId){
     return this.findOne({"userId" : userId, "contactId" : contactId}).exec();
   },
-  getContactListFromMsgUpdatedAt(userId){
+  getContactListFromMsgUpdatedAt(userId, limit){
     return this.find({
       $and : [
         { 
@@ -184,7 +184,7 @@ contactSchema.statics = {
         {"status" : true },
         {"msgUpdatedAt" : {$ne : null , $exists : true }}
       ]
-    }).sort({"msgUpdatedAt" : -1}).exec();
+    }).sort({"msgUpdatedAt" : -1}).limit(limit).exec();
   },
   updateTimeWhenHasNewMessage(userId, contactId){
     return this.findOneAndUpdate(

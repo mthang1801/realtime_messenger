@@ -89,7 +89,136 @@ function chatAttachment(targetId){
 
 $(document).ready(function () {
   socket.on("response-send-messenger-attachment", message => {
-    console.log(message);
+    if(!$(`.person[data-chat = ${message.senderId}]`).length){
+      //#region embed left side
+       let leftSideConversation = `
+       <li class="nav-item left-side-conversations__content-item" >
+         <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${message.senderId}" data-chat="${message.senderId}" >
+           <div class="person__avatar">
+             <span class="person__avatar--dot"></span>
+             <img src="images/users/${message.sender.avatar}" class="person__avatar-image" >
+           </div>
+           <div class="person__infor">
+             <div class="person__infor--username">
+               ${message.sender.username}
+             </div>
+             <div class="person__infor--messenger convert-emoji">
+               <span>Tệp đính kèm</span>
+             </div>
+           </div>
+           <div class="person__config" data-uid="${message.senderId}">                 
+             <div class="person__config--time" data-uid="${message.senderId}">
+               ${convertDateTimeMessenger(message.createdAt)}
+             </div>
+             <div class="person__config--setting" >
+               <img src="images/icons/three_dots.png" class="person__config--setting-icon">
+             </div>
+             <div class="person__config--menu" data-uid="${message.senderId}">
+               <div class="remove-conversation">Xóa hội thoại</div>
+             </div>
+           </div>                 
+         </a>
+       </li>            
+       `
+       //#endregion
+   
+       $("#all-conversations").find("ul").append(leftSideConversation);
+       $("#private-conversations").find("ul").append(leftSideConversation);
+       $(".left-side").getNiceScroll().resize();
+       switchTabConversation();
+       //#region embed right side
+       let rightSideConversation = `
+       <div class="right-side__screen tab-pane" id="to-${message.senderId}" >
+         <div class="right-side__top">
+           <div class="right-side__top--leftside">
+             To :
+             <span class="right-side__top--leftside-username">
+               ${message.sender.username}
+             </span>
+           </div>
+           <div class="right-side__top--rightside">
+             <span class="right-side__top--rightside-item">
+               <a href="#modalImage-${message.senderId}" data-toggle="modal" class="btn-link btn-dark-grey image-libraries" data-uid="${message.senderId}">Hình ảnh <i class="fas fa-image"></i></a>
+             </span>
+             <span class="right-side__top--rightside-item">
+               <a href="#modalAttachFile-${message.senderId}" data-toggle="modal" class="btn-link btn-dark-grey">Tệp đính kèm <i class="fas fa-paperclip"></i></a>
+             </span>
+           </div>
+         </div>
+         <div class="right-side__middle ">
+           <div class="right-side__middle-content convert-emoji" data-chat="${message.senderId}">
+          
+           </div>
+         </div>
+         <div class="right-side__bottom convert-emoji" data-chat="${message.senderId}">
+           <input type="text" class="right-side__bottom-write write-chat" id="chat-text-${message.senderId}" data-conversation-type="private"  data-chat="${message.senderId}" style="display:none">
+           <div class="right-side__bottom-icons">
+             <div class="right-side__bottom-icons-item">
+               <a href="#" class="icon-chat"><i class="fas fa-smile"></i></a>
+             </div>					
+             <div class="right-side__bottom-icons-item">        
+               <label for="image-chat-${message.senderId}" class="image-chat" data-chat="${message.senderId}"><input type="file" class="d-none" id="image-chat-${message.senderId}" name="msg-image-chat"><i class="fas fa-image"></i></label>
+             </div>
+             <div class="right-side__bottom-icons-item">
+               <label for="attach-chat-${message.senderId}" data-chat="${message.senderId}">  <input type="file" class="d-none" id="attach-chat-${message.senderId}" name="msg-attachment-chat"><i class="fas fa-paperclip"></i></label>
+             </div>
+             <div class="right-side__bottom-icons-item">
+               <a href="javascript:void(0)" data-toggle="modal" id="video-chat-${message.senderId}"><i class="fas fa-video"></i></a>
+             </div>				
+           </div>
+         </div>
+       </div>  
+       `;
+       
+       //#endregion
+   
+       $("#screen-chat").append(rightSideConversation);
+   
+       //#region embed image modal
+       let conversationImageModal = `
+       <div class="modal fade" id="modalImage-${message.senderId}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+         <div class="modal-dialog modal-lg" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title">Thư viện Hình Ảnh</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body">
+               <div class="all-images" style="visibility: hidden;background-color: #DADDE1">
+                       
+               </div>
+             </div>				
+           </div>
+         </div>
+       </div>  
+       `;
+       //#endregion
+       $("body").append(conversationImageModal);
+   
+       //#region embed attachment Modal
+       let conversationAttachmentModal = `
+       <div class="modal fade" id="modalAttachFile-${message.senderId}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true"-hidden="true">
+         <div class="modal-dialog modal-dialog-scrollable" role="document">
+           <div class="modal-content">
+             <div class="modal-header">
+               <h5 class="modal-title">Tập tin đính kèm</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+             </div>
+             <div class="modal-body modal-attachment-libraries">
+               
+             </div>        
+           </div>
+         </div>
+       </div>
+       `
+       //#endregion
+       $("body").append(conversationAttachmentModal);
+   
+     }
     let yourMessageOuter = $(`<div class="right-side__middle-content--you bubble" title="${convertTimerTitleMessenger(message.createdAt)}" data-message-id="${message._id}"></div>`);
     let yourAvatar = `<img src="images/users/${message.sender.avatar}" class="right-side__middle-content-avatar right-side__middle-content-avatar--you" >`;
     let yourAttachmentMessenger = ` 
@@ -146,5 +275,6 @@ $(document).ready(function () {
     //update modal attachment libraries
     let attachmentItem = $(`<a href="data:${message.file.contentType};base64,${bufferToBase64(message.file.data.data)}"  download="${message.file.fileName}" title="upload vào lúc ${convertTimerTitleMessenger(message.createdAt)}">${message.file.fileName}</a>`);
     $(`#modalAttachFile-${message.receiverId}`).find(".modal-attachment-libraries").append(attachmentItem);
+    socket.emit("check-status");
   })
 });

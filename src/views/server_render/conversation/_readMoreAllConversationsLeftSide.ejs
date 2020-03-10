@@ -1,0 +1,85 @@
+<% allConversations.forEach( (conversation, index) => {%>                                        
+  <% if(conversation.members) {%>
+    <li class="nav-item left-side-conversations__content-item" >
+      <a class="nav-link person group-chat"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+        <div class="person__avatar">
+          <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
+        </div>
+        <div class="person__infor">
+          <div class="person__infor--username">
+            <%= conversation.name %>
+          </div>
+          <div class="person__infor--messenger convert-emoji">
+            <%if (getLastItemInArray(conversation.messages).messageType == "text"){ %>
+              <% if(getLastItemInArray(conversation.messages).text.length > 15) {%>
+                <%= getLastItemInArray(conversation.messages).text.substring(0,15) %>
+                <span>...</span>
+              <% }else {%>
+                <%= getLastItemInArray(conversation.messages).text %>
+              <%}%>                    
+            <%}%>
+            <% if(getLastItemInArray(conversation.messages).messageType == "image") {%>
+              <span>Hình ảnh</span>
+            <%}%>
+            <%if(getLastItemInArray(conversation.messages).messageType == "file") {%>
+              <span>Tệp đính kèm </span>
+            <%}%>
+          </div>
+        </div>
+        <div class="person__config" data-uid="<%= conversation._id %>">                  
+          <div class="person__config--time" data-uid="<%= conversation._id %>">
+            <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+          </div>
+          <div class="person__config--setting" >
+            <img src="images/icons/three_dots.png" class="person__config--setting-icon">
+          </div>
+          <div class="person__config--menu" data-uid="<%= conversation._id %>">
+            <div class="remove-conversation">Xóa hội thoại</div>
+          </div>
+        </div>               
+      </a>
+    </li>              
+  <%}else{%>
+    <li class="nav-item left-side-conversations__content-item" >
+      <a class="nav-link person"  href="javascript:void(0)" data-target="#to-<%= conversation._id %>" data-chat="<%= conversation._id %>" >
+        <div class="person__avatar">
+          <span class="person__avatar--dot"></span>
+          <img src="images/users/<%= conversation.avatar %>" class="person__avatar-image" >
+        </div>
+        <div class="person__infor">
+          <div class="person__infor--username">
+            <%= conversation.username %>
+          </div>
+          <div class="person__infor--messenger convert-emoji">
+            <%if (getLastItemInArray(conversation.messages).messageType == "text"){ %>
+              <% if(getLastItemInArray(conversation.messages).text.length > 15) {%>
+                <%= getLastItemInArray(conversation.messages).text.substring(0,15) %>
+                <span>...</span>
+              <% }else {%>
+                <%= getLastItemInArray(conversation.messages).text %>
+              <%}%>                    
+            <%}%>
+            <% if(getLastItemInArray(conversation.messages).messageType == "image") {%>
+              <span>Hình ảnh</span>
+            <%}%>
+            <%if(getLastItemInArray(conversation.messages).messageType == "file") {%>
+              <span>Tệp đính kèm </span>
+            <%}%>
+          </div>
+        </div>
+        <div class="person__config" data-uid="<%= conversation._id %>">                 
+          <div class="person__config--time" data-uid="<%= conversation._id %>">
+            <%= convertToMessengerTimeStamp(conversation.msgUpdatedAt) %>
+          </div>
+          <div class="person__config--setting" >
+            <img src="images/icons/three_dots.png" class="person__config--setting-icon">
+          </div>
+          <div class="person__config--menu" data-uid="<%= conversation._id %>">
+            <div class="remove-conversation">Xóa hội thoại</div>
+          </div>
+        </div>                 
+      </a>
+    </li>            
+  <%}%>
+<%})%>       
+  

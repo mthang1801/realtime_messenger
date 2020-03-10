@@ -1,3 +1,5 @@
+let originConversationsList = "";
+
 function createGroupChat(){
   $("#btn-create-new-group").off("click").on("click", function(){
     let listUsersId = [];
@@ -54,6 +56,10 @@ function createGroupChat(){
         socket.emit("create-new-group", data);
         socket.emit("check-status");
 
+        $("#list-users-group").empty();
+        $("#input-create-new-group").val("");        
+        $("#current-list-users").html(originConversationsList);
+        addUserIntoNewGroup();
       },
       error : function(error){       
         error.responseJSON.forEach( err => {
@@ -73,6 +79,7 @@ function createGroupChat(){
 
 $(document).ready(function () {
   createGroupChat();
+  originConversationsList = $("#current-list-users").html(); 
   socket.on("response-create-new-group", data => {
     console.log(data);
     let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, group} = data ;         

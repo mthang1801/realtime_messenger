@@ -275,6 +275,8 @@ function switchTabConversation(){
       callVideo(targetId);
       readMoreMessengers(targetId)
       photoSetGrid();
+      conversationConfig();
+      initialConfigure();
   })
 };
 

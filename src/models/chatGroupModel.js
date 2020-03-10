@@ -18,7 +18,13 @@ chatGroupSchema.statics = {
     return this.create(item);
   },
   findGroupConversationByUserId(userId) {
-    return this.find({"members" : {$elemMatch : { "userId" : userId}}}).sort({"createdAt" : -1}).exec();
+    return this.find({"members" : {$elemMatch : { "userId" : userId}}}).sort({"msgUpdatedAt" : -1}).exec();
+  },
+  findLimitedGroupConversationByUserId(userId, limit) {
+    return this.find({"members" : {$elemMatch : { "userId" : userId}}}).sort({"msgUpdatedAt" : -1}).limit(limit).exec();
+  },
+  findLimitedGroupConversationByUserIdWithSkipNumbers(userId, skipNumbers, limit) {
+    return this.find({"members" : {$elemMatch : { "userId" : userId}}}).sort({"msgUpdatedAt" : -1}).skip(skipNumbers).limit(limit).exec();
   },
   findGroupById(id){
     return this.findById(id).exec();

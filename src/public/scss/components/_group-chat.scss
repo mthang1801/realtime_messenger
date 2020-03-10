@@ -64,15 +64,11 @@
 
 .search-users-new-group{
   margin-bottom : .25rem;
-  @include mobile{
-    width : 100%;
+  font-size : .9em ;
+  & input{
+    height :2.5em;
   }
-  @include tablet{
-    width : 80%;
-  }
-  @include desktop{
-    width : 50%;
-  }
+  
 }
 
 .loading-search-user-new-group {

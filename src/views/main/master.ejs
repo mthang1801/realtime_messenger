@@ -48,6 +48,9 @@
 		<!--Modal group chat  -->		
 		<%- include("groupChat/groupChatModal") %>
 
+		<!-- Modal find more users who are not friends to add new group chat  -->
+		<%- include("groupChat/moreUsersGroupChatModal") %>
+		
 		<!-- Modal image chat -->
 		<%- include("images/imagesModal") %>
 
@@ -56,8 +59,8 @@
 
 		<!-- Modal video call -->
 		<%- include("videoCall/videoCallModal") %>
-	</div>
-	
+
+		
 	<!-- Integrate libraries -->	
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/jquery.nicescroll/jquery.nicescroll.min.js"></script>
@@ -107,6 +110,8 @@
 	<script src="js/groupChat/addUserIntoNewGroup.js"></script>
 	<script src="js/groupChat/removeUserOutOfNewGroup.js"></script>
 	<script src="js/groupChat/createGroupChat.js"></script>
+	<script src="js/groupChat/filterUsersCreateNewGroup.js"></script>
+	<script src="js/groupChat/searchUserContactListGroupChat.js"></script>
 	
 </body>
 </html>

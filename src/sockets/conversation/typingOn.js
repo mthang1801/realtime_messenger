@@ -10,7 +10,7 @@ let typingOn = io => {
     });
 
     socket.on("create-new-group", data => {
-      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);     
       newGroupArray.push(data.group._id);
     });
 
@@ -43,9 +43,12 @@ let typingOn = io => {
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
       })
-      newGroupArray.forEach( groupId => {
-        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
-      })
+      if(newGroupArray.length){
+        newGroupArray.forEach( (groupId,index) => {              
+          clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+          newGroupArray.splice(index,1) ;        
+        })
+      }
     })
   })
 }

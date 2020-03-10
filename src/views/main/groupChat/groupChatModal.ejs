@@ -5,16 +5,41 @@
         <h5 class="modal-title">Tạo nhóm</h5>         
       </div>
       <div class="modal-body">
-        <div class="input-group search-users-new-group">
-          <input type="text" class="form-control" placeholder="Tìm kiếm người dùng" id="search-users-new-group">
-          <div class="input-group-append">
-            <button class="btn btn-light border-secondary" id="btn-search-users-new-group"><i class="fas fa-search"></i></button>
-          </div>
+       <div class="row">
+         <div class="col-12 col-lg-6">
+           <div class="input-group">
+             <input type="text" class="form-control input-search-friends border-secondary" placeholder="Tìm kiếm bạn bè" id="input-search-friends-add-new-group" style="height:2rem">            
+           </div>
         </div>
+        <div class="col-6">
+          <button class="btn btn-primary btn-sm"  id="btn-search-more-users">Thêm người ngoài &nbsp;<i class="fas fa-search-plus"></i></button>
+        </div>
+       </div>
        <div class="row" style="height:90%">
-         <div class="col-12 col-lg-6" style="border-right:1px solid lightgrey">                         
-            <ul class="list-users" id="list-users-searching">
-             
+         <div class="col-12 col-lg-6" style="border-right:1px solid lightgrey">    
+          <h6 class="text-center mt-2">Danh sách bạn bè hiện tại</h6>                     
+            <ul class="list-users" id="current-list-users">
+              <% if(usersContactList.length) { %>
+                <% usersContactList.forEach( user => { %>
+                  <li class="list-users-item" data-chat="<%= user._id %>">
+                    <div class="list-users-item__avatar">
+                      <img src="images/users/<%= user.avatar %>" class="list-users-item__avatar-image">
+                    </div>
+                    <div class="list-users-item__info">
+                      <div class="list-users-item__info-username">
+                        <%= user.username %>
+                      </div>
+                      <div class="list-users-item__info-address">
+                        <%= user.address ? user.address : "" %>
+                      </div>
+                    </div>
+                    <div class="list-users-item__button">
+                    <button class="list-users-item__button-add" data-chat="<%= user._id %>">Thêm vào nhóm</button>
+                    <button class="list-users-item__button-remove" data-chat="<%= user._id %>">Xóa khỏi nhóm</button>
+                    </div>
+                  </li>   
+                <%})%>
+              <%}%>
             </ul>                         
         </div>
           

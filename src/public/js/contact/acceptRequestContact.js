@@ -77,14 +77,14 @@ function acceptRequestAddContact(){
                   các bạn đã trở thành bạn bè của nhau
                 </div>
               </div>
-              <div class="person__config" data-uid="${ user._id }>
-                <div class="person__config--setting" ">
-                  <span>...</span>                  
-                </div>
-                <div class="person__config--menu" data-uid="${user._id}">
-                    <div class="remove-conversation" >Xóa hội thoại</div>
-                  </div>
+              <div class="person__config" data-uid="${ user._id }>                
                 <div class="person__config--time" data-uid="${user._id}">${timer}</div>
+                <div class="person__config--setting" >
+                  <img src="images/icons/three_dots.png" class="person__config--setting-icon">
+                </div>
+                <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                  <div class="remove-conversation">Xóa hội thoại</div>
+                </div>
               </div>
             </a>
           </li>            
@@ -236,14 +236,14 @@ socket.on("response-accept-request-contact-received", user => {
             các bạn đã trở thành bạn bè của nhau
           </div>
         </div>
-        <div class="person__config" data-uid="${user._id }>
-          <div class="person__config--setting" ">
-            <span>...</span>            
-          </div>
-          <div class="person__config--menu" ata-uid="${user._id}">
-            <div class="remove-conversation" d>Xóa hội thoại</div>
-          </div>
+        <div class="person__config" data-uid="${user._id }>         
           <div class="person__config--time" ata-uid="${user._id}">${timer}</div>
+          <div class="person__config--setting" >
+            <img src="images/icons/three_dots.png" class="person__config--setting-icon">
+          </div>
+          <div class="person__config--menu" data-uid="<%= conversation._id %>">
+            <div class="remove-conversation">Xóa hội thoại</div>
+          </div>
         </div>
       </a>
     </li>            

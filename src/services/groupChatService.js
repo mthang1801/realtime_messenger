@@ -2,14 +2,17 @@ import userModel from "../models/userModel";
 import chatGroupModel from "../models/chatGroupModel";
 
 /**
- * searching users except userId
+ * searching users except contactList
  * @param {string} userId 
  * @param {string} searchKey 
+ * @param {array} contactList
+ * 
  */
-let searchUsers = (userId, searchKey) => {
+let searchUsers = (userId,contactList, searchKey) => {
   return new Promise(async (resolve, reject) => {
-    try{    
-      let usersList = await userModel.findUsersToAddNewGroup(userId, searchKey);      
+    try{         
+      contactList.push(userId);
+      let usersList = await userModel.findUsersToAddNewGroup(contactList, searchKey);      
       usersList.sort( (a,b) => a["username"].localeCompare(b["username"]));
       resolve(usersList);
     }catch (error) {

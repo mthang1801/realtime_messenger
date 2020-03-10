@@ -220,7 +220,7 @@ let initialConfigure = () => {
     });
     $(this).find("a.navigation__nav-link").addClass("active");
   });
-  //hide loading conctact
+  //hide loading contact
   $(".search-users-box__loading").hide();
   $(".request-contact-sent-box__loading").hide();
   $(".request-contact-received-box__loading").hide();
@@ -230,10 +230,7 @@ let initialConfigure = () => {
   }else{
     $(".request-contact-sent-box__read-more").hide();
   }  
- 
-
-  // $("#left-side ul.list-messenger-users").find("li:first-child").click();
-
+  //change type chat at Left side
   $("#select-type-chat").on("change", function(){
     let targetId = $("option:selected", this).data("target");
     $(".tab-pane").each( function(index, elem){
@@ -241,7 +238,15 @@ let initialConfigure = () => {
     })    
     $(`${targetId}`).addClass("show active");
     $(".left-side").getNiceScroll().resize();   
-  })
+  });
+  //display setting button conversation when hover to conversation Item at left side
+  $(".left-side-conversations__content-item").on("mouseover", function(){
+    $(this).find(".person__config--setting").css("display", "block");
+  });
+  $(".left-side-conversations__content-item").on("mouseout", function(){
+    $(this).find(".person__config--setting").css("display", "none");
+  });
+
 };
 
 // let enableSeenGroup = false ;
@@ -277,7 +282,6 @@ function updateNumberOfMessages(receiverId){
   newNumberOfMessages = currentNumberOfMessages+1;
   checkScreenShow(receiverId);
 }
-
 
 //Have 2 cases occur: 
 //case 1 : receiver click conversation item

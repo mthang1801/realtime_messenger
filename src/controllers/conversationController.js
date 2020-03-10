@@ -1,7 +1,7 @@
 import {conversation} from "../services";
 import {promisify} from "util";
 import ejs from "ejs";
-import {getLastItemInArray, convertToMessengerTimeStamp, bufferToBase64, convertDateTimeMessenger} from "../helpers/clientHelper";
+import {getLastItemInArray, convertToMessengerTimeStamp, bufferToBase64, convertDateTimeMessenger, convertDateTimeToString} from "../helpers/clientHelper";
 import multer from "multer";
 import {app} from "../config/app";
 import {transErrors} from "../../lang/vi";
@@ -183,6 +183,98 @@ let readMoreMessengers = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
+};
+
+let readMoreAllConversations = async(req, res) => {
+  try {
+    let skipPrivates = +req.query.skipPrivates;
+    let skipGroups = +req.query.skipGroups;
+    let userId = req.user._id ; 
+    let listConversations = await conversation.readMoreAllConversations(userId, skipPrivates, skipGroups);
+    let dataToRender = {
+      allConversations: listConversations,
+      getLastItemInArray : getLastItemInArray ,
+      convertToMessengerTimeStamp : convertToMessengerTimeStamp,
+      convertDateTimeMessenger : convertDateTimeMessenger,
+      bufferToBase64 : bufferToBase64,
+      convertDateTimeToString : convertDateTimeToString,
+      user : req.user
+    };
+    let readMoreAllConversationsLeftSide = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsLeftSide.ejs", dataToRender);
+    let readMorePrivateConversationsLeftSide = await renderFile("src/views/server_render/conversation/_readMorePrivateConversationsLeftSide.ejs", dataToRender);
+    let readMoreGroupConversationsLeftSide = await renderFile("src/views/server_render/conversation/_readMoreGroupConversationsLeftSide.ejs", dataToRender);
+    let readMoreAllConversationsRightSide = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsRightSide.ejs", dataToRender);
+    let readMoreAllConversationsImageModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsImageModal.ejs", dataToRender);    
+    let readMoreAllConversationsAttachmentModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsAttachmentModal.ejs", dataToRender);   
+    return res.status(200).send({
+      readMoreAllConversationsLeftSide,
+      readMorePrivateConversationsLeftSide, 
+      readMoreGroupConversationsLeftSide,
+      readMoreAllConversationsRightSide,
+      readMoreAllConversationsImageModal,
+      readMoreAllConversationsAttachmentModal
+    })
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMorePrivateConversations = async (req, res) => {
+  try {
+    let skipPrivates = +req.query.skipPrivates;
+    let userId = req.user._id ;
+    let listConversations = await conversation.readMoreAllConversations(userId, skipPrivates);
+    let dataToRender = {
+      allConversations: listConversations,
+      getLastItemInArray : getLastItemInArray ,
+      convertToMessengerTimeStamp : convertToMessengerTimeStamp,
+      convertDateTimeMessenger : convertDateTimeMessenger,
+      bufferToBase64 : bufferToBase64,
+      convertDateTimeToString : convertDateTimeToString,
+      user : req.user
+    };
+    let readMorePrivateConversationsLeftSide = await renderFile("src/views/server_render/conversation/_readMorePrivateConversationsLeftSide.ejs", dataToRender);
+    let readMoreAllConversationsRightSide = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsRightSide.ejs", dataToRender);
+    let readMoreAllConversationsImageModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsImageModal.ejs", dataToRender);    
+    let readMoreAllConversationsAttachmentModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsAttachmentModal.ejs", dataToRender);   
+    return res.status(200).send({     
+      readMorePrivateConversationsLeftSide,    
+      readMoreAllConversationsRightSide,
+      readMoreAllConversationsImageModal,
+      readMoreAllConversationsAttachmentModal
+    })
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
+
+let readMoreGroupConversations = async (req, res) => {
+  try {
+    let skipGroups = +req.query.skipGroups;
+    let userId = req.user._id ;
+    let listConversations = await conversation.readMoreGroupConversations(userId, skipGroups);
+    let dataToRender = {
+      allConversations: listConversations,
+      getLastItemInArray : getLastItemInArray ,
+      convertToMessengerTimeStamp : convertToMessengerTimeStamp,
+      convertDateTimeMessenger : convertDateTimeMessenger,
+      bufferToBase64 : bufferToBase64,
+      convertDateTimeToString : convertDateTimeToString,
+      user : req.user
+    };
+    let readMoreGroupConversationsLeftSide = await renderFile("src/views/server_render/conversation/_readMoreGroupConversationsLeftSide.ejs", dataToRender);
+    let readMoreAllConversationsRightSide = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsRightSide.ejs", dataToRender);
+    let readMoreAllConversationsImageModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsImageModal.ejs", dataToRender);    
+    let readMoreAllConversationsAttachmentModal = await renderFile("src/views/server_render/conversation/_readMoreAllConversationsAttachmentModal.ejs", dataToRender);   
+    return res.status(200).send({      
+      readMoreGroupConversationsLeftSide,
+      readMoreAllConversationsRightSide,
+      readMoreAllConversationsImageModal,
+      readMoreAllConversationsAttachmentModal
+    })
+  } catch (error) {
+    return res.status(500).send(error);
+  }
 }
 module.exports = {
   chatTextAndEmoji : chatTextAndEmoji,
@@ -192,5 +284,8 @@ module.exports = {
   getUserConversation : getUserConversation,
   chatImage : chatImage,
   chatAttachment : chatAttachment,
-  readMoreMessengers : readMoreMessengers
+  readMoreMessengers : readMoreMessengers,
+  readMoreAllConversations : readMoreAllConversations,
+  readMorePrivateConversations : readMorePrivateConversations,
+  readMoreGroupConversations : readMoreGroupConversations
 }

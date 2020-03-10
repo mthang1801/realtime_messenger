@@ -29,7 +29,7 @@ function chatWithUserContact(){
             <div class="person__config--setting" >
               <img src="images/icons/three_dots.png" class="person__config--setting-icon">
             </div>
-            <div class="person__config--menu" data-uid="<%= conversation._id %>">
+            <div class="person__config--menu" data-uid="${targetId}">
               <div class="remove-conversation">Xóa hội thoại</div>
             </div>
           </div>          
@@ -152,6 +152,9 @@ function chatWithUserContact(){
       $(`.person[data-chat = ${targetId}]`).addClass("active");
       $(`#to-${targetId}`).addClass("active");
       $(`#to-${targetId}`).getNiceScroll().resize();
+      $(".left-side").getNiceScroll().resize();
+      initialConfigure();
+      conversationConfig();
       niceScrollChatBox(targetId);
       switchTabConversation();    
       enableEmojiChat(targetId);    
@@ -161,6 +164,8 @@ function chatWithUserContact(){
       receiverHasSeenMessage(targetId);  
       callVideo(targetId);
       photoSetGrid();
+      socket.emit("check-status");
+     
     })
   })
 }

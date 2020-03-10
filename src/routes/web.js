@@ -77,6 +77,9 @@ let initRoutes = (app) => {
   router.post("/conversation/chat-image", auth.checkLoggedIn, conversation.chatImage);
   router.post("/conversation/chat-attachment", auth.checkLoggedIn, conversation.chatAttachment);
   router.get("/conversation/read-more-messengers", auth.checkLoggedIn, conversation.readMoreMessengers);
+  router.get("/conversation/read-more-all-conversations", auth.checkLoggedIn, conversation.readMoreAllConversations);
+  router.get("/conversation/read-more-private-conversations", auth.checkLoggedIn, conversation.readMorePrivateConversations);
+  router.get("/conversation/read-more-group-conversations", auth.checkLoggedIn, conversation.readMoreGroupConversations);
   //group-chat
   router.get("/group-chat/search-users" , auth.checkLoggedIn, groupChat.searchUsers);
   router.post("/group-chat/create-new-group-chat", auth.checkLoggedIn, groupChatValid.createNewGroup, groupChat.createNewGroup);

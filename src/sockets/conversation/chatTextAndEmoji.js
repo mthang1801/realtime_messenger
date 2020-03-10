@@ -11,7 +11,7 @@ let chatTextAndEmoji = (io) => {
 
     
     socket.on("create-new-group", data => {
-      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);
+      clients = pushSocketIdIntoArray(clients, data.group._id , socket.id);     
       newGroupArray.push(data.group._id);
     });
 
@@ -34,14 +34,19 @@ let chatTextAndEmoji = (io) => {
         emitResponseToArray(io, clients, targetId, "response-send-messenger-text-and-emoji", message);
       }
     })
+
+
     socket.on("disconnect", () => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
-      socket.request.user.listGroupsId.forEach( group => {
-        clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+      socket.request.user.listGroupsId.forEach( group => {       
+        clients = removeSocketIdOutOfArray(clients, group._id, socket.id);       
       });
-      newGroupArray.forEach( groupId => {
+     if(newGroupArray.length){
+      newGroupArray.forEach( (groupId,index) => {              
         clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+        newGroupArray.splice(index,1) ;        
       })
+     }
     })
   })
 }

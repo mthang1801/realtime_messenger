@@ -30,9 +30,12 @@ let userOnlineOffline = io => {
       socket.request.user.listGroupsId.forEach( group => {
         clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
       });
-      newGroupArray.forEach( groupId => {
-        clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
-      })
+      if(newGroupArray.length){
+        newGroupArray.forEach( (groupId,index) => {              
+          clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+          newGroupArray.splice(index,1) ;        
+        })
+      }
       
       socket.broadcast.emit("server-send-user-is-offline", socket.request.user._id );
     })

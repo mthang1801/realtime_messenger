@@ -599,8 +599,8 @@ a {
   border-radius: .15rem;
   color: #4A4A4A; }
   .person:hover {
-    color: #f7f7f7;
-    background-color: #828282; }
+    color: #4A4A4A;
+    background-color: #CCD0D5; }
   .person__avatar {
     position: relative;
     width: 3.5rem;
@@ -645,7 +645,7 @@ a {
       width: 8rem;
       text-align: center;
       right: 45%;
-      top: 0;
+      bottom: -17%;
       padding: .5rem 1rem;
       border-radius: .5rem;
       background-color: #4A4A4A;
@@ -664,14 +664,21 @@ a {
         font-weight: 700; }
     .person__config--setting {
       display: inline-block;
-      font-size: 1.2em;
-      margin-bottom: 1rem;
-      letter-spacing: .2rem;
+      font-size: 1em;
+      letter-spacing: .25rem;
       font-weight: bold;
       text-align: center;
       z-index: 1;
+      display: none;
       transition: all .2s;
       margin-left: auto; }
+      .person__config--setting-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        opacity: .8; }
+        .person__config--setting-icon:hover {
+          transform: scale(1.1);
+          opacity: 1; }
       @media (max-width: 479px) {
         .person__config--setting {
           width: 60%; } }
@@ -682,8 +689,7 @@ a {
         .person__config--setting {
           width: 30%; } }
       .person__config--setting:hover {
-        color: #f7f7f7;
-        transform: scale(1.25); }
+        color: #000; }
     .person__config--time {
       font-size: .9em; }
 

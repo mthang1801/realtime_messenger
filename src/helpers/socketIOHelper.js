@@ -13,9 +13,8 @@ export const emitResponseToArray = (io, clients, userId, eventName, data) => {
   })
 }
 
-export const removeSocketIdOutOfArray = (clients, userId, socketId) => {
-  clients[userId] = clients[userId].filter(socketIdItem => socketIdItem != socketId);
-
+export const removeSocketIdOutOfArray = (clients, userId, socketId) => {  
+  clients[userId] = clients[userId].filter(socketIdItem => socketIdItem != socketId);  
   if(!clients[userId].length){
     delete clients[userId];
   }

@@ -24,15 +24,13 @@ function chatWithUserContact(){
               Bắt đầu trò chuyện
             </div>
           </div>
-          <div class="person__config" data-uid="${targetId}">
-            <div class="person__config--setting">
-              <span>...</span>       
+          <div class="person__config" data-uid="${targetId}">            
+            <div class="person__config--time" data-uid="${targetId}"></div>
+            <div class="person__config--setting" >
+              <img src="images/icons/three_dots.png" class="person__config--setting-icon">
             </div>
-            <div class="person__config--menu" data-uid="${targetId}">
+            <div class="person__config--menu" data-uid="<%= conversation._id %>">
               <div class="remove-conversation">Xóa hội thoại</div>
-            </div>
-            <div class="person__config--time" data-uid="${targetId}">
-              
             </div>
           </div>          
         </a>

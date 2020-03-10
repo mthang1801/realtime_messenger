@@ -47,8 +47,8 @@
   border-radius: .15rem;
   color : $color-dark-ui-secondary-text;
   &:hover{
-    color : $color-grey-light;
-    background-color: $color-dark-mode-gray-50;   
+    color : $color-dark-ui-secondary-text;
+    background-color: $color-divider-on-wash;   
   }
   &__avatar{
     position : relative; 
@@ -94,14 +94,14 @@
     position : relative;
     height : 100%;
     flex-direction: column;
-    text-align: right;   
+    text-align: right; 
     &--menu{
       display : none;
       position: absolute;
       width : 8rem;
       text-align: center;
       right : 45%;
-      top : 0;
+      bottom : -17%;
       padding : .5rem 1rem;
       border-radius : .5rem;
       background-color :  $color-dark-ui-secondary-text ;
@@ -123,12 +123,22 @@
     }
     &--setting{
       display : inline-block;
-      font-size : 1.2em;
-      margin-bottom : 1rem;
-      letter-spacing: .2rem;      
+      font-size : 1em;
+      // margin-bottom : 1rem;
+      letter-spacing: .25rem;      
       font-weight: bold;     
       text-align:center;   
       z-index : 1;   
+      display: none;  
+      &-icon{
+        width : 1.5rem;
+        height : 1.5rem;
+        opacity: .8;
+        &:hover{
+          transform : scale(1.1);
+          opacity : 1;
+        }
+      }
       @include mobile{
         width : 60%;
       }
@@ -141,8 +151,7 @@
       transition : all .2s;
       margin-left: auto;
       &:hover{
-        color : $color-grey-light;    
-        transform : scale(1.25)
+        color : $color-black;           
       }         
     }
     &--time{

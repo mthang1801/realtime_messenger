@@ -35,6 +35,7 @@ function conversationConfig(){
           },
           error: function (error) {
             alertify.notify(error.responseText, "error" , 7);
+            console.log(error);
           }
         });
       })

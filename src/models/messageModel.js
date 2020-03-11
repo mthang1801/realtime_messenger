@@ -22,7 +22,8 @@ let messageSchema = new mongoose.Schema({
   isBlocked : {type : Boolean, default : false},
   createdAt : {type : Number, default : Date.now},
   updatedAt : {type : Number, default : null},
-  deletedAt : {type : Number, default : null},
+  deletedAt : {type : Number, default : null},  
+  otherProps : {listUsersIdRemoved : [{userId : String}]}
 },{upsert : true, strict: false});
 
 messageSchema.statics = {
@@ -54,7 +55,8 @@ messageSchema.statics = {
           ]
         },
         { "isBlocked" : false },
-        { "deletedAt" : null}
+        { "deletedAt" : null},
+        { "otherProps.listUsersIdRemoved" : {$not : { $elemMatch : { "userId" :  currentUserId }}}}
       ]
     }).sort({"createdAt" : -1}).limit(limit).exec();
   },
@@ -157,6 +159,17 @@ messageSchema.statics = {
         {"senderId" : receiverId, "receiverId" : senderId}
       ]
     }).sort({"createdAt" : -1}).skip(skipNumber).limit(limit).exec();
+  },
+  pushUserIdToRemoveMessagesList(userId, contactId){
+    return this.updateMany(
+      {
+        $or : [
+          {"senderId" : userId, "receiverId" : contactId},
+          {"senderId" : contactId, "receiverId" : userId}
+        ],
+      },
+      { $push : {"otherProps.listUsersIdRemoved" : {"userId" : userId}}},            
+    ).exec();
   }
 }
 

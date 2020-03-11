@@ -19,6 +19,7 @@ let getAllConversations = userId => {
        
       //get Messages from Users
       let contacts = await contactModel.getLimitedContactListFromMsgUpdatedAt(userId, conversations_limitation);          
+      console.log(contacts);
       let usersConversationPromise = contacts.map( async contact => {        
         if(contact.userId == userId){
           let user = await userModel.findUserById(contact.contactId);
@@ -373,21 +374,28 @@ let updateHasSeenMessage = (senderId, receiverId) => {
     }
   })
 };
-
+/**
+ * 
+ * @param {string} userId 
+ * @param {string} contactId 
+ * push userId to deprecatedMsgId at messengerModel
+ * push userId to deprecatedMsgId at contactModel
+ */
 let removeConversation = (userId, contactId) => {
   return new Promise( async (resolve, reject) => {
     try {
       let checkContactIdIsGroup = await chatGroupModel.findGroupById(contactId);
       if(checkContactIdIsGroup){
         return reject(transErrors.can_not_remove_group);
-      }
+      }      
+      let updateMessengers = await messengerModel.model.pushUserIdToRemoveMessagesList(userId, contactId);   
       
-      let updateContact = await contactModel.removeConversation(userId, contactId);
-      if(!updateContact){
-        return reject(transErrors.update)
-      }
-      let removeConversation = await messengerModel.model.removeAllMessenger(userId, contactId);
+      let updateContactMessenger = await contactModel.pushUserIdToRemoveMessagesList(userId, contactId);
       
+      // let removeConversation = await messengerModel.model.removeAllMessenger(userId, contactId);
+      if(updateMessengers.nModified==0 && updateContactMessenger ==0){
+        return reject(transErrors.update_failed);
+      }
       resolve(true);
     } catch (error) {
       reject(error);

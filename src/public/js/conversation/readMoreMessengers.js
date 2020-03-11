@@ -9,8 +9,10 @@ function readMoreMessengers(targetId){
         type: "get",
         url: `/conversation/read-more-messengers?skipNumber=${skipNumber}&targetId=${targetId}`,
         global : false,
-        beforeSend: function(){         
-          $(`.right-side__middle-content[data-chat = ${targetId}]`).prepend(`<div class="loading-read-more-messengers"><div></div><div></div><div></div></div>`)
+        beforeSend: function(){   
+          if(!$(`.right-side__middle-content[data-chat = ${targetId}]`).find(".loading-read-more-messengers").length){
+            $(`.right-side__middle-content[data-chat = ${targetId}]`).prepend(`<div class="loading-read-more-messengers"><div></div><div></div><div></div></div>`)
+          }
         },
         success: function (data) {
           $(`.right-side__middle-content[data-chat = ${targetId}]`).prepend(data);

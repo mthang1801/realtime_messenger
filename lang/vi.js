@@ -49,7 +49,8 @@ export const transErrors = {
   not_attachment_chat : "Tập tin không phải dạng tệp đính kèm",
   attachment_oversize : "Kich thước tệp quá lớn",
   lengthCreateNewGroup : "Độ dài tối thiểu 3 ký tự, tối đa 50 ký tự",
-  empty_array_userId : "Để tạo nhóm cần ít nhất 1 thành viên"
+  empty_array_userId : "Để tạo nhóm cần ít nhất 1 thành viên",
+  update_failed : "Cập nhật thất bại"
 }
 
 export const transSuccess = {

@@ -8,7 +8,8 @@ let contactSchema = new mongoose.Schema({
   blockList : [{type : String, default : null }],
   updatedAt : {type : Number, default : null},
   deletedAt : {type : Number, default : null},
-  msgUpdatedAt : {type :Number, default : null }
+  msgUpdatedAt : {type :Number, default : null },
+  otherProps : {listUsersIdRemoved : [{userId : String}]}
 }, {upsert :true, strict : false});
 
 contactSchema.statics = {
@@ -182,7 +183,8 @@ contactSchema.statics = {
           ]
         },
         {"status" : true },
-        {"msgUpdatedAt" : {$ne : null , $exists : true }}
+        {"msgUpdatedAt" : {$ne : null  }},
+        {"otherProps.listUsersIdRemoved" : {$not :  { $elemMatch : { "userId" :  userId }}}}
       ]
     }).sort({"msgUpdatedAt" : -1}).limit(limit).exec();
   },
@@ -196,7 +198,8 @@ contactSchema.statics = {
           ]
         },
         {"status" : true },
-        {"msgUpdatedAt" : {$ne : null , $exists : true }}
+        {"msgUpdatedAt" : {$ne : null }},
+        {"otherProps.listUsersIdRemoved" : {$not : {$elemMatch : { "userId" : userId}}}}
       ]
     }).sort({"msgUpdatedAt" : -1}).skip(skipNumbers).limit(limit).exec();
   }, 
@@ -224,41 +227,28 @@ contactSchema.statics = {
         ]
       },
       {
-        "msgUpdatedAt" : Date.now()
+        $set :{  "msgUpdatedAt" : Date.now() },
+        $pull : { "otherProps.listUsersIdRemoved": {"userId" : {$in : [userId, contactId]}} }         
       },
       {
          new : true
       }
     ).exec();
   },
-  removeConversation(userId, contactId){
-    return this.findOneAndUpdate(
+  pushUserIdToRemoveMessagesList(userId, contactId){
+    return this.updateMany(
       {
-        $and : [
-          {
-            $or : [
-              {
-                $and : [
-                  {"userId" : userId},
-                  {"contactId" : contactId}
-                ]
-              },
-              {
-                $and : [
-                  {"userId" :contactId},
-                  {"contactId" : userId}
-                ]
-              }
-            ]
-          },
-          {"status" : true}
+        $or : [
+          {"userId" : userId, "contactId" : contactId},
+          {"userId" : contactId, "contactId" : userId},
         ]
       },
+      { $push : { "otherProps.listUsersIdRemoved" : {"userId" : userId}}},
       {
-        "msgUpdatedAt" :null
-      },
-      {
-         new : true
+        "fields" : {
+          "new" : true, 
+          "upsert" : true
+        }
       }
     ).exec();
   }

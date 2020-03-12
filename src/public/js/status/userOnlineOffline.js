@@ -7,6 +7,8 @@ socket.on("server-send-list-users-online", listUsersId => {
     $(`.person[data-chat = ${userId}]`).find(".person__avatar--dot").addClass("online");
     $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").addClass("avatar-online");
     $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").addClass("online");
+    $(`#to-${userId}`).find(".right-side__top--leftside-avatar").addClass("avatar-online");
+    $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").addClass("online");
   })
 });
 
@@ -14,7 +16,9 @@ socket.on("server-send-new-user-is-online" , userId => {
   $(`.person[data-chat = ${userId}]`).find(".person__avatar").addClass("avatar-online");
   $(`.person[data-chat = ${userId}]`).find(".person__avatar--dot").addClass("online");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").addClass("avatar-online");
-    $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").addClass("online");
+  $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").addClass("online");
+  $(`#to-${userId}`).find(".right-side__top--leftside-avatar").addClass("avatar-online");
+  $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").addClass("online");
 });
 
 socket.on("server-send-user-is-offline" , userId  => {
@@ -23,6 +27,8 @@ socket.on("server-send-user-is-offline" , userId  => {
   $(`.person[data-chat = ${userId}]`).find(".person__avatar--dot").removeClass("online");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").removeClass("avatar-online");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").removeClass("online");
+  $(`#to-${userId}`).find(".right-side__top--leftside-avatar").addClass("avatar-online");
+  $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").addClass("online");
 })
 
 

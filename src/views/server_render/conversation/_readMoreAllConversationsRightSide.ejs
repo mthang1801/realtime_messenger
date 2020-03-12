@@ -3,7 +3,9 @@
   <div class="right-side__screen tab-pane" id="to-<%= conversation._id %>" >
     <div class="right-side__top">
       <div class="right-side__top--leftside">
-        To :
+        <div class="right-side__top--leftside-avatar">          
+          <img src="images/users/<%= conversation.avatar %>" alt="<%= conversation.avatar %>" class="right-side__top--leftside-avatar--image"/>
+        </div>
         <span class="right-side__top--leftside-username">
           <%= conversation.name %>
         </span>
@@ -70,7 +72,10 @@
     <div class="right-side__screen tab-pane" id="to-<%= conversation._id %>" >
       <div class="right-side__top">
         <div class="right-side__top--leftside">
-          To :
+          <div class="right-side__top--leftside-avatar">
+            <div class="right-side__top--leftside-avatar--dot"></div>
+            <img src="images/users/<%= conversation.avatar %>" alt="<%= conversation.avatar %>" class="right-side__top--leftside-avatar--image"/>
+          </div>
           <span class="right-side__top--leftside-username">
             <%= conversation.username %>
           </span>

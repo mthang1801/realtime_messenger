@@ -9,7 +9,11 @@ export const pushSocketIdIntoArray = (clients, userId, socketId) => {
 
 export const emitResponseToArray = (io, clients, userId, eventName, data) => {
   clients[userId].forEach(socketId => {
-    io.sockets.connected[socketId].emit(eventName, data);
+    try {
+      io.to(socketId).emit(eventName, data);
+    } catch (error) {
+      console.log(error)
+    }
   })
 }
 

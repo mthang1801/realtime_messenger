@@ -19,7 +19,6 @@ let getAllConversations = userId => {
        
       //get Messages from Users
       let contacts = await contactModel.getLimitedContactListFromMsgUpdatedAt(userId, conversations_limitation);          
-      console.log(contacts);
       let usersConversationPromise = contacts.map( async contact => {        
         if(contact.userId == userId){
           let user = await userModel.findUserById(contact.contactId);

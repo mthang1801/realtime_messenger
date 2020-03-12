@@ -2,13 +2,15 @@
 function eventNotificationItem(){  
   $(".card-notifications__item ").off("click").on("click", function(){       
     let notificationId = $(this).data("notification-uid");
-    let senderId = $(this).data("uid");           
+    let senderId = $(this).data("uid");  
+    // let groupId = $(this).data("group-uid");
     $(this).attr({"data-toggle": "modal", "data-target" : `#modalUserInfor-${senderId}`});
     $(this).removeClass("card-unread");
     $.ajax({
       type: "get",
       url: `/notification/info?senderId=${senderId}&id=${notificationId}`,
       success: function (data) {
+        console.log(data);
         if(data){         
           $("body").find(`#modalUserInfor-${senderId}`).remove();
           $("body").append(data);

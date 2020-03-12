@@ -24,7 +24,7 @@ let chatTextAndEmoji = (io) => {
       if(clients[data.groupId]){       
         let socketGroup = clients[data.groupId].filter( socketId => socketId != socket.id );
         socketGroup.forEach(socketId => {
-          io.sockets.connected[socketId].emit("response-send-messenger-text-and-emoji-group", message)
+          io.sockets.connected[socketId].emit("response-send-messenger-text-and-emoji-group", message);
         })
       }
     })
@@ -39,7 +39,12 @@ let chatTextAndEmoji = (io) => {
     socket.on("disconnect", () => {
       clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {       
-        clients = removeSocketIdOutOfArray(clients, group._id, socket.id);       
+        clients = removeSocketIdOutOfArray(clients, group._id, socket.id); 
+        let index =  newGroupArray.indexOf(group._id); 
+        if(index != -1){
+          clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+          newGroupArray.splice(index,1) ;    
+        }
       });
      if(newGroupArray.length){
       newGroupArray.forEach( (groupId,index) => {              

@@ -35,11 +35,12 @@ notificationSchema.statics = {
 
 let NOTIFICATION_TYPES = {
   ADD_CONTACT : "add_contact",
-  ACCEPT_CONTACT : "accept_contact"
+  ACCEPT_CONTACT : "accept_contact",
+  CREATE_NEW_GROUP : "create_new_group"
 };
 
 let NOTIFICATION_CONTENTS = {
-  getContent : (id, type, isRead, userId, userName, userAvatar, timer) => {
+  getContent : (id, type, isRead, userId, userName, userAvatar, timer, groupId=null, groupName=null) => {
     if(type == NOTIFICATION_TYPES.ADD_CONTACT){
       if(!isRead){
         return `
@@ -130,7 +131,51 @@ let NOTIFICATION_CONTENTS = {
               `
       }
     }
-   
+    if(type == NOTIFICATION_TYPES.CREATE_NEW_GROUP){
+      if(!isRead){
+        return `
+                <li class="card-notifications__item card-unread" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã thêm bạn vào nhóm ${groupName}
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }else{
+        return `
+                <li class="card-notifications__item" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã thêm bạn vào nhóm ${groupName}
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }
+    }
   }
 }
 

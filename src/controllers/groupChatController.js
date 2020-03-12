@@ -35,10 +35,12 @@ let createNewGroup =  async(req, res) => {
   try {
     let groupName = req.body.groupName;
     let listUsersId = req.body.listUsersId ;
-    let userId = req.user._id ; 
-    let newGroup = await groupChat.createNewGroup(userId, groupName, listUsersId);
+    let userId = req.user._id ;
+    let userName = req.user.username ;
+    let userAvatar = req.user.avatar; 
+    let data = await groupChat.createNewGroup(userId, userName, userAvatar, groupName, listUsersId);    
     let dataToRender = {
-      conversation : newGroup,
+      conversation : data.newGroup,
       getLastItemInArray : getLastItemInArray,
       bufferToBase64 : bufferToBase64,
       convertToMessengerTimeStamp : convertToMessengerTimeStamp
@@ -52,7 +54,8 @@ let createNewGroup =  async(req, res) => {
       groupChatRightSide,
       groupChatImageModal,
       groupChatAttachmentModal,
-      group : newGroup
+      group : data.newGroup,
+      notification : data.notificationHTML
     })
   } catch (error) {
     return res.status(500).send(error);

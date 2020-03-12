@@ -24,7 +24,8 @@ function createGroupChat(){
       url: "/group-chat/create-new-group-chat",
       data: data ,
       success: function (data) {
-        let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, group} = data ;         
+        console.log(data);
+        let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, group, notification} = data ;         
         //left side
         $("#all-conversations").find("ul").prepend(groupChatLeftSide);      
         $("#group-conversations").find("ul").prepend(groupChatLeftSide);
@@ -55,6 +56,7 @@ function createGroupChat(){
 
         socket.emit("create-new-group", data);
         socket.emit("check-status");
+        socket.emit("notify-members-create-new-group", data)
 
         $("#list-users-group").empty();
         $("#input-create-new-group").val("");        
@@ -92,10 +94,17 @@ $(document).ready(function () {
     $("body").append(groupChatImageModal);
     //attachment modal
     $("body").append(groupChatAttachmentModal);
+    //embed notification
+    $("#notification-dashboard-body").find("ul").prepend(data.notification);
+    $("#notification-bell-count").fadeIn(100);
+    alertify.notify("Bạn vừa có một thông báo mới", "infor", 7);
+    $("#notification-board").show();
+    eventNotificationItem();
     //emit when member received group
     socket.emit("user-received-new-group", data );  
     //check status online
     socket.emit("check-status");
+    
     // $(".initial-conversation").hide();
     // $(".person").removeClass("active");
     // $(".right-side__screen").removeClass("active");    

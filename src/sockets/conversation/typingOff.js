@@ -19,8 +19,6 @@ let typingOff = io => {
       clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)      
     });
 
-    console.log(clients);
-    console.log(newGroupArray);
     socket.on("user-blur-typing", data => {          
       if(data.groupId){
         let dataToEmit ={ 

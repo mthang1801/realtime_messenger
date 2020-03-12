@@ -7,7 +7,7 @@ function readMoreConversation(){
     let conversationTarget = $("option:checked","#select-type-chat").data("target");    
     let skipNumbersGroupConversations = $("#group-conversations").find("ul").children().length;
     let skipNumbersPrivateConversations = $("#private-conversations").find("ul").children().length;  
-    let currentOffsetTop = $(this).scrollTop() + 50;
+    let currentOffsetTop = $(this).scrollTop();
     if($(this)[0].scrollHeight - $(this)[0].clientHeight <= $(this).scrollTop()  + 15){     
       switch(conversationType){
         case "all-chat" : readMoreAllConversations(skipNumbersPrivateConversations, skipNumbersGroupConversations, currentOffsetTop); break;

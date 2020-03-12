@@ -28,8 +28,13 @@ export GG_APP_SECRET==***
 export GG_CALLBACK_URL==***
 
 #saltRounds
-export SALT_ROUNDS=10
+export SALT_ROUNDS=***
 
 #config session
-export SESSION_KEY==***
-export SESSION_SECRET==***
+export SESSION_KEY=***
+export SESSION_SECRET=***
+
+#set get limit
+export LIMIT_NOTIFICATIONS=***
+export LIMIT_CONVERSATIONS=***
+export LIMIT_MESENGERS=***

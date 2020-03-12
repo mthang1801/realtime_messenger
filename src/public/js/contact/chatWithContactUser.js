@@ -47,7 +47,10 @@ function chatWithUserContact(){
     <div class="right-side__screen tab-pane" id="to-${targetId}" >
       <div class="right-side__top">
         <div class="right-side__top--leftside">
-          To :
+          <div class="right-side__top--leftside-avatar">
+            <div class="right-side__top--leftside-avatar--dot"></div>
+            <img src="images/users/${user.avatar}" alt="${user.avatar}" class="right-side__top--leftside-avatar--image"/>
+          </div>
           <span class="right-side__top--leftside-username">
             ${targetName}
           </span>

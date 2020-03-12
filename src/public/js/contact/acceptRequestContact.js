@@ -102,7 +102,10 @@ function acceptRequestAddContact(){
           <div class="right-side__screen tab-pane" id="to-${user._id}" >
             <div class="right-side__top">
               <div class="right-side__top--leftside">
-                To :
+                <div class="right-side__top--leftside-avatar">
+                  <div class="right-side__top--leftside-avatar--dot"></div>
+                  <img src="images/users/${user.avatar} alt="${user.avatar} class="right-side__top--leftside-avatar--image"/>
+                </div>
                 <span class="right-side__top--leftside-username">
                   ${user.username}
                 </span>
@@ -256,7 +259,10 @@ socket.on("response-accept-request-contact-received", user => {
     <div class="right-side__screen tab-pane" id="to-${user._id}" >
       <div class="right-side__top">
         <div class="right-side__top--leftside">
-          To :
+          <div class="right-side__top--leftside-avatar">
+            <div class="right-side__top--leftside-avatar--dot"></div>
+            <img src="images/users/${user.avatar}" alt="${user.avatar}" class="right-side__top--leftside-avatar--image"/>
+          </div>
           <span class="right-side__top--leftside-username">
             ${user.username}
           </span>

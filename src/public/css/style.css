@@ -792,12 +792,14 @@ a {
     z-index: 10; }
   .right-side__top {
     background-color: #DADDE1;
-    height: 8%;
+    height: 10%;
     padding: .5rem 1.5rem; }
     .right-side__top--leftside {
       float: left; }
       .right-side__top--leftside-avatar {
+        float: left;
         display: inline-block;
+        margin-top: 5%;
         position: relative;
         width: 2.1rem;
         height: 2.1rem;
@@ -806,7 +808,8 @@ a {
         .right-side__top--leftside-avatar--image {
           width: 100%;
           height: 100%;
-          border-radius: 50%; }
+          border-radius: 50%;
+          vertical-align: middle; }
         .right-side__top--leftside-avatar--dot {
           position: absolute;
           bottom: 1%;
@@ -815,18 +818,30 @@ a {
           height: .55rem;
           border-radius: 50%;
           background-color: #d1ccc0; }
+      .right-side__top--leftside-username-status {
+        float: left;
+        margin-left: .6rem;
+        display: flex;
+        flex-direction: column; }
       .right-side__top--leftside-username {
+        font-size: .95em;
         font-weight: 700; }
+      .right-side__top--leftside-status {
+        font-size: .87em;
+        color: #4A4A4A; }
     .right-side__top--rightside {
       float: right; }
-      .right-side__top--rightside-item:not(last-child) {
-        margin-right: 1.5rem; }
+      .right-side__top--rightside-item {
+        display: inline-block;
+        margin-top: 5%; }
+        .right-side__top--rightside-item:not(:last-child) {
+          margin-right: 1.5rem; }
     .right-side__top::after {
       content: "";
       clear: both;
       display: table; }
   .right-side__middle {
-    height: 76%;
+    height: 74%;
     padding: .5rem;
     width: 100%;
     position: relative; }

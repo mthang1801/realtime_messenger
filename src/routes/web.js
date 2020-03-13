@@ -52,6 +52,7 @@ let initRoutes = (app) => {
   router.put("/user/update-avatar", auth.checkLoggedIn , user.updateAvatar);
   router.put("/user/update-info", auth.checkLoggedIn, userValid.userUpdateInfo, user.updateInfo);
   router.put("/user/update-password", auth.checkLoggedIn, userValid.userUpdatePassword, user.updatePassword);
+  router.post("/user/update-user-has-been-offline", auth.checkLoggedIn, user.updateUserHasBeenOffline);
   //contact section
   router.get("/contact/find-users", auth.checkLoggedIn, contact.findUsersContact); 
   router.post("/contact/add-contact" , auth.checkLoggedIn, contact.addContact);

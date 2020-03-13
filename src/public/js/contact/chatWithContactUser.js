@@ -1,3 +1,11 @@
+
+function convertDateTimeMessenger(timeStamp){
+  if(!timeStamp){
+    return "";
+  }
+  return moment(timeStamp).locale("vi").startOf("seconds").fromNow();
+}
+
 //when click btn-chat, leftSide will prepend conversation 
 function chatWithUserContact(){
   $(".btn-chat").off("click").on("click", function(e){
@@ -5,13 +13,15 @@ function chatWithUserContact(){
     let targetId = $(this).data("uid");
     let targetName = $(`.contact-list__item[data-uid = ${targetId}]`).find(".card-user__body-text--username").text().trim();
     let targetOriginalAvatar =  $(`.contact-list__item[data-uid = ${targetId}]`).find("div.card-user__body-avatar > img").attr("src");
+    let targetLastTimeOnline = $(`.contact-list__item[data-uid = ${targetId}]`).data("last-online");
     let targetAvatar = targetOriginalAvatar.split("/")[2];  
     let checkExistsConversationAtLeftSide = $("ul.left-side-conversations__content-list").find(`.person[data-chat = ${targetId}]`).length;
+    
     if(checkExistsConversationAtLeftSide==0){
      //#region conversation left side
       let userConversationLeftSide = `
       <li class="nav-item left-side-conversations__content-item" >
-        <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${targetId}" data-chat="${targetId}" >
+        <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${targetId}" data-last-online=${targetLastTimeOnline} data-chat="${targetId}" id="left-side-${targetId}">
           <div class="person__avatar">
             <span class="person__avatar--dot"></span>
             <img src="images/users/${targetAvatar}" class="person__avatar-image" >
@@ -43,17 +53,23 @@ function chatWithUserContact(){
     //#endregion
 
     //#region conversation right side
+    let lastTimeOnline = convertDateTimeMessenger(targetLastTimeOnline);
     let userConversationRightSide = `
     <div class="right-side__screen tab-pane" id="to-${targetId}" >
       <div class="right-side__top">
         <div class="right-side__top--leftside">
           <div class="right-side__top--leftside-avatar">
             <div class="right-side__top--leftside-avatar--dot"></div>
-            <img src="images/users/${user.avatar}" alt="${user.avatar}" class="right-side__top--leftside-avatar--image"/>
+            <img src="images/users/${targetAvatar}" alt="${targetAvatar}" class="right-side__top--leftside-avatar--image"/>
           </div>
-          <span class="right-side__top--leftside-username">
-            ${targetName}
-          </span>
+          <div class="right-side__top--leftside-username-status">
+            <span class="right-side__top--leftside-username">
+              ${targetName}
+            </span>
+            <span class="right-side__top--leftside-status">
+                ${targetLastTimeOnline == -1 ? "Vừa mới truy cập" : lastTimeOnline}
+            </span>
+          </div>
         </div>
         <div class="right-side__top--rightside">
           <span class="right-side__top--rightside-item">

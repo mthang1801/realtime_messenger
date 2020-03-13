@@ -11,7 +11,6 @@ let searchUsers = async (req, res) => {
     let searchKey = req.query.searchKey;
     let userId = req.user._id ; 
     let contactList = req.query.contactList;
-    console.log(contactList);
     let usersList = await groupChat.searchUsers(userId,contactList, searchKey);   
     let dataToRender = {
       usersList : usersList

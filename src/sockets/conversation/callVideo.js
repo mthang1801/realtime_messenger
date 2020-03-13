@@ -70,7 +70,7 @@ let callVideo = io => {
       }
     })
     socket.on("disconnect", () => {
-      clients= removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
+      clients= removeSocketIdOutOfArray(io, socket, clients, socket.request.user._id, socket.id);
     })
   })
 }

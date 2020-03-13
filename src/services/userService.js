@@ -60,9 +60,21 @@ let updatePassword = (userId, currentPassword, newPassword) => {
       reject(error);
     }
   })
+};
+
+let updateUserHasBeenOffline = userId => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let userUpdate = await  userModel.updateUserHasBeenOffline(userId);
+      resolve(true);
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 module.exports ={
   updateAvatar : updateAvatar,
   updateInfo : updateInfo,
-  updatePassword : updatePassword
+  updatePassword : updatePassword,
+  updateUserHasBeenOffline : updateUserHasBeenOffline
 }

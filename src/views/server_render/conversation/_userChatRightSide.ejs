@@ -5,9 +5,18 @@
         <div class="right-side__top--leftside-avatar--dot"></div>
         <img src="images/users/<%= user.avatar %>" alt="<%= user.avatar %>" class="right-side__top--leftside-avatar--image"/>
       </div>
-      <span class="right-side__top--leftside-username">
-        <%= user.username %>
-      </span>
+      <div class="right-side__top--leftside-username-status">
+        <span class="right-side__top--leftside-username">
+          <%= user.username %>
+        </span>
+        <span class="right-side__top--leftside-status">
+          <% if(user.otherProps.lastTimeOnline == -1) {%>
+            Vừa mới truy cập
+          <%}else{%>
+            Truy cập <%= convertToMessengerTimeStamp(user.otherProps.lastTimeOnline) %>
+          <%}%>
+        </span>
+      </div>
     </div>
     <div class="right-side__top--rightside">
       <span class="right-side__top--rightside-item">

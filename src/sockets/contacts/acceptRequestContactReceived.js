@@ -2,6 +2,7 @@ import {pushSocketIdIntoArray, removeSocketIdOutOfArray} from "../../helpers/soc
 
 let acceptRequestContactReceived = (io) =>{
   let clients = {}; 
+  
   io.on("connection", socket => {
     clients = pushSocketIdIntoArray(clients, socket.request.user._id, socket.id);
 
@@ -15,7 +16,7 @@ let acceptRequestContactReceived = (io) =>{
       }
     })
     socket.on("disconnect", () =>{
-      removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
+      removeSocketIdOutOfArray(io, socket, clients, socket.request.user._id, socket.id);
     })
   })
 }

@@ -69,7 +69,7 @@
               <ul class="contact-list"> 
                 <% if(usersContactList.length) { %>
                   <% usersContactList.forEach( user => { %>
-                    <li class="contact-list__item" data-uid="<%= user._id %>">
+                    <li class="contact-list__item" data-uid="<%= user._id %>" data-last-online="<%= user.otherProps.lastTimeOnline %>">
                       <div class="card-user">
                         <div class="card-user__body">
                           <div class="card-user__body-avatar">

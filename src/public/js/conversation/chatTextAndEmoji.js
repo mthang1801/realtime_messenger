@@ -128,9 +128,14 @@ socket.on("response-send-messenger-text-and-emoji", message => {
             <div class="right-side__top--leftside-avatar--dot"></div>
             <img src="images/users/${message.sender.avatar}" alt="${message.sender.avatar}" class="right-side__top--leftside-avatar--image"/>
           </div>
-          <span class="right-side__top--leftside-username">
-            ${message.sender.username}
-          </span>
+          <div class="right-side__top--leftside-username-status">
+            <span class="right-side__top--leftside-username">
+              ${message.sender.username}
+            </span>
+            <span class="right-side__top--leftside-status">             
+                Vừa mới truy cập           
+            </span>
+          </div>
         </div>
         <div class="right-side__top--rightside">
           <span class="right-side__top--rightside-item">

@@ -17,9 +17,14 @@ export const emitResponseToArray = (io, clients, userId, eventName, data) => {
   })
 }
 
-export const removeSocketIdOutOfArray = (clients, userId, socketId) => {  
+export const removeSocketIdOutOfArray = (io, socket, clients, userId, socketId) => {  
+  // if(clients[userId].indexOf(socketId) != -1 && clients[userId].length==1) {       
+   
+  //   // io.sockets.emit("server-send-current-user-is-offline", userId)
+  // }
   clients[userId] = clients[userId].filter(socketIdItem => socketIdItem != socketId);  
   if(!clients[userId].length){
+    socket.broadcast.emit("server-send-user-is-offline", userId);
     delete clients[userId];
   }
   return clients;

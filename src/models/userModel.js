@@ -28,7 +28,10 @@ let userSchema = new mongoose.Schema({
   },
   createdAt : {type : Number, default : Date.now},
   updatedAt : {type : Number, default : null},
-  deletedAt : {type : Number, default : null}
+  deletedAt : {type : Number, default : null},
+  otherProps : {
+    lastTimeOnline : {type : Number, default : -1} //if online return -1, offline return Date.now()
+  }
 })
 
 userSchema.statics = {
@@ -161,6 +164,12 @@ userSchema.statics = {
         }
       ]
     },{"local.password" : 0}).exec();
+  },
+  updateMySelfHasOnline(userId){
+    return this.findByIdAndUpdate(userId, {"otherProps.lastTimeOnline" : -1}, {new : true}).exec();
+  },
+  updateUserHasBeenOffline(userId){
+    return this.findByIdAndUpdate(userId, {"otherProps.lastTimeOnline": Date.now()}, {new : true}).exec();
   }
 };
 

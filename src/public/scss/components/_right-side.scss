@@ -9,12 +9,14 @@
   }
   &__top{
     background-color : $color-divider-on-white;
-    height :8%;
+    height :10%;
     padding : .5rem 1.5rem; 
     &--leftside{
       float : left ; 
       &-avatar{
+        float : left ;
         display : inline-block;
+        margin-top: 5%;
         position : relative;
         width : 2.1rem ;
         height : 2.1rem ; 
@@ -23,7 +25,8 @@
         &--image{
           width : 100% ;
           height : 100% ; 
-          border-radius : 50%;
+          border-radius : 50%;     
+          vertical-align: middle;     
         }
         &--dot{
           position : absolute;
@@ -35,15 +38,29 @@
           background-color : $color-icon-offline;
         }
       }
-     
+      &-username-status{
+        float : left ;
+        margin-left : .6rem;
+        display : flex ;
+        flex-direction: column;                
+      }
       &-username{
+        font-size : .95em;
         font-weight: 700;
+      }
+      &-status{
+        font-size : .87em;
+        color :$color-dark-ui-secondary-text;
       }
     }
     &--rightside{
-      float: right;
-      &-item:not(last-child){
-        margin-right : 1.5rem;
+      float: right;      
+      &-item{
+        display : inline-block;
+        margin-top : 5%;
+        &:not(:last-child){
+          margin-right : 1.5rem;
+        }
       }
     }
     &::after{
@@ -53,7 +70,7 @@
     }
   }
   &__middle{
-    height: 76%;
+    height: 74%;
     padding : .5rem;  
     width : 100%;  
     position : relative;

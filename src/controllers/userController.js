@@ -95,8 +95,19 @@ let updatePassword = async (req,res) => {
   }
 }
 
+let updateUserHasBeenOffline = async (req, res) => {
+  try {        
+    let userId = req.user._id;
+    let updateStatus = await user.updateUserHasBeenOffline(userId);
+    return res.status(200).send({success : !!updateStatus})
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+}
+
 module.exports = {
   updateAvatar : updateAvatar,
   updateInfo : updateInfo,
-  updatePassword : updatePassword
+  updatePassword : updatePassword,
+  updateUserHasBeenOffline : updateUserHasBeenOffline
 }

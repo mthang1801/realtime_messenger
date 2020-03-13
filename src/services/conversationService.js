@@ -16,7 +16,9 @@ const conversations_limitation = +process.env.LIMIT_CONVERSATIONS;
 let getAllConversations = userId => {
   return new Promise(async (resolve, reject) => {
     try {
-       
+      //update mySelf is online 
+      let updateMySelfHasOnline = await userModel.updateMySelfHasOnline(userId);      
+
       //get Messages from Users
       let contacts = await contactModel.getLimitedContactListFromMsgUpdatedAt(userId, conversations_limitation);          
       let usersConversationPromise = contacts.map( async contact => {        

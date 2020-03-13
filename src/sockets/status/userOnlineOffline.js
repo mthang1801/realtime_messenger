@@ -18,7 +18,7 @@ let userOnlineOffline = io => {
       clients = pushSocketIdIntoArray(clients, data.group._id, socket.id)      
     });
 
-    socket.on("check-status", () => {
+    socket.on("check-status", () => {      
       let listUsersIdOnline = Object.keys(clients);       
       socket.emit("server-send-list-users-online", listUsersIdOnline);
 
@@ -26,18 +26,18 @@ let userOnlineOffline = io => {
     })
     
     socket.on("disconnect", () => {
-      clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
+      clients = removeSocketIdOutOfArray(io, socket, clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
-        clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+        clients = removeSocketIdOutOfArray(io, socket, clients, group._id, socket.id);
       });
       if(newGroupArray.length){
         newGroupArray.forEach( (groupId,index) => {              
-          clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+          clients = removeSocketIdOutOfArray(io, socket, clients, groupId, socket.id);
           newGroupArray.splice(index,1) ;        
         })
       }
       
-      socket.broadcast.emit("server-send-user-is-offline", socket.request.user._id );
+      // socket.broadcast.emit("server-send-user-is-offline", socket.request.user._id );
     })
   })
 

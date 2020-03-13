@@ -1,5 +1,5 @@
 import {validationResult} from "express-validator/check";
-import {auth} from "../services";
+import {auth, user} from "../services";
 import {transSuccess, transErrors, authInvalidation} from "../../lang/vi";
 let getLoginRegister = (req,res) => {
   return res.render("authentication/master",{
@@ -72,8 +72,12 @@ let checkLoggedOut = (req,res,next) => {
   next();
 };
 
-let logoutAccount = (req,res) => {
+let logoutAccount = async (req,res) => {
+  let userId = req.user._id ; 
+  let updateStatus = await user.updateUserHasBeenOffline(userId);
   req.logout() ; 
+  //create last time online for user
+  
   req.flash("activeSuccess" , transSuccess.loggout_success) ;
   return res.redirect("/login-register");
 };

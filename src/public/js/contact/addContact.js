@@ -1,8 +1,7 @@
 //Request user to make friend
 function addContact(){
   $(".btn-request-add-contact").off("click").on("click" , function(){    
-    let contactId = $(this).data("uid");  
-    console.log(contactId)  ;
+    let contactId = $(this).data("uid");      
     $.ajax({
       type: "post",
       url: "/contact/add-contact",

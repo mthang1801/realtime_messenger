@@ -254,6 +254,13 @@ let enableSeenPrivate = false ;
 let currentNumberOfMessages = 0;
 let newNumberOfMessages = 0;
 
+function convertDateTimeMessenger(timeStamp){
+  if(!timeStamp){
+    return "";
+  }
+  return moment(timeStamp).locale("vi").startOf("seconds").fromNow();
+}
+
 //bỏ bước đầu click chuột
 let enableClickLeftSide = false ;
 function switchTabConversation(){
@@ -263,9 +270,19 @@ function switchTabConversation(){
       $(`.a[data-chat = ${targetId}]`).addClass("active");   
       $(this).find(".nav-link").tab("show");         
       $(".initial-conversation").hide();
-      
+      let lastTimeOnline  = + document.getElementById(`left-side-${targetId}`).getAttribute("data-last-online");
+    
       currentNumberOfMessages = +$(`.right-side__middle-content[data-chat = ${targetId}]`).find(".bubble").length;
-      
+      //lấy thời gian người dùng truy cập
+      if( $(`.person[data-chat = ${targetId}]`).find(".person__avatar").hasClass("avatar-online")){     
+        $(`#to-${targetId}`).find(".right-side__top--leftside-status").text("Vừa mới truy cập");
+      }else{
+        if(lastTimeOnline != -1){         
+          $(`#to-${targetId}`).find(".right-side__top--leftside-status").text(`Truy cập ${convertDateTimeMessenger(lastTimeOnline)}`);
+        }else{
+          $(`#to-${targetId}`).find(".right-side__top--leftside-status").text("");
+        }
+      }
       niceScrollChatBox(targetId);
       enableEmojiChat(targetId);    
       chatTextAndEmoji(targetId) ;  

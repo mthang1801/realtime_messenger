@@ -13,9 +13,7 @@ function acceptRequestAddContact(){
       data: {userId},
       success: function (data) {   
        if(data.success){        
-          let {user, contact, notificationId} = data.data; 
-          console.log(user)             ;
-          console.log(contact);
+          let {user, contact, notificationId} = data.data;        
           //decrese number request contact received
           decreaseCountContactNumber("count-request-contact-received");
           //incrase number of contacts at contact panel
@@ -64,7 +62,7 @@ function acceptRequestAddContact(){
           let timer = getTimelineOfNotificationItem(contact.updatedAt)
           let userContactLeftSideHTML =` 
           <li class="nav-item left-side-conversations__content-item" >
-            <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
+            <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}">
               <div class="person__avatar">
                 <span class="person__avatar--dot"></span>
                 <img src="images/users/${user.avatar}" class="person__avatar-image" >
@@ -226,7 +224,7 @@ socket.on("response-accept-request-contact-received", user => {
    //#region create new User Contact at LeftSide
    let userContactLeftSideHTML =` 
     <li class="nav-item left-side-conversations__content-item" >
-      <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" >
+      <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}">
         <div class="person__avatar">
           <span class="person__avatar--dot"></span>
           <img src="images/users/${user.avatar}" class="person__avatar-image" >

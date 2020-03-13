@@ -93,7 +93,7 @@ $(document).ready(function () {
       //#region embed left side
        let leftSideConversation = `
        <li class="nav-item left-side-conversations__content-item" >
-         <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${message.senderId}" data-chat="${message.senderId}" >
+         <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${message.senderId}" data-chat="${message.senderId}" id="left-side-${message.senderId}">
            <div class="person__avatar">
              <span class="person__avatar--dot"></span>
              <img src="images/users/${message.sender.avatar}" class="person__avatar-image" >
@@ -133,11 +133,16 @@ $(document).ready(function () {
            <div class="right-side__top--leftside">
             <div class="right-side__top--leftside-avatar">
               <div class="right-side__top--leftside-avatar--dot"></div>
-              <img src="images/users/${user.avatar}" alt="${user.avatar}" class="right-side__top--leftside-avatar--image"/>
+              <img src="images/users/${message.sender.avatar}" alt="${message.sender.avatar}" class="right-side__top--leftside-avatar--image"/>
             </div>
-             <span class="right-side__top--leftside-username">
-               ${message.sender.username}
-             </span>
+            <div class="right-side__top--leftside-username-status">
+              <span class="right-side__top--leftside-username">
+                ${message.sender.username}
+              </span>
+              <span class="right-side__top--leftside-status">               
+                  Vừa mới truy cập                
+              </span>
+            </div>
            </div>
            <div class="right-side__top--rightside">
              <span class="right-side__top--rightside-item">

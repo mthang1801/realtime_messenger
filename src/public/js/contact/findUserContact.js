@@ -9,7 +9,8 @@ function callSearchUsers(event){
     }
     
     $.get(`/contact/find-users?searchKey=${searchKey}`, function(data){
-      if(data){  
+  
+      if(data.trim()!=""){  
         $("#search-users-box").find("ul.search-users-box__list-users").empty().append(data);
         $(".search-users-box__read-more").show();
         readMoreSearchAllUsers(searchKey);

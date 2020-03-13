@@ -14,7 +14,8 @@ let chatTextAndEmoji =async(req, res) => {
   let userId = req.user._id ;
   let userName = req.user.username ; 
   let userAvatar = req.user.avatar;
-  
+  let lastTimeOnline = req.user.otherProps.lastTimeOnline;
+
   let sendStatus = await conversation.chatTextAndEmoji(userId, userName, userAvatar, receiverId , messengerText, isGroup); 
   return res.status(200).send({success: !!sendStatus, message: sendStatus})
  } catch (error) {
@@ -275,7 +276,9 @@ let readMoreGroupConversations = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
+
+
 module.exports = {
   chatTextAndEmoji : chatTextAndEmoji,
   updateMessageHasBeenReceived : updateMessageHasBeenReceived,
@@ -287,5 +290,5 @@ module.exports = {
   readMoreMessengers : readMoreMessengers,
   readMoreAllConversations : readMoreAllConversations,
   readMorePrivateConversations : readMorePrivateConversations,
-  readMoreGroupConversations : readMoreGroupConversations
+  readMoreGroupConversations : readMoreGroupConversations,
 }

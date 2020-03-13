@@ -39,18 +39,18 @@ let typingOff = io => {
     })
 
     socket.on("disconnect", () => {
-      clients = removeSocketIdOutOfArray(clients, socket.request.user._id, socket.id);
+      clients = removeSocketIdOutOfArray(io, socket, clients, socket.request.user._id, socket.id);
       socket.request.user.listGroupsId.forEach( group => {
-        clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+        clients = removeSocketIdOutOfArray(io, socket, clients, group._id, socket.id);
          let index =  newGroupArray.indexOf(group._id); 
         if(index != -1){
-          clients = removeSocketIdOutOfArray(clients, group._id, socket.id);
+          clients = removeSocketIdOutOfArray(io, socket, clients, group._id, socket.id);
           newGroupArray.splice(index,1) ;    
         }
       })
       if(newGroupArray.length){
         newGroupArray.forEach( (groupId,index) => {              
-          clients = removeSocketIdOutOfArray(clients, groupId, socket.id);
+          clients = removeSocketIdOutOfArray(io, socket, clients, groupId, socket.id);
           newGroupArray.splice(index,1) ;       
         })
        }

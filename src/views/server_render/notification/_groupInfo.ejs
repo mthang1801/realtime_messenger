@@ -1,0 +1,29 @@
+<% if(groupInfo) {%>
+  <div class="modal" id="modalGroupNotificationInfo-<%=groupInfo._id %>" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Thông báo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">                
+          <% if(groupInfo.notificationType == "create_new_group") { %>
+            <div class="card" style="border:none">          
+              <div class="card-body">
+                <div class="text-center">
+                  <img src="images/users/<%=groupInfo.avatar %>" alt="<%= groupInfo.name %>" style="height:6rem;width:6rem;border-radius:50%">
+                </div>
+                <h5 class="card-text my-3 text-center" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-groupInfo.name %></h5>
+                <h6 class="card-text" style="color:#3b5998"><%= convertDateTimeToString(groupInfo.createdAt) %> </h6>
+                <h6 class="card-text" style="color:#3b5998">Bạn đã trở thành thành viên của <%= groupInfo.name %> </h6>                         
+              </div>
+            </div>
+          <%}%>
+        </div>    
+      </div>
+    </div>
+  </div>
+  <%}%>
+  

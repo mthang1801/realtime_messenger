@@ -31,6 +31,7 @@ chatGroupSchema.statics = {
   },
   findGroupAndUpdateTimeWhenHasNewMessenger(id){
     return this.findByIdAndUpdate(id, {"msgUpdatedAt": Date.now()}, {new: true}).exec();
-  }
+  },
+ 
 }
 module.exports = mongoose.model("chat-group", chatGroupSchema);

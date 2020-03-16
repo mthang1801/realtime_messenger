@@ -503,6 +503,7 @@ a {
   display: none; }
   .notification__header {
     display: flex;
+    font-size: .88em;
     justify-content: space-between; }
     .notification__header--link a:not(last-child) {
       margin-right: .5rem; }
@@ -833,7 +834,7 @@ a {
       float: right; }
       .right-side__top--rightside-item {
         display: inline-block;
-        margin-top: 5%; }
+        margin-top: 2.5%; }
         .right-side__top--rightside-item:not(:last-child) {
           margin-right: 1.5rem; }
     .right-side__top::after {

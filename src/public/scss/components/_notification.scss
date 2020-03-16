@@ -12,6 +12,7 @@
   display : none;
   &__header{
     display :flex ; 
+    font-size: .88em;
     justify-content: space-between;    
     &--link a:not(last-child){    
       margin-right : .5rem;

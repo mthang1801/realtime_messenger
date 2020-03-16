@@ -6,24 +6,21 @@ function readMoreNotification(){
     if(loading){
       return;
     }
-    let skipNumber = $(this).find("ul").children().length;
-    // console.log(`offset().top: ${$(this).find("li:last-child").offset().top}`)
-    // console.log(`scrollTop: ${$(this).scrollTop()}`)
-    // console.log(`scrollHeight: ${$(this)[0].scrollHeight}`);
-    let offsetPage =  $(this).scrollTop()  + 100;
-    // console.log(offsetPage)
+    let skipPrivateNumbers = $(this).find("li.card-notifications__item:not('.notification-group')").length;
+    let skipGroupNumbers = $(this).find("li.card-notifications__item.notification-group").length;       
+    let offsetPage =  $(this).scrollTop()  + 100;    
     if($(this)[0].scrollHeight - $(this)[0].clientHeight <= $(this).scrollTop()  + 20){      
       loading = true ;
       $(".notification-loading").show();
       $(this).scrollTop($(this)[0].scrollTop + 50);
       $.ajax({
         type: "get",
-        url: `/notification/read-more-notifications?skipNumber=${skipNumber}`,
+        url: `/notification/read-more-notifications?skipPrivateNumbers=${skipPrivateNumbers}&skipGroupNumbers=${skipGroupNumbers}`,
         global: false ,
         success: function (data) {          
           if(data){
-           let {usersNotification} = data.usersNotification;           
-           $("#notification-dashboard-body ul.card-notifications").append(usersNotification);
+           let {allNotificationsContent} = data.allNotificationsContent;           
+           $("#notification-dashboard-body ul.card-notifications").append(allNotificationsContent);
           
            $("#notification-dashboard-body").scrollTop(offsetPage);
            loading = false;

@@ -62,7 +62,7 @@ function acceptRequestAddContact(){
           let timer = getTimelineOfNotificationItem(contact.updatedAt)
           let userContactLeftSideHTML =` 
           <li class="nav-item left-side-conversations__content-item" >
-            <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}">
+            <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}" >
               <div class="person__avatar">
                 <span class="person__avatar--dot"></span>
                 <img src="images/users/${user.avatar}" class="person__avatar-image" >
@@ -75,12 +75,12 @@ function acceptRequestAddContact(){
                   các bạn đã trở thành bạn bè của nhau
                 </div>
               </div>
-              <div class="person__config" data-uid="${ user._id }>                
+              <div class="person__config" data-uid="${ user._id }">                
                 <div class="person__config--time" data-uid="${user._id}">${timer}</div>
                 <div class="person__config--setting" >
                   <img src="images/icons/three_dots.png" class="person__config--setting-icon">
                 </div>
-                <div class="person__config--menu" data-uid="<%= conversation._id %>">
+                <div class="person__config--menu" data-uid="${user._id}">
                   <div class="remove-conversation">Xóa hội thoại</div>
                 </div>
               </div>
@@ -146,7 +146,9 @@ function acceptRequestAddContact(){
           //create socket 
           socket.emit("accept-request-contact-received", {userId, updatedAt: contact.updatedAt, notificationId});
 
+          switchTabConversation();      
           removeCurrentContact();
+          eventNotificationItem();
        }
       },
       error : function (error) {
@@ -223,31 +225,32 @@ socket.on("response-accept-request-contact-received", user => {
    //solve LeftSide and RightSide
    //#region create new User Contact at LeftSide
    let userContactLeftSideHTML =` 
-    <li class="nav-item left-side-conversations__content-item" >
-      <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}">
-        <div class="person__avatar">
-          <span class="person__avatar--dot"></span>
-          <img src="images/users/${user.avatar}" class="person__avatar-image" >
+   <li class="nav-item left-side-conversations__content-item" >
+    <a class="nav-link person"  href="javascript:void(0)" data-target="#to-${user._id}" data-chat="${user._id}" id="left-side-${user._id}" >
+      <div class="person__avatar">
+        <span class="person__avatar--dot"></span>
+        <img src="images/users/${user.avatar}" class="person__avatar-image" >
+      </div>
+      <div class="person__infor">
+        <div class="person__infor--username">
+          ${user.username}
         </div>
-        <div class="person__infor">
-          <div class="person__infor--username">
-            ${user.username}
-          </div>
-          <div class="person__infor--messenger convert-emoji">
-            các bạn đã trở thành bạn bè của nhau
-          </div>
+        <div class="person__infor--messenger convert-emoji">
+          các bạn đã trở thành bạn bè của nhau
         </div>
-        <div class="person__config" data-uid="${user._id }>         
-          <div class="person__config--time" ata-uid="${user._id}">${timer}</div>
-          <div class="person__config--setting" >
-            <img src="images/icons/three_dots.png" class="person__config--setting-icon">
-          </div>
-          <div class="person__config--menu" data-uid="<%= conversation._id %>">
-            <div class="remove-conversation">Xóa hội thoại</div>
-          </div>
+      </div>
+      <div class="person__config" data-uid="${ user._id }">                
+        <div class="person__config--time" data-uid="${user._id}">${timer}</div>
+        <div class="person__config--setting" >
+          <img src="images/icons/three_dots.png" class="person__config--setting-icon">
         </div>
-      </a>
-    </li>            
+        <div class="person__config--menu" data-uid="${user._id}">
+          <div class="remove-conversation">Xóa hội thoại</div>
+        </div>
+      </div>
+    </a>
+  </li>            
+                
     `;
     $("#all-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);
     $("#private-conversations").find("ul.left-side-conversations__content-list").prepend(userContactLeftSideHTML);

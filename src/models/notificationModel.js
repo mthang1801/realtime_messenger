@@ -5,6 +5,7 @@ let notificationSchema = new mongoose.Schema({
   receiverId : String ,
   type : String ,   
   isRead : {type : Boolean, default : false},
+  membersRead : [{userId : String}],
   createdAt : {type : Number, default : Date.now},
   deletedAt : {type : Number, default : null}
 })
@@ -15,6 +16,9 @@ notificationSchema.statics = {
   },
   findNotificationByReceiverId(userId, limit){
     return this.find({"receiverId" : userId}).sort({"createdAt" : -1}).limit(limit).exec();
+  },
+  findNotificationByGroupId(groupId){
+    return this.find({"receiverId" : groupId}).sort({"createdAt": -1}).exec();
   },
   getUnreadNotificationByReceiverId(userId){
     return this.find({"receiverId" : userId, "isRead" : false}).sort({"createdAt" : -1}).exec();
@@ -30,6 +34,27 @@ notificationSchema.statics = {
   },
   updateAllNotificationAsRead(userId){
     return this.updateMany({"receiverId": userId}, {isRead: true},{new : true}).exec();
+  },
+  /**
+   * 
+   * @param {string} userId 
+   * @param {string} notificationId 
+   * check userId has whether existed in membersRead, if it has existed , do not solve, else push it into membersRead
+   */
+  findNotificationByIdAndPushMemberIdToMembersRead(userId, notificationId){
+    return this.findOneAndUpdate(
+      {"_id" : notificationId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}},
+      {$push : {membersRead : {"userId" : userId}}}, {new : true}).exec();
+  },
+  findNotificationById(id){
+    return this.findById(id).exec();
+  },
+  pushMemberIdIntoNotificationWithReceiverIdIsGroupId(userId, groupId){
+    return this.updateMany(
+      {"receiverId" : groupId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}},
+      {$push : {"membersRead" : {"userId" : userId}}},
+      {new : true}
+    ).exec();
   }
 }
 
@@ -134,7 +159,7 @@ let NOTIFICATION_CONTENTS = {
     if(type == NOTIFICATION_TYPES.CREATE_NEW_GROUP){
       if(!isRead){
         return `
-                <li class="card-notifications__item card-unread" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                <li class="card-notifications__item notification-group card-unread" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
                   <div class="card-notifications__avatar">
                     <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
                   </div>
@@ -144,7 +169,7 @@ let NOTIFICATION_CONTENTS = {
                         ${userName}
                       </span>
                       <span class="Card-notifications__text--primary--content">
-                        đã thêm bạn vào nhóm ${groupName}
+                        đã thêm bạn vào  <strong style="color:#d62e18">${groupName}</strong>
                       </span>
                     </div>
                     <div class="card-notifications__text--sub">
@@ -155,7 +180,7 @@ let NOTIFICATION_CONTENTS = {
               `
       }else{
         return `
-                <li class="card-notifications__item" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                <li class="card-notifications__item notification-group" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
                   <div class="card-notifications__avatar">
                     <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
                   </div>
@@ -165,7 +190,7 @@ let NOTIFICATION_CONTENTS = {
                         ${userName}
                       </span>
                       <span class="Card-notifications__text--primary--content">
-                        đã thêm bạn vào nhóm ${groupName}
+                        đã thêm bạn vào  <strong style="color:#d62e18">${groupName}</strong>
                       </span>
                     </div>
                     <div class="card-notifications__text--sub">

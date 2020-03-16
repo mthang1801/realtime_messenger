@@ -1,6 +1,7 @@
 import notificationModel from "../models/notificationModel";
 import userModel from "../models/userModel";
 import contactModel from "../models/contactModel";
+import chatGroupModel from "../models/chatGroupModel";
 import {getTimelineOfNotificationItem} from "../helpers/clientHelper";
 import {transErrors} from "../../lang/vi";
 import _ from "lodash";
@@ -10,14 +11,72 @@ const limited_notifications = +process.env.LIMIT_NOTIFICATIONS;
 let getNotifications = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
+      //get private notifications
+
       let getListNotification = await notificationModel.model.findNotificationByReceiverId(userId, limited_notifications);     
-      let listUsersPromise = getListNotification.map( async notificationItem => {
+      let listUsersNotificationsInfoPromise = getListNotification.map( async notificationItem => {
         let senderInfo = await userModel.findUserById(notificationItem.senderId);                      
-        let timer = getTimelineOfNotificationItem(notificationItem.createdAt);
-        return await notificationModel.contents.getContent(notificationItem._id, notificationItem.type, notificationItem.isRead, senderInfo._id, senderInfo.username, senderInfo.avatar, timer);
+        let notificationInfo = {
+          id: notificationItem._id, 
+          type: notificationItem.type, 
+          isRead : notificationItem.isRead,
+          userId : senderInfo._id,
+          userName : senderInfo.username, 
+          userAvatar : senderInfo.avatar, 
+          createdAt : notificationItem.createdAt
+         }
+         return notificationInfo;       
       })
+      let listUsersNotificationsInfo = await Promise.all(listUsersNotificationsInfoPromise);
       
-      resolve(await Promise.all(listUsersPromise));
+      //get group notifications
+      let getListGroups = await chatGroupModel.findGroupConversationByUserId(userId);
+      let listGroupsNotificationsPromise = getListGroups.map( async group => {
+        return  await notificationModel.model.findNotificationByGroupId(group._id);        
+      })
+
+      let listDiscreteArrayNotifications = await Promise.all(listGroupsNotificationsPromise);
+      listDiscreteArrayNotifications = listDiscreteArrayNotifications.slice(0, limited_notifications);
+      let listArrayGroupNotifications = [];
+      listDiscreteArrayNotifications.forEach( arrayNotifications => {
+        arrayNotifications.forEach( notification => {
+          listArrayGroupNotifications.push(notification);
+        })
+      })
+      let listArrayNotifications = listArrayGroupNotifications.filter( notificationItem => notificationItem.senderId != userId);
+      let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {
+        
+        let senderInfo = await userModel.findUserById(notificationItem.senderId);    
+        let groupInfo = await chatGroupModel.findGroupById(notificationItem.receiverId);        
+        let isRead = false ;
+        for(let i = 0 ; i< notificationItem.membersRead.length ; i++){
+          if(notificationItem.membersRead[i].userId == userId){
+            isRead = true ; break;
+          }
+        }
+        
+        let notificationInfo = {
+          id: notificationItem._id, 
+          type: notificationItem.type, 
+          isRead : isRead,
+          userId : senderInfo._id,
+          userName : senderInfo.username, 
+          userAvatar : senderInfo.avatar, 
+          createdAt : notificationItem.createdAt,
+          groupId : groupInfo._id,
+          groupName : groupInfo.name
+         }
+         return notificationInfo;
+      })
+      let listGroupNotificationsInfo = await  Promise.all(listGroupNotificationsInfoPromise);     
+      let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
+      allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt).slice(0,limited_notifications);
+      let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
+        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+        let timeStamp = getTimelineOfNotificationItem(createdAt);
+        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
+      })
+      resolve(allNotificationsContent);
     } catch (error) {
       reject(error);
     }
@@ -35,20 +94,78 @@ let countUnreadNotifications = (userId) => {
   })
 };
 
-let readMoreNotification = (userId, skipNumber) => {
+let readMoreNotification = (userId, skipPrivateNumbers, skipGroupNumbers) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let listNotification = await notificationModel.model.readMoreNotification(userId,skipNumber,limited_notifications);
-      if(!listNotification.length){
+      //get private notification
+
+      let getListNotification = await notificationModel.model.readMoreNotification(userId, skipPrivateNumbers, limited_notifications);     
+      if(!getListNotification.length){
         return reject(transErrors.empty_notification);
       }
-      let usersNotificationPromise = listNotification.map( async notificationItem => {
-        let user = await userModel.findUserById(notificationItem.senderId);
-        let timer = getTimelineOfNotificationItem(notificationItem.createdAt);
-        return notificationModel.contents.getContent(notificationItem._id, notificationItem.type, notificationItem.isRead, user._id, user.username, user.avatar, timer);
-      });
-      let usersNotification = await Promise.all(usersNotificationPromise);
-      resolve({usersNotification});
+      let listUsersNotificationsInfoPromise = getListNotification.map( async notificationItem => {
+        let senderInfo = await userModel.findUserById(notificationItem.senderId);                      
+        let notificationInfo = {
+          id: notificationItem._id, 
+          type: notificationItem.type, 
+          isRead : notificationItem.isRead,
+          userId : senderInfo._id,
+          userName : senderInfo.username, 
+          userAvatar : senderInfo.avatar, 
+          createdAt : notificationItem.createdAt
+         }
+         return notificationInfo;       
+      })
+      let listUsersNotificationsInfo = await Promise.all(listUsersNotificationsInfoPromise);
+      
+      //get group notifications
+      let getListGroups = await chatGroupModel.findGroupConversationByUserId(userId);
+      let listGroupsNotificationsPromise = getListGroups.map( async group => {
+        return  await notificationModel.model.findNotificationByGroupId(group._id);        
+      })
+
+      let listDiscreteArrayNotifications = await Promise.all(listGroupsNotificationsPromise);
+      listDiscreteArrayNotifications = listDiscreteArrayNotifications.slice(skipGroupNumbers, limited_notifications+ skipGroupNumbers);
+      let listArrayGroupNotifications = [];
+      listDiscreteArrayNotifications.forEach( arrayNotifications => {
+        arrayNotifications.forEach( notification => {
+          listArrayGroupNotifications.push(notification);
+        })
+      })
+      let listArrayNotifications = listArrayGroupNotifications.filter( notificationItem => notificationItem.senderId != userId);
+      let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {
+        
+        let senderInfo = await userModel.findUserById(notificationItem.senderId);    
+        let groupInfo = await chatGroupModel.findGroupById(notificationItem.receiverId);
+        let isRead = false ;
+        for(let i = 0 ; i< notificationItem.membersRead.length ; i++){
+          if(notificationItem.membersRead[i].userId == userId){
+            isRead = true ; break;
+          }
+        }
+        let notificationInfo = {
+          id: notificationItem._id, 
+          type: notificationItem.type, 
+          isRead : isRead,
+          userId : senderInfo._id,
+          userName : senderInfo.username, 
+          userAvatar : senderInfo.avatar, 
+          createdAt : notificationItem.createdAt,
+          groupId : groupInfo._id,
+          groupName : groupInfo.name
+         }
+         return notificationInfo;
+      })
+      let listGroupNotificationsInfo = await  Promise.all(listGroupNotificationsInfoPromise);
+
+      let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
+      allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt).slice(0,limited_notifications);
+      let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
+        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+        let timeStamp = getTimelineOfNotificationItem(createdAt);
+        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
+      })
+      resolve({allNotificationsContent});
     } catch (error) {
       reject(error);
     }
@@ -64,33 +181,52 @@ let readMoreNotification = (userId, skipNumber) => {
  * step3 : determine contact status, if no status return 0, else if status = false return 1, else if status = true return 2
  * step4 : if contact status = false, need to determine userId in contact is sender or receiver
  */
-let getNotificationInfo = (userId, senderId, notificationId) =>{
+let getNotificationInfo = (userId, senderId, notificationId, isGroup, groupId) =>{
   return new Promise( async (resolve, reject) => {
-    try {
-      //step 1 : get senderInfor
-      let senderInfor = await userModel.findUserById(senderId);
-      senderInfor = senderInfor.toObject();
-      //step 2 :  get type notification 
-      let notificationInfor = await notificationModel.model.findNotificationByIdAndUpdate(notificationId);    
-      senderInfor.notificationType = notificationInfor.type;
-      //step 3 : determine contact status, if no status return 0, else if status = false return 1, else if status = true return 2
-      //senderId as userId and userId as contactId in database
-      let contactInfor = await contactModel.findContact(senderId, userId);      
-          
-      if(!contactInfor){
-        senderInfor.hasContact = 0;
-      }else if(contactInfor.status==false){
-        senderInfor.isSender = false ;
-        if(contactInfor.userId == userId){
-          senderInfor.isSender = true;
+    try {   
+      //solve for private
+      if(!isGroup){
+        //step 1 : get senderInfo
+        let senderInfo = await userModel.findUserById(senderId);
+        senderInfo = senderInfo.toObject();
+        //step 2 :  get type notification 
+        let notificationInfor = await notificationModel.model.findNotificationByIdAndUpdate(notificationId);         
+        senderInfo.notificationType = notificationInfor.type;
+        //step 3 : determine contact status, if no status return 0, else if status = false return 1, else if status = true return 2
+        //senderId as userId and userId as contactId in database
+        let contactInfor = await contactModel.findContact(senderId, userId);      
+            
+        if(!contactInfor){
+          senderInfo.hasContact = 0;
+        }else if(contactInfor.status==false){
+          senderInfo.isSender = false ;
+          if(contactInfor.userId == userId){
+            senderInfo.isSender = true;
+          }
+          senderInfo.hasContact = 1;
+          senderInfo.createdAtContact = contactInfor.createdAt;
+        }else if(contactInfor.status==true){
+          senderInfo.hasContact = 2; 
+          senderInfo.updatedAtContact = contactInfor.updatedAt;
         }
-        senderInfor.hasContact = 1;
-        senderInfor.createdAtContact = contactInfor.createdAt;
-      }else if(contactInfor.status==true){
-        senderInfor.hasContact = 2; 
-        senderInfor.updatedAtContact = contactInfor.updatedAt;
+        return resolve({senderInfo: senderInfo});
       }
-      resolve(senderInfor);
+      //solve for group
+      
+      let updatePushUserIdIntoReadMembers = await notificationModel.model.findNotificationByIdAndPushMemberIdToMembersRead(userId, notificationId);      
+      let groupInfo = await chatGroupModel.findGroupById(groupId);    
+      let senderInfo = await userModel.findUserById(senderId);
+      groupInfo = groupInfo.toObject();
+      groupInfo.senderName = senderInfo.username; 
+      groupInfo.senderAvatar = senderInfo.avatar;    
+      let notificationInfo = {};
+      if(updatePushUserIdIntoReadMembers==null){
+        notificationInfo = await notificationModel.model.findNotificationById(notificationId);
+      }else{
+        notificationInfo= updatePushUserIdIntoReadMembers;
+      }
+      groupInfo.notificationType  =  notificationInfo.type; 
+      resolve({groupInfo : groupInfo})
     } catch (error) {
       reject(error);
     }
@@ -104,15 +240,76 @@ let getNotificationInfo = (userId, senderId, notificationId) =>{
  */
 let readAllNotifications = userId =>{
   return new Promise( async (resolve, reject) =>{
-    try {     
-      let listNotifications = await notificationModel.model.getAllNotificationsByReceiverId(userId);
-      let usersContactPromise = listNotifications.map( async notificationItem => {
+    try {   
+      //get private notifications
+      let getListNotification = await notificationModel.model.getAllNotificationsByReceiverId(userId);     
+      let listUsersNotificationsInfoPromise = getListNotification.map( async notificationItem => {
         let senderInfo = await userModel.findUserById(notificationItem.senderId);                      
-        let timer = getTimelineOfNotificationItem(notificationItem.createdAt);
-        return await notificationModel.contents.getContent(notificationItem._id, notificationItem.type, notificationItem.isRead, senderInfo._id, senderInfo.username, senderInfo.avatar, timer);
-      })
-      let usersContact = await Promise.all(usersContactPromise);     
-      resolve(usersContact);
+        let notificationInfo = {
+          id: notificationItem._id, 
+          type: notificationItem.type, 
+          isRead : notificationItem.isRead,
+          userId : senderInfo._id,
+          userName : senderInfo.username, 
+          userAvatar : senderInfo.avatar, 
+          createdAt : notificationItem.createdAt
+          }
+          return notificationInfo;       
+       })
+       let listUsersNotificationsInfo = await Promise.all(listUsersNotificationsInfoPromise);
+      
+       //get group notifications
+       let getListGroups = await chatGroupModel.findGroupConversationByUserId(userId);
+      
+       let listGroupsNotificationsPromise = getListGroups.map( async group => {
+         return  await notificationModel.model.getAllNotificationsByReceiverId(group._id);        
+       })
+ 
+       let listDiscreteArrayNotifications = await Promise.all(listGroupsNotificationsPromise);
+        listDiscreteArrayNotifications = listDiscreteArrayNotifications;
+        let listArrayGroupNotifications = [];
+        listDiscreteArrayNotifications.forEach( arrayNotifications => {
+          arrayNotifications.forEach( notification => {
+            listArrayGroupNotifications.push(notification);
+          })
+        })
+        console.log(listArrayGroupNotifications);
+       let listArrayNotifications = listArrayGroupNotifications.filter( notificationItem => notificationItem.senderId != userId);
+       let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {
+         
+         let senderInfo = await userModel.findUserById(notificationItem.senderId);    
+         let groupInfo = await chatGroupModel.findGroupById(notificationItem.receiverId);        
+         let isRead = false ;
+         for(let i = 0 ; i< notificationItem.membersRead.length ; i++){
+           if(notificationItem.membersRead[i].userId == userId){
+             isRead = true ; break;
+           }
+         }
+         
+         let notificationInfo = {
+           id: notificationItem._id, 
+           type: notificationItem.type, 
+           isRead : isRead,
+           userId : senderInfo._id,
+           userName : senderInfo.username, 
+           userAvatar : senderInfo.avatar, 
+           createdAt : notificationItem.createdAt,
+           groupId : groupInfo._id,
+           groupName : groupInfo.name
+          }
+          return notificationInfo;
+       })
+       let listGroupNotificationsInfo = await  Promise.all(listGroupNotificationsInfoPromise);
+ 
+       let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
+       allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt);
+       let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
+         let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+         let timeStamp = getTimelineOfNotificationItem(createdAt);
+         return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
+       })
+   
+       resolve(allNotificationsContent);
     } catch (error) {
       reject(error);
     }
@@ -122,10 +319,14 @@ let readAllNotifications = userId =>{
 let markAsReadAllNotifications = userId => {
   return new Promise(async (resolve, reject) =>{
     try {
-      let updateStatus = await  notificationModel.model.updateAllNotificationAsRead(userId);
-      if(updateStatus.nModified == 0){
-        return reject(transErrors.unable_updateNotification)
-      }
+      //update private notification
+      let updateStatus = await  notificationModel.model.updateAllNotificationAsRead(userId);     
+      //update group notification
+      let getListGroups = await chatGroupModel.findGroupConversationByUserId(userId);      
+      getListGroups.forEach( async group => {
+        //group._id plays as receiverId in notificationModel, now push userId into notificationModel with receiverId is group._id
+        await notificationModel.model.pushMemberIdIntoNotificationWithReceiverIdIsGroupId(userId, group._id)              
+      })
       return resolve(true);
     } catch (error) {
       reject(error);

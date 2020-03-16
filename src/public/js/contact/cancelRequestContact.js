@@ -7,10 +7,10 @@ function cancelRequestAddContact(){
       data: {contactId : contactId},
       success: function (response) {
         if(response.success){
-          $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${contactId}]`).hide("fast");
-          $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${contactId}]`).hide("fast");
-          $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${contactId}]`).hide("fast");          
-          $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${contactId}]`).show("fast");
+          $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${contactId}]`).hide();
+          $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${contactId}]`).hide();
+          $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${contactId}]`).hide();          
+          $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${contactId}]`).show();
           
           decreaseCountContactNumber("count-request-contact-sent");
           decreaseNotificationNumber("contact-count");
@@ -37,10 +37,10 @@ function cancelRequestAddContact(){
 };
 
 socket.on("response-remove-add-new-contact", function(user){  
-  $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${user._id}]`).hide("fast");
-  $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${user._id}]`).hide("fast");
-  $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${user._id}]`).hide("fast");          
-  $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${user._id}]`).show("fast");
+  $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${user._id}]`).hide();
+  $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${user._id}]`).hide();
+  $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${user._id}]`).hide();          
+  $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${user._id}]`).show();
   decreaseNotificationNumber("contact-count");
   decreaseCountContactNumber("count-request-contact-received");
   $("#link-request-contact-received ul.request-contact-received-list").find(`li.request-contact-received-list__item[data-uid = ${user._id}]`).remove();

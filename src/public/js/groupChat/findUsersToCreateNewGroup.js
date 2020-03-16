@@ -50,7 +50,9 @@ $(document).ready(function () {
 
   $("#modalGroupChat").on("shown.bs.modal", function(){
     $("#input-search-users-new-group").focus();
-    $("#btn-create-new-group").attr("disabled", "disabled");
+    if(!$("#list-users-group").children().length){
+      $("#btn-create-new-group").attr("disabled", "disabled");
+    }   
     createGroupChat();
   })
 

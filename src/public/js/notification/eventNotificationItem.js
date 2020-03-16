@@ -3,17 +3,25 @@ function eventNotificationItem(){
   $(".card-notifications__item ").off("click").on("click", function(){       
     let notificationId = $(this).data("notification-uid");
     let senderId = $(this).data("uid");  
+    let isGroup = false;
+    let groupId = "";
+    if($(this).hasClass("notification-group")){
+      isGroup = true ; 
+      groupId = $(this).data("group-uid");
+    }
+   
     // let groupId = $(this).data("group-uid");
     $(this).attr({"data-toggle": "modal", "data-target" : `#modalUserInfor-${senderId}`});
     $(this).removeClass("card-unread");
     $.ajax({
       type: "get",
-      url: `/notification/info?senderId=${senderId}&id=${notificationId}`,
+      url: `/notification/info?senderId=${senderId}&id=${notificationId}&isGroup=${isGroup}&groupId=${groupId}`,
       success: function (data) {
-        console.log(data);
-        if(data){         
+        let {dataRender, type} = data;
+        console.log(dataRender);
+        if(type=="private"){         
           $("body").find(`#modalUserInfor-${senderId}`).remove();
-          $("body").append(data);
+          $("body").append(dataRender);
 
           $(`#modalUserInfor-${senderId}`).modal("show");   
           $("#notification-board").hide();
@@ -21,6 +29,12 @@ function eventNotificationItem(){
           acceptRequestAddContact();   
           rejectRequestAddContact();
           cancelRequestAddContact();            
+        }else{
+          $("body").find(`#modalGroupNotificationInfo-${groupId}`).remove();
+          $("body").append(dataRender);
+
+          $(`#modalGroupNotificationInfo-${groupId}`).modal("show");
+          $("#notification-board").hide();
         }
       },
       error : function(error){

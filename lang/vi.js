@@ -50,7 +50,10 @@ export const transErrors = {
   attachment_oversize : "Kich thước tệp quá lớn",
   lengthCreateNewGroup : "Độ dài tối thiểu 3 ký tự, tối đa 50 ký tự",
   empty_array_userId : "Để tạo nhóm cần ít nhất 1 thành viên",
-  update_failed : "Cập nhật thất bại"
+  update_failed : "Cập nhật thất bại",
+  group_avatar_error_type : "Kiểu file không đúng",
+  group_avatar_oversize : "Kích thước file qúa lớn",
+  permission_update_group : "Chỉ có host mới được phép thay đổi thông tin của nhóm!!!"
 }
 
 export const transSuccess = {

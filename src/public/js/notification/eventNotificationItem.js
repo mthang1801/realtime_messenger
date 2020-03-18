@@ -22,7 +22,8 @@ function eventNotificationItem(){
         if(type=="private"){         
           $("body").find(`#modalUserInfor-${senderId}`).remove();
           $("body").append(dataRender);
-
+          //decrease number of notification 
+          decreaseNotificationNumber("notification-bell-count");
           $(`#modalUserInfor-${senderId}`).modal("show");   
           $("#notification-board").hide();
           addContact();
@@ -32,7 +33,7 @@ function eventNotificationItem(){
         }else{
           $("body").find(`#modalGroupNotificationInfo-${groupId}`).remove();
           $("body").append(dataRender);
-
+          decreaseNotificationNumber("notification-bell-count");
           $(`#modalGroupNotificationInfo-${groupId}`).modal("show");
           $("#notification-board").hide();
         }

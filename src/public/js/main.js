@@ -245,8 +245,7 @@ let initialConfigure = () => {
   });
   $(".left-side-conversations__content-item").on("mouseout", function(){
     $(this).find(".person__config--setting").css("display", "none");
-  });
-
+  });  
 };
 
 // let enableSeenGroup = false ;

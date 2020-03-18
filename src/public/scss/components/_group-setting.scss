@@ -1,0 +1,49 @@
+.group-avatar{ 
+  margin-bottom : .5rem;
+  display : flex ;
+  flex-direction: column;
+  align-items: center;
+  &-image{
+    width : 6rem;
+    height : 6rem;
+    border-radius : 50%;
+    border : 1px solid $color-icon-offline;
+    &:hover{
+      cursor: pointer;
+      box-shadow : 0 .2rem .3rem rgba($color-black, .15);
+      transform : scale(1.025)
+    }
+  }
+  &-image-common{
+    width : 6rem;
+    height : 6rem;
+    border-radius : 50%;
+    border : 1px solid $color-icon-offline;
+  }
+}
+
+.group-info{
+  &-legend{
+    color : $color-red-dark ;
+    font-weight: 700;
+    font-size : 1.1em;
+    text-align:center;
+  }
+  &-edit{
+    width : 1.25rem;
+    height : 1.25rem;
+    background-color : $color-facebook-bg-messenger;
+    padding : .3rem .4rem;
+    border-radius : .2rem;
+    color : $color-white;
+    &:hover{
+      cursor: pointer;
+      background-color : $color-primary;
+    }
+  }
+  &-text{
+    font-weight : bold;  
+    color : $color-facebook;
+  }
+}
+

@@ -25,7 +25,7 @@ function createGroupChat(){
       data: data ,
       success: function (data) {
         console.log(data);
-        let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, group, notification} = data ;         
+        let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, groupChatSettingModal, groupChatSettingModalForMembers, group, notification} = data ;         
         //left side
         $("#all-conversations").find("ul").prepend(groupChatLeftSide);      
         $("#group-conversations").find("ul").prepend(groupChatLeftSide);
@@ -36,7 +36,8 @@ function createGroupChat(){
         $("body").append(groupChatImageModal);
         //attachment modal
         $("body").append(groupChatAttachmentModal);
-      
+        //setting group
+        $("body").append(groupChatSettingModal);
         $("#modalGroupChat").modal("hide");
         $(".initial-conversation").hide();
         $(".person").removeClass("active");
@@ -62,6 +63,21 @@ function createGroupChat(){
         $("#input-create-new-group").val("");        
         $("#current-list-users").html(originConversationsList);
         addUserIntoNewGroup();
+
+        changeGroupChatAvatar();
+        changeGroupName();
+        enableEditGroup();
+        //event update group
+        updateGroupChat();
+      
+        //open modal group
+        $(".btn-open-modal-group").off("click").on("click", function(){
+          let targetId = $(this).data("uid");
+          $(`#modalSettingGroup-${targetId}`).modal("show");
+          originGroupName = $(`#input-group-name-${targetId}`).val();
+          originGroupAvatar = $(`#group-avatar-image-${targetId}`).attr("src");     
+        })
+      
       },
       error : function(error){       
         error.responseJSON.forEach( err => {
@@ -82,9 +98,8 @@ function createGroupChat(){
 $(document).ready(function () {
   createGroupChat();
   originConversationsList = $("#current-list-users").html(); 
-  socket.on("response-create-new-group", data => {
-    console.log(data);
-    let {groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, group} = data ;         
+  socket.on("response-create-new-group", data => {    
+    let { groupChatLeftSide, groupChatRightSide, groupChatImageModal, groupChatAttachmentModal, groupChatSettingModal, groupChatSettingModalForMembers , group} = data ;         
     //left side
     $("#all-conversations").find("ul.left-side-conversations__content-list").prepend(groupChatLeftSide);
     $("#group-conversations").find("ul.left-side-conversations__content-list").prepend(groupChatLeftSide);          
@@ -94,22 +109,22 @@ $(document).ready(function () {
     $("body").append(groupChatImageModal);
     //attachment modal
     $("body").append(groupChatAttachmentModal);
+    //group chat setting modal
+    $("body").append(groupChatSettingModalForMembers);
+    //increase notification number
+    increaseNotificationNumber("notification-bell-count");
     //embed notification
     $("#notification-dashboard-body").find("ul").prepend(data.notification);
     $("#notification-bell-count").fadeIn(100);
-    alertify.notify("Bạn vừa có một thông báo mới", "infor", 7);
-    $("#notification-board").show();
+    alertify.notify("Bạn vừa có một thông báo mới", "success", 7);
+
     eventNotificationItem();
     //emit when member received group
     socket.emit("user-received-new-group", data );  
     //check status online
     socket.emit("check-status");
     
-    // $(".initial-conversation").hide();
-    // $(".person").removeClass("active");
-    // $(".right-side__screen").removeClass("active");    
-    // $(`.person[data-chat = ${group._id}]`).addClass("active");
-    // $(`#to-${group._id}`).addClass("active");
+    
     $(`#to-${group._id}`).getNiceScroll().resize();
     niceScrollChatBox(group._id);
     switchTabConversation();    
@@ -121,6 +136,19 @@ $(document).ready(function () {
     callVideo(group._id);
     photoSetGrid();
     
-   
+    changeGroupChatAvatar();
+    changeGroupName();
+    enableEditGroup();
+    //event update group
+    updateGroupChat();
+
+    //open modal group
+    $(".btn-open-modal-group").off("click").on("click", function(){
+      let targetId = $(this).data("uid");
+      $(`#modalSettingGroup-${targetId}`).modal("show");
+      originGroupName = $(`#input-group-name-${targetId}`).val();
+      originGroupAvatar = $(`#group-avatar-image-${targetId}`).attr("src");     
+    })
+
   })
 });

@@ -86,8 +86,23 @@ let getNotifications = (userId) => {
 let countUnreadNotifications = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
-      let unreadNotifications = await notificationModel.model.getUnreadNotificationByReceiverId(userId);
-      resolve(unreadNotifications.length);
+      let unreadNotifications = await notificationModel.model.countUnreadNotificationByReceiverId(userId);
+      
+      let listGroupChat = await chatGroupModel.findGroupConversationByUserId(userId);
+      if(listGroupChat.length){
+        //count number of notifications with unread userId
+        let unreadNotificationsGroupChat = 0 ;
+        listGroupChat.forEach( async (group,index) => {
+          unreadNotificationsGroupChat += await notificationModel.model.countUnreadNotificationsGroupChat(userId, group._id);     
+          if(index == listGroupChat.length - 1){
+            let totalUnreadNotifications = unreadNotificationsGroupChat + unreadNotifications;              
+            return resolve(totalUnreadNotifications);
+          }
+        })
+      }else{
+        resolve(unreadNotifications)     
+      }      
+     
     } catch (error) {
       reject(error);
     }
@@ -272,8 +287,7 @@ let readAllNotifications = userId =>{
           arrayNotifications.forEach( notification => {
             listArrayGroupNotifications.push(notification);
           })
-        })
-        console.log(listArrayGroupNotifications);
+        })        
        let listArrayNotifications = listArrayGroupNotifications.filter( notificationItem => notificationItem.senderId != userId);
        let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {
          

@@ -1,7 +1,9 @@
 import userModel from "../models/userModel";
 import chatGroupModel from "../models/chatGroupModel";
 import notificationModel  from "../models/notificationModel";
+import fsExtra from "fs-extra";
 import {convertDateTimeMessenger, convertToMessengerTimeStamp} from "../helpers/clientHelper";
+import {transErrors} from "../../lang/vi";
 /**
  * searching users except contactList
  * @param {string} userId 
@@ -39,7 +41,7 @@ let createNewGroup = (userId, userName, userAvatar, groupName, listUsersId) => {
       let newGroupItem = {
         name : groupName,
         userAmount :listUsersId.length,
-        admin : [{userId : userId}],
+        admins : [{userId : userId}],
         members : members,      
       }
       let newGroup = await chatGroupModel.createNew(newGroupItem);
@@ -56,9 +58,54 @@ let createNewGroup = (userId, userName, userAvatar, groupName, listUsersId) => {
       reject(error);
     }
   })
+};
+
+let updateGroupChat = (userId, userName, userAvatar, groupId, file, groupName ) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+    let oldGroup = {};      
+    if(file && groupName){      
+      oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, file.filename, groupName);
+      //remove old avatar
+      if(oldGroup.avatar != "group-avatar.jpeg"){
+        await fsExtra.remove(`${file.destination}/${oldGroup.avatar}`);
+      }     
+     }
+     else if( file && !groupName){
+       oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateAvatar(userId,groupId,file.filename);
+      //remove old avatar
+      if(oldGroup.avatar != "group-avatar.jpeg"){
+        await fsExtra.remove(`${file.destination}/${oldGroup.avatar}`);
+      }      
+     }
+     else{
+       oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateGroupName(userId,groupId,groupName);
+     }
+     
+     if(oldGroup == null){
+       return reject(transErrors.permission_update_group)
+     }
+     
+     // create notification
+     let newNotificationItem = {
+      senderId : userId , 
+      receiverId : groupId ,
+      type : notificationModel.types.UPDATE_GROUP ,      
+     }
+
+     let notification = await notificationModel.model.create(newNotificationItem);
+     let notificationHTML = notificationModel.contents.getContent(notification._id, notification.type, notification.isRead, userId, userName, userAvatar, convertToMessengerTimeStamp(notification.createdAt), groupId, groupName, oldGroup.name);    
+
+     let groupAfterUpdating = await chatGroupModel.findGroupById(groupId);
+     resolve({groupAfterUpdating : groupAfterUpdating , notificationHTML :notificationHTML })
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 
 module.exports ={
   searchUsers : searchUsers,
   createNewGroup : createNewGroup,
+  updateGroupChat : updateGroupChat
 }

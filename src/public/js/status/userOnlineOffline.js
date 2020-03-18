@@ -1,7 +1,6 @@
 socket.emit("check-status");
 
-socket.on("server-send-list-users-online", listUsersId => {  
-  console.log(listUsersId);
+socket.on("server-send-list-users-online", listUsersId => {    
   listUsersId.forEach( userId => {
     $(`.person[data-chat = ${userId}]`).find(".person__avatar").addClass("avatar-online");
     $(`.person[data-chat = ${userId}]`).find(".person__avatar--dot").addClass("online");

@@ -12,6 +12,7 @@ import chatAttachment from "./conversation/chatAttachment";
 import callVideo from "./conversation/callVideo";
 import userOnlineOffline from "./status/userOnlineOffline";
 import createNewGroup from "./groupChat/createNewGroup";
+import updateGroupChat from "./groupChat/updateGroupChat";
 let initSockets = (io) => {
   addNewContact(io);
   removeAddNewContact(io);
@@ -27,6 +28,7 @@ let initSockets = (io) => {
   callVideo(io);
   userOnlineOffline(io);
   createNewGroup(io);
+  updateGroupChat(io);
 };
 
 

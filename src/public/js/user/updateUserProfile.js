@@ -26,7 +26,7 @@ function eventUpdateUserProfile(){
         fileReader.onload = (event)=>{          
           $("<img>", {
             "src" : event.target.result,
-            "class" : "general-setting__update-avatar-image",
+            "class" : "group-avatar-image",
             "id" : "image-update-avatar",
             "alt" : fileData.name
           }).appendTo(imagePreview);
@@ -44,7 +44,7 @@ function eventUpdateUserProfile(){
   $("#input-change-username-profile").on("change", function(){
     let value = $(this).val().trim();
     let match = /^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/
-    if(!match.test(value) || value == ""|| value.length < 3){
+    if(!match.test(value) || value.length < 3){
       alertify.notify("username không được để trống hoặc chứa các ký tự đặc biệt và có ít nhất 3 ký tự", "error", 7);
       $(this).val(userOriginalInformation.username) ;
       delete userInformation.username;

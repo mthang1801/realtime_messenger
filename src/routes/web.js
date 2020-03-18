@@ -84,6 +84,7 @@ let initRoutes = (app) => {
   //group-chat
   router.get("/group-chat/search-users" , auth.checkLoggedIn, groupChat.searchUsers);
   router.post("/group-chat/create-new-group-chat", auth.checkLoggedIn, groupChatValid.createNewGroup, groupChat.createNewGroup);
+  router.put("/group-chat/update-group-chat", auth.checkLoggedIn, groupChat.updateGroupChat);
   return app.use(router);
 }
 

@@ -7,6 +7,9 @@ export const app = {
   messenger_chat_maxSize : 1024 * 1024, //equivalent 1MB for
   messenger_chat_type : ["image/png", "image/jpg", "image/jpeg"],
   attachment_chat_directory : "src/public/images/chat", 
-  attachment_chat_maxSize : 1024 * 1024* 5, //equivalent 1MB for
+  attachment_chat_maxSize : 1024 * 1024* 5, //equivalent 5MB for
   attachment_chat_type : ["image/png", "image/jpg", "image/jpeg"],
+  group_avatar_directory : "src/public/images/users", 
+  group_avatar_maxSize : 1024 * 1024, //equivalent 1MB for
+  group_avatar_type : ["image/png", "image/jpg", "image/jpeg"],
 }

@@ -4,9 +4,9 @@ let chatGroupSchema = new mongoose.Schema({
   name : String ,
   userAmount : {type : Number, max : 199},
   messageAmount : {type : Number, default  : 0},
-  admin : [{userId : String}],
+  admins : [{userId : String}],
   members : [{userId : String}],
-  avatar : {type : String, default : "group-avatar.png"},
+  avatar : {type : String, default : "group-avatar.jpeg"},
   createdAt : {type : Number, default : Date.now},
   msgUpdatedAt : {type : Number, default : Date.now},
   updatedAt : {type : Number, default : null},
@@ -32,6 +32,23 @@ chatGroupSchema.statics = {
   findGroupAndUpdateTimeWhenHasNewMessenger(id){
     return this.findByIdAndUpdate(id, {"msgUpdatedAt": Date.now()}, {new: true}).exec();
   },
- 
+  checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, fileName, groupName){
+    return this.findOneAndUpdate(
+      {"_id": groupId, "admins.0.userId" : userId }, 
+      {"avatar": fileName, "name" : groupName, updatedAt : Date.now()}
+      ).exec();
+  },
+  checkUserIsAdminAndUpdateAvatar(userId, groupId, fileName){
+    return this.findOneAndUpdate(
+      {"_id": groupId, "admins.0.userId" : userId }, 
+      {"avatar": fileName,  updatedAt : Date.now()}
+      ).exec();
+  },
+  checkUserIsAdminAndUpdateGroupName(userId, groupId, groupName){
+    return this.findOneAndUpdate(
+      {"_id": groupId, "admins.0.userId" : userId }, 
+      {"name" : groupName, updatedAt : Date.now()}
+      ).exec();
+  }
 }
 module.exports = mongoose.model("chat-group", chatGroupSchema);

@@ -32,7 +32,7 @@ let getNotificationInfo = async (req, res) => {
       type="private";
     }
     else {
-      let groupInfo = notificationInfo.groupInfo;     
+      let groupInfo = notificationInfo.groupInfo;           
       notificationModal = await renderFile("src/views/server_render/notification/_groupInfo.ejs", {groupInfo, convertDateTimeToString});    
       type="group";
     }

@@ -64,7 +64,8 @@ let getNotifications = (userId) => {
           userAvatar : senderInfo.avatar, 
           createdAt : notificationItem.createdAt,
           groupId : groupInfo._id,
-          groupName : groupInfo.name
+          groupName : groupInfo.name,
+          groupOldName : groupInfo.oldName
          }
          return notificationInfo;
       })
@@ -72,10 +73,10 @@ let getNotifications = (userId) => {
       let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
       allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt).slice(0,limited_notifications);
       let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
-        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName, groupOldName } = notificationInfo;
         let timeStamp = getTimelineOfNotificationItem(createdAt);
-        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
-      })
+        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName, groupOldName);
+      })    
       resolve(allNotificationsContent);
     } catch (error) {
       reject(error);
@@ -86,8 +87,9 @@ let getNotifications = (userId) => {
 let countUnreadNotifications = (userId) => {
   return new Promise( async (resolve, reject) => {
     try {
+      //count unread private notification 
       let unreadNotifications = await notificationModel.model.countUnreadNotificationByReceiverId(userId);
-      
+      //count unread group chat notification
       let listGroupChat = await chatGroupModel.findGroupConversationByUserId(userId);
       if(listGroupChat.length){
         //count number of notifications with unread userId
@@ -95,14 +97,13 @@ let countUnreadNotifications = (userId) => {
         listGroupChat.forEach( async (group,index) => {
           unreadNotificationsGroupChat += await notificationModel.model.countUnreadNotificationsGroupChat(userId, group._id);     
           if(index == listGroupChat.length - 1){
-            let totalUnreadNotifications = unreadNotificationsGroupChat + unreadNotifications;              
+            let totalUnreadNotifications = unreadNotificationsGroupChat + unreadNotifications;                          
             return resolve(totalUnreadNotifications);
           }
         })
       }else{
         resolve(unreadNotifications)     
-      }      
-     
+      }           
     } catch (error) {
       reject(error);
     }
@@ -112,8 +113,7 @@ let countUnreadNotifications = (userId) => {
 let readMoreNotification = (userId, skipPrivateNumbers, skipGroupNumbers) => {
   return new Promise(async (resolve, reject) => {
     try {
-      //get private notification
-
+      //get private notification      
       let getListNotification = await notificationModel.model.readMoreNotification(userId, skipPrivateNumbers, limited_notifications);     
       if(!getListNotification.length){
         return reject(transErrors.empty_notification);
@@ -132,7 +132,7 @@ let readMoreNotification = (userId, skipPrivateNumbers, skipGroupNumbers) => {
          return notificationInfo;       
       })
       let listUsersNotificationsInfo = await Promise.all(listUsersNotificationsInfoPromise);
-      
+     
       //get group notifications
       let getListGroups = await chatGroupModel.findGroupConversationByUserId(userId);
       let listGroupsNotificationsPromise = getListGroups.map( async group => {
@@ -140,24 +140,20 @@ let readMoreNotification = (userId, skipPrivateNumbers, skipGroupNumbers) => {
       })
 
       let listDiscreteArrayNotifications = await Promise.all(listGroupsNotificationsPromise);
-      listDiscreteArrayNotifications = listDiscreteArrayNotifications.slice(skipGroupNumbers, limited_notifications+ skipGroupNumbers);
-      let listArrayGroupNotifications = [];
-      listDiscreteArrayNotifications.forEach( arrayNotifications => {
-        arrayNotifications.forEach( notification => {
-          listArrayGroupNotifications.push(notification);
-        })
-      })
-      let listArrayNotifications = listArrayGroupNotifications.filter( notificationItem => notificationItem.senderId != userId);
-      let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {
-        
+    
+      listDiscreteArrayNotifications = [].concat(...listDiscreteArrayNotifications);      
+      listDiscreteArrayNotifications= _.sortBy(listDiscreteArrayNotifications, notificationItem => -notificationItem.createdAt)
+      listDiscreteArrayNotifications = listDiscreteArrayNotifications.slice(skipGroupNumbers, skipGroupNumbers + limited_notifications);    
+      let listArrayNotifications = listDiscreteArrayNotifications.filter( notificationItem => notificationItem.senderId != userId);
+      let listGroupNotificationsInfoPromise = listArrayNotifications.map( async notificationItem => {        
         let senderInfo = await userModel.findUserById(notificationItem.senderId);    
         let groupInfo = await chatGroupModel.findGroupById(notificationItem.receiverId);
         let isRead = false ;
-        for(let i = 0 ; i< notificationItem.membersRead.length ; i++){
-          if(notificationItem.membersRead[i].userId == userId){
-            isRead = true ; break;
-          }
-        }
+         for(let i = 0 ; i< notificationItem.membersRead.length ; i++){
+           if(notificationItem.membersRead[i].userId == userId){
+             isRead = true ; break;
+           }
+         }
         let notificationInfo = {
           id: notificationItem._id, 
           type: notificationItem.type, 
@@ -167,18 +163,21 @@ let readMoreNotification = (userId, skipPrivateNumbers, skipGroupNumbers) => {
           userAvatar : senderInfo.avatar, 
           createdAt : notificationItem.createdAt,
           groupId : groupInfo._id,
-          groupName : groupInfo.name
+          groupName : groupInfo.name,
+          groupOldName : groupInfo.oldName
          }
          return notificationInfo;
       })
       let listGroupNotificationsInfo = await  Promise.all(listGroupNotificationsInfoPromise);
 
       let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
+       
       allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt).slice(0,limited_notifications);
+     
       let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
-        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+        let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName, groupOldName } = notificationInfo;
         let timeStamp = getTimelineOfNotificationItem(createdAt);
-        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
+        return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName, groupOldName);
       })
       resolve({allNotificationsContent});
     } catch (error) {
@@ -309,7 +308,8 @@ let readAllNotifications = userId =>{
            userAvatar : senderInfo.avatar, 
            createdAt : notificationItem.createdAt,
            groupId : groupInfo._id,
-           groupName : groupInfo.name
+           groupName : groupInfo.name,
+           groupOldName : groupInfo.oldName
           }
           return notificationInfo;
        })
@@ -318,9 +318,9 @@ let readAllNotifications = userId =>{
        let allNotificationsInfo = [...listUsersNotificationsInfo, ...listGroupNotificationsInfo];
        allNotificationsInfo = _.sortBy(allNotificationsInfo, item => -item.createdAt);
        let allNotificationsContent = allNotificationsInfo.map( notificationInfo => {
-         let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName } = notificationInfo;
+         let  {id, type, isRead, userId, userName, userAvatar, createdAt, groupId, groupName, groupOldName } = notificationInfo;
          let timeStamp = getTimelineOfNotificationItem(createdAt);
-         return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName);
+         return notificationModel.contents.getContent(id, type, isRead, userId, userName, userAvatar, timeStamp, groupId, groupName, groupOldName);
        })
    
        resolve(allNotificationsContent);

@@ -21,6 +21,31 @@
               </div>
             </div>
           <%}%>
+          <% if(groupInfo.notificationType == "update_group") { %>
+            <div class="card" style="border:none">          
+              <div class="card-body">
+                <div class="text-center">
+                  <img src="images/users/<%=groupInfo.avatar %>" alt="<%= groupInfo.name %>" style="height:6rem;width:6rem;border-radius:50%">
+                </div>
+                <h5 class="card-text my-3 text-center" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-groupInfo.name %></h5>
+                <h6 class="card-text" style="color:#3b5998"><%- convertDateTimeToString(groupInfo.createdAt) %> </h6>
+                <h6 class="card-text" style="color:#3b5998"><strong><%- groupInfo.senderName %></strong> đã thay đổi nhóm <strong style="color:#d62e18"><%-groupInfo.oldName %></strong> thành <strong><%- groupInfo.name %></strong></h6>                         
+              </div>
+            </div>
+          <%}%>
+          <% if(groupInfo.notificationType == "update_avatar_group") { %>
+            <div class="card" style="border:none">          
+              <div class="card-body">
+                <div class="text-center">
+                  <img src="images/users/<%=groupInfo.avatar %>" alt="<%= groupInfo.name %>" style="height:6rem;width:6rem;border-radius:50%">
+                </div>
+                <h5 class="card-text my-3 text-center" style="font-weight:bold;font-size:1.2em;color:#1a449c"><%-groupInfo.name %></h5>
+                <h6 class="card-text" style="color:#3b5998"><%- convertDateTimeToString(groupInfo.createdAt) %> </h6>
+                <h6 class="card-text" style="color:#3b5998"><strong><%- groupInfo.senderName %></strong> đã cập nhật hình đại diện cho nhóm  <strong><%- groupInfo.name %></strong></h6>                         
+              </div>
+            </div>
+          <%}%>
+          
         </div>    
       </div>
     </div>

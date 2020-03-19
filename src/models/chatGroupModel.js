@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 let chatGroupSchema = new mongoose.Schema({
   name : String ,
+  oldName : {type : String , default : null },
   userAmount : {type : Number, max : 199},
   messageAmount : {type : Number, default  : 0},
   admins : [{userId : String}],
@@ -32,22 +33,22 @@ chatGroupSchema.statics = {
   findGroupAndUpdateTimeWhenHasNewMessenger(id){
     return this.findByIdAndUpdate(id, {"msgUpdatedAt": Date.now()}, {new: true}).exec();
   },
-  checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, fileName, groupName){
+  checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, fileName, newGroupName, currentGroupName=null){
+    if(currentGroupName == null || newGroupName == currentGroupName){
+      return this.findOneAndUpdate(
+        {"_id": groupId, "admins.0.userId" : userId }, 
+        {"avatar": fileName, "name" : newGroupName, updatedAt : Date.now()}
+        ).exec();
+    }
     return this.findOneAndUpdate(
       {"_id": groupId, "admins.0.userId" : userId }, 
-      {"avatar": fileName, "name" : groupName, updatedAt : Date.now()}
+      {"avatar": fileName, "name" : newGroupName, updatedAt : Date.now(), "oldName" : currentGroupName}
       ).exec();
   },
-  checkUserIsAdminAndUpdateAvatar(userId, groupId, fileName){
+  checkUserIsAdminAndUpdateGroupName(userId, groupId, newGroupName, currentGroupName){
     return this.findOneAndUpdate(
       {"_id": groupId, "admins.0.userId" : userId }, 
-      {"avatar": fileName,  updatedAt : Date.now()}
-      ).exec();
-  },
-  checkUserIsAdminAndUpdateGroupName(userId, groupId, groupName){
-    return this.findOneAndUpdate(
-      {"_id": groupId, "admins.0.userId" : userId }, 
-      {"name" : groupName, updatedAt : Date.now()}
+      {"name" : newGroupName, updatedAt : Date.now(), "oldName" : currentGroupName}
       ).exec();
   }
 }

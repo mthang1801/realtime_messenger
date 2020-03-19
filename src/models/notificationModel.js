@@ -60,7 +60,7 @@ notificationSchema.statics = {
     return this.count({"receiverId" : userId, "isRead" : false}).exec();
   },
   countUnreadNotificationsGroupChat(userId, groupId){
-    return this.count({"receiverId": groupId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}}).exec();
+    return this.count({"receiverId": groupId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}, "senderId" : {$ne : userId}}).exec();
   }
 }
 
@@ -68,7 +68,8 @@ let NOTIFICATION_TYPES = {
   ADD_CONTACT : "add_contact",
   ACCEPT_CONTACT : "accept_contact",
   CREATE_NEW_GROUP : "create_new_group",
-  UPDATE_GROUP : "update_group"
+  UPDATE_GROUP : "update_group",
+  UPDATE_AVATAR_GROUP : "update_avatar_group"
 };
 
 let NOTIFICATION_CONTENTS = {
@@ -243,6 +244,51 @@ let NOTIFICATION_CONTENTS = {
                       </span>
                       <span class="Card-notifications__text--primary--content">
                       đã đổi tên group <strong style="color:#d62e18;text-decoration:line-through">${oldGroupName}</strong> thành <strong style="color:#3b5998">${oldGroupName}</strong>
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }
+    }
+    if(type == NOTIFICATION_TYPES.UPDATE_AVATAR_GROUP){
+      if(!isRead){
+        return `
+                <li class="card-notifications__item notification-group card-unread" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                        đã thay đổi ảnh đại diện <strong style="color:#d62e18">${oldGroupName}</strong> 
+                      </span>
+                    </div>
+                    <div class="card-notifications__text--sub">
+                      ${timer}
+                    </div>
+                  </div>
+                </li>
+              `
+      }else{
+        return `
+                <li class="card-notifications__item notification-group" data-notification-uid="${id}" data-uid="${userId}" data-group-uid=${groupId}>
+                  <div class="card-notifications__avatar">
+                    <img src="images/users/${userAvatar}" class="card-notifications__avatar-image">
+                  </div>
+                  <div class="card-notifications__text">
+                    <div class="card-notifications__text--primary">
+                      <span class="card-notifications__text--primary--username">
+                        ${userName}
+                      </span>
+                      <span class="Card-notifications__text--primary--content">
+                      đã thay đổi ảnh đại diện <strong style="color:#d62e18">${oldGroupName}</strong> 
                       </span>
                     </div>
                     <div class="card-notifications__text--sub">

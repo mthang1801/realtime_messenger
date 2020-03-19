@@ -60,41 +60,42 @@ let createNewGroup = (userId, userName, userAvatar, groupName, listUsersId) => {
   })
 };
 
-let updateGroupChat = (userId, userName, userAvatar, groupId, file, groupName ) => {
+let updateGroupChat = (userId, userName, userAvatar, groupId, file, newGroupName ) => {
   return new Promise( async (resolve, reject) => {
     try {
-    let oldGroup = {};      
-    if(file && groupName){      
-      oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, file.filename, groupName);
+    let oldGroup = {};
+    let currentGroup = await chatGroupModel.findGroupById(groupId) ;
+    let currentGroupName = currentGroup.name ; 
+    // create notification   
+    let newNotificationItem = {
+      senderId : userId , 
+      receiverId : groupId ,     
+     }   
+    if(file && newGroupName){      
+      
+      //determine type of notification
+      if(currentGroupName != newGroupName){       
+       await chatGroupModel.checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, file.filename, newGroupName, currentGroupName);
+        newNotificationItem.type = notificationModel.types.UPDATE_GROUP ;
+      }else{
+       await chatGroupModel.checkUserIsAdminAndUpdateBothAvatarAndName(userId, groupId, file.filename, newGroupName);
+        newNotificationItem.type = notificationModel.types.UPDATE_AVATAR_GROUP;
+      }
       //remove old avatar
-      if(oldGroup.avatar != "group-avatar.jpeg"){
-        await fsExtra.remove(`${file.destination}/${oldGroup.avatar}`);
+      if(currentGroup.avatar != "group-avatar.jpeg"){
+        await fsExtra.remove(`${file.destination}/${currentGroup.avatar}`);
       }     
      }
-     else if( file && !groupName){
-       oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateAvatar(userId,groupId,file.filename);
-      //remove old avatar
-      if(oldGroup.avatar != "group-avatar.jpeg"){
-        await fsExtra.remove(`${file.destination}/${oldGroup.avatar}`);
-      }      
-     }
-     else{
-       oldGroup = await chatGroupModel.checkUserIsAdminAndUpdateGroupName(userId,groupId,groupName);
+     else if( !file && newGroupName ){      
+       newNotificationItem.type = notificationModel.types.UPDATE_GROUP ;
+        await chatGroupModel.checkUserIsAdminAndUpdateGroupName(userId,groupId,newGroupName, currentGroupName);
      }
      
      if(oldGroup == null){
        return reject(transErrors.permission_update_group)
-     }
-     
-     // create notification
-     let newNotificationItem = {
-      senderId : userId , 
-      receiverId : groupId ,
-      type : notificationModel.types.UPDATE_GROUP ,      
-     }
-
+     }  
      let notification = await notificationModel.model.create(newNotificationItem);
-     let notificationHTML = notificationModel.contents.getContent(notification._id, notification.type, notification.isRead, userId, userName, userAvatar, convertToMessengerTimeStamp(notification.createdAt), groupId, groupName, oldGroup.name);    
+     let notificationHTML = notificationModel.contents.getContent(notification._id, notification.type, notification.isRead, userId, userName, userAvatar, convertToMessengerTimeStamp(notification.createdAt), groupId, newGroupName, currentGroupName);    
 
      let groupAfterUpdating = await chatGroupModel.findGroupById(groupId);
      resolve({groupAfterUpdating : groupAfterUpdating , notificationHTML :notificationHTML })

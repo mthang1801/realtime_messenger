@@ -1315,3 +1315,86 @@ a {
 .group-info-text {
   font-weight: bold;
   color: #3b5998; }
+
+.list-group-members {
+  list-style: none;
+  margin: 1rem 0; }
+  .list-group-members-item {
+    position: relative;
+    background-color: #DADDE1;
+    display: flex;
+    align-self: sketc;
+    align-items: center;
+    width: 100%;
+    padding: .3rem .75rem;
+    border-radius: .25rem;
+    min-height: 6rem;
+    margin-bottom: .5rem; }
+    .list-group-members-item:hover {
+      background-color: #CCD0D5;
+      cursor: pointer; }
+    .list-group-members-item__avatar {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      border: 1px solid #d1ccc0;
+      margin-right: 1.25rem;
+      position: relative; }
+      .list-group-members-item__avatar-dot {
+        position: absolute;
+        width: .5rem;
+        height: .5rem;
+        border-radius: 50%;
+        background-color: #d1ccc0;
+        bottom: .35rem;
+        right: .2rem; }
+      .list-group-members-item__avatar-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%; }
+    .list-group-members-item__info {
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      flex-grow: 1;
+      align-items: flex-start;
+      justify-content: center; }
+      .list-group-members-item__info--username {
+        font-weight: 700; }
+      .list-group-members-item__info--join-date {
+        font-size: .9em;
+        color: rgba(0, 0, 0, 0.7); }
+    .list-group-members-item__config--setting {
+      height: 1.5rem;
+      width: 1.5rem;
+      position: absolute;
+      background-color: transparent;
+      top: .5rem;
+      right: .25rem; }
+      .list-group-members-item__config--setting-icon {
+        width: 100%;
+        height: 100%;
+        opacity: .6;
+        color: #DADDE1; }
+        .list-group-members-item__config--setting-icon:hover {
+          cursor: pointer;
+          opacity: 1; }
+    .list-group-members-item__button {
+      position: absolute;
+      bottom: 1rem;
+      right: .5rem; }
+
+.common-navigation {
+  height: 100%;
+  position: relative;
+  padding: 0 1rem; }
+  .common-navigation__input {
+    width: 80%;
+    align-items: center;
+    margin-bottom: 1rem; }
+    .common-navigation__input-control {
+      padding: .15rem .75rem;
+      height: calc(1em + .75rem); }
+    .common-navigation__input-button {
+      padding: .1rem .75rem;
+      height: calc(1em + .75rem); }

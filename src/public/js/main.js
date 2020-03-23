@@ -282,6 +282,7 @@ function switchTabConversation(){
           $(`#to-${targetId}`).find(".right-side__top--leftside-status").text("");
         }
       }
+
       niceScrollChatBox(targetId);
       enableEmojiChat(targetId);    
       chatTextAndEmoji(targetId) ;  
@@ -356,6 +357,19 @@ function enableConverToImage(){
   })
 };
 
+//group chat setting
+function groupChatSetting(){
+  $(".modalSetting").on("show.bs.modal", function(){
+    let groupId = $(this).data("group-uid");
+   $(`#list-group-chat-setting-modal-${groupId}`).children().each( function(index, elem){
+     $(this).removeClass("active");
+     if(index == $(`#list-group-chat-setting-modal-${groupId}`).children().length - 1){
+      $(`#list-group-chat-setting-modal-${groupId}`).children().eq(0).addClass("active");
+     }
+   })
+  })
+}
+
 
 $(document).ready(function () {
   initialConfigure();
@@ -386,6 +400,9 @@ $(document).ready(function () {
   switchTabConversation();
 
   checkScreenShow();
+
+  //setup group chat setting modal
+  groupChatSetting();
   
   let dataTarget = $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target");
   // $(".left-side-conversations__content-item").eq(0).find(".nav-link").attr("data-target","")

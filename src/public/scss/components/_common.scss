@@ -1,0 +1,21 @@
+.common{
+  &-navigation{
+    height: 100%;
+    position :relative;
+    padding : 0 1rem;
+   
+    &__input{    
+     width: 80%;
+     align-items : center;
+     margin-bottom: 1rem;
+    &-control{
+      padding : .15rem .75rem;
+      height: calc(1em + .75rem);    
+      }
+    &-button{
+      padding : .1rem .75rem;
+      height: calc(1em + .75rem);        
+      }
+    }
+  }
+}

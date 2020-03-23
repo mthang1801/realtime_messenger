@@ -1,4 +1,4 @@
-import {notification, contact, conversation} from "../services";
+import {notification, contact, conversation, groupChat} from "../services";
 import {convertDateTimeToString, convertToMessengerTimeStamp, getLastItemInArray, bufferToBase64, convertDateTimeMessenger} from "../helpers/clientHelper";
 import  request from "request";
 let getICETurnServer = () => {
@@ -46,6 +46,8 @@ let getHome =async (req, res) => {
   let getContactList = await contact.getContactList(req.user._id);
   //get conversations
   let getAllConversations = await conversation.getAllConversations(req.user._id);     
+  //get group members
+  let getGroupMembers = await groupChat.getGroupMembers(req.user._id);
   let ICEServerList = await getICETurnServer();
   return res.render("main/home/home",{
     activeSuccess : req.flash("activeSuccess"),
@@ -60,6 +62,7 @@ let getHome =async (req, res) => {
     convertDateTimeToString : convertDateTimeToString,
     convertToMessengerTimeStamp : convertToMessengerTimeStamp,
     allConversations : getAllConversations,
+    groupChatMembers : getGroupMembers,
     getLastItemInArray : getLastItemInArray,
     bufferToBase64 : bufferToBase64,
     convertDateTimeMessenger : convertDateTimeMessenger,

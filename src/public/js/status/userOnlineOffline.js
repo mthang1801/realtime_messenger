@@ -7,6 +7,8 @@ socket.on("server-send-list-users-online", listUsersId => {
     $(`.person[data-chat = ${userId}]`).attr("data-last-online", "-1");
     $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").addClass("avatar-online");
     $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").addClass("online");
+    $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar").addClass("avatar-online");
+    $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar-dot").addClass("online");
     $(`#to-${userId}`).find(".right-side__top--leftside-avatar").addClass("avatar-online");
     $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").addClass("online");
     $(`#to-${userId}`).find(".right-side__top--leftside-status").text("Vừa mới truy cập");
@@ -19,6 +21,8 @@ socket.on("server-send-new-user-is-online" , userId => {
   $(`.person[data-chat = ${userId}]`).attr("data-last-online", "-1");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").addClass("avatar-online");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").addClass("online");
+  $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar").addClass("avatar-online");
+    $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar-dot").addClass("online");
   $(`#to-${userId}`).find(".right-side__top--leftside-avatar").addClass("avatar-online");
   $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").addClass("online");
   $(`#to-${userId}`).find(".right-side__top--leftside-status").text("Vừa mới truy cập");
@@ -32,6 +36,8 @@ socket.on("server-send-user-is-offline" , userId  => {
   $(`.person[data-chat = ${userId}]`).attr("data-last-online", Date.now());
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar").removeClass("avatar-online");
   $(`.contact-list__item[data-uid = ${userId}]`).find(".card-user__body-avatar--dot").removeClass("online");
+  $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar").removeClass("avatar-online");
+    $(`.list-group-members-item[data-uid= ${userId}]`).find(".list-group-members-item__avatar-dot").removeClass("online");
   $(`#to-${userId}`).find(".right-side__top--leftside-avatar").removeClass("avatar-online");
   $(`#to-${userId}`).find(".right-side__top--leftside-avatar--dot").removeClass("online");
   $(`#to-${userId}`).find(".right-side__top--leftside-status").text("Vừa mới offline"); 

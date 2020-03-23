@@ -1,0 +1,161 @@
+<% allConversations.forEach( (conversation,index) => {%>
+  <% if(conversation.members) {%>
+    <div class="modal fade modalSetting" id="modalSettingGroup-<%= conversation._id %>" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"" aria-hidden="true" data-group-uid="<%= conversation._id %>">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Cài đặt nhóm</h5>            
+          </div>
+          <div class="modal-body">
+            <div class="row">
+
+              <div class="col-3 ">
+                <div class="nav flex-column nav-pills" id="list-group-chat-setting-modal-<%= conversation._id %>" role="tablist" aria-orientation="vertical">
+                  <a class="nav-link" id="v-pills-group-info" data-toggle="pill" href="#general-group-info-<%= conversation._id %>" role="tab" aria-controls="v-pills-home" aria-selected="true">Thông tin nhóm</a>
+                  <a class="nav-link" id="v-pills-group-members" data-toggle="pill" href="#group-members-<%= conversation._id %>" role="tab" aria-controls="v-pills-profile" aria-selected="false">Thành viên</a>
+                  <a class="nav-link" id="v-pills-search-and-add-member" data-toggle="pill" href="#search-and-add-member" role="tab" aria-controls="v-pills-messages" aria-selected="false">Thêm Thành Viên</a>
+                  <a class="nav-link" id="v-pills-todo-list" data-toggle="pill" href="#group-todo" role="tab" aria-controls="v-pills-settings" aria-selected="false">Công việc</a>
+                  <a class="nav-link" id="v-pills-history" data-toggle="pill" href="#group-history" role="tab" aria-controls="v-pills-settings" aria-selected="false">Nhật ký</a>
+                </div>
+              </div>
+
+              <div class="col-9 ">              
+                <div class="tab-content" id="v-pills-tabContent">
+                  <!-- general group info -->
+                  <div class="tab-pane fade show active" id="general-group-info-<%= conversation._id %>" role="tabpanel" aria-labelledby="v-pills-general-group-info">
+                    <div class="group-avatar" id="group-avatar-box-<%= conversation._id %>">
+                      <% if(conversation.admins[0].userId == user._id ) { %>
+                        <img src="images/users/<%= conversation.avatar %>" class="group-avatar-image" data-uid="<%= conversation._id %>" id="group-avatar-image-<%= conversation._id %>">                                                  
+                      <%}else{%>
+                        <img src="images/users/<%= conversation.avatar %>" class="group-avatar-image-common" data-uid="<%= conversation._id %>" id="group-avatar-image-<%= conversation._id %>">                                                  
+                      <%}%>
+                    
+                    </div>
+                    <input type="file" class="group-avatar__update-image form-control" name="group-avatar" id="input-update-group-avatar-<%= conversation._id %>" style="opacity: 0;">                      
+                    <form class="group-info" data-uid="<%= conversation._id %>">
+                      <legend class="group-info-legend">Thông tin nhóm</legend>
+                      <div class="form-group row align-items-center">
+                        <% if(conversation.admins[0].userId == user._id ) { %>
+                         <label for="input-group-name-<%= conversation._id %>" class="col-form-label col-12 col-lg-3 font-weight-bold">Tên nhóm: </label>
+                            <div class="col-10 col-lg-7">
+                              <input type="text" class="form-control input-group-name" id="input-group-name-<%= conversation._id %>" data-uid="<%= conversation._id %>" name="group-name" id="input-group-name-<%= conversation._id %>" value="<%= conversation.name %>" disabled/>                          
+                            </div>
+                            <div class="col-2">
+                              <span class="group-info-edit" data-uid="<%= conversation._id %>"><i class="fas fa-edit"></i></span>
+                          </div>
+                        <%}else{%>
+                          <label for="group-name-<%= conversation._id %>" class="col-form-label col-12 col-lg-3 font-weight-bold">Tên nhóm: </label>
+                          <div class="col-10 col-lg-7 group-info-text" id="group-name-<%= conversation._id %>">
+                            <span><%= conversation.name %></span>     
+                          </div>                          
+                        <%}%>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label for="group-number-members-<%= conversation._id %>" class="col-form-label col-12 col-lg-3 font-weight-bold">Số thành viên: </label>
+                        <div class="col-12 col-lg-9 group-info-text" id="group-number-members-<%= conversation._id %>">
+                          <%= conversation.members.length %>
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center">
+                        <label for=group-createdAt-<%= conversation._id %>" class="col-form-label col-12 col-lg-3 font-weight-bold">Ngày tạo nhóm: </label>
+                        <div class="col-12 col-lg-9 group-info-text" id="group-createdAt-<%= conversation._id %>">
+                          <%= convertDateTimeToString(conversation.createdAt) %>
+                        </div>
+                      </div>
+                      <div class="form-group row align-items-center" >
+                        <label for="group-updatedAt-<%= conversation._id %>" class="col-form-label col-12 col-lg-3 font-weight-bold">Ngày cập nhật cuối cùng: </label>
+                        <div class="col-12 col-lg-9 group-info-text" id="group-updatedAt-<%= conversation._id %>">
+                          <% if (conversation.updatedAt == null) { %>
+                            Nhóm chưa cập nhật
+                          <%}else { %>
+                            <%= convertDateTimeToString(conversation.updatedAt) %>
+                          <%}%>
+                        </div>
+                      </div>
+                      <% if(conversation.admins[0].userId == user._id ) { %>
+                      <div class="form-group text-center">                        
+                        <button type="button" class="btn btn-primary btn-sm mr-3 btn-update-group" data-uid="<%= conversation._id %>">Lưu thay đổi</button>
+                        <button type="button" class="btn btn-secondary btn-sm btn-cancel-update-group" data-uid="<%= conversation._id %>">Hoàn tác</button>
+                      </div>
+                      <%}%>
+                    </form> 
+                  </div>
+
+                  <!-- list group members -->
+                  <div class="tab-pane fade" id="group-members-<%= conversation._id %>" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <div class="input-group common-navigation__input" id="input-setting-group-modal-search-members">
+                      <input type="text" class="form-control common-navigation__input-control" placeholder="Tìm Kiếm...">
+                      <span class="input-group-append">
+                        <button class="btn btn-light-grey common-navigation__input-button">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </span>
+                    </div>                    
+                   
+                    <h6 class="text-black-50">Danh sách thành viên</h6>
+                    <ul class="list-group-members"  data-group-uid="<%= conversation._id %>">                                              
+                      <% groupChatMembers.forEach( group => { %>       
+                        <% if (group._id == conversation._id.toString()) {%>                               
+                          <% group.members.forEach( member =>  {%>
+                            <li class="nav-item list-group-members-item" data-uid="<%= member._id %>" data-last-online="<%= member.otherProps.lastTimeOnline %>">                        
+                              <div class="list-group-members-item__avatar">
+                                <span class="list-group-members-item__avatar-dot"></span>
+                                <img src="images/users/<%= member.avatar %>" title="<%= member._avatar %>" class="list-group-members-item__avatar-image" >
+                              </div>
+                              <div class="list-group-members-item__info">
+                                <div class="list-group-members-item__info--username">
+                                  <%= member.username %>
+                                </div>
+                                <div class="list-group-members-item__info--address">
+                                  <%= member.address ? member.address : "" %>
+                                </div>
+                                <div class="list-group-members-item__info--join-date">
+                                  <%= convertDateTimeToString(member.joinedAt) %>
+                                </div>
+                              </div>  
+                              <%if(conversation.admins[0].userId == user._id) {%>                                                                         
+                              <div class="list-group-members-item__config--setting dropleft" >
+                                <a href="javascript:void(0)"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  <img src="images/icons/more-icon.png" class="list-group-members-item__config--setting-icon">
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                  <a class="dropdown-item" href="#">Action</a>
+                                  <a class="dropdown-item" href="#">Another action</a>
+                                  <a class="dropdown-item" href="#">Something else here</a>
+                                </div>                         
+                              </div>                             
+                              <%}%>
+                              <div class="list-group-members-item__button" data-contact-uid="<%= member._id %>">  
+                                <% if(member.contactStatus == 0) { %>
+                                  <% if(member.isSenderRequest)  { %>
+                                    <button class="btn btn-sm btn-primary btn-accept-request-contact" data-uid="<%= member._id %>">Chấp nhận</button>
+                                    <button class="btn btn-sm btn-danger btn-reject-request-contact" data-uid="<%= member._id %>">Từ chối</button>      
+                                  <%}else{%>                                    
+                                    <button class="btn btn-sm btn-danger btn-cancel-request-contact-sent" data-uid="<%= member._id %>">Hủy Yêu Cầu</button>                                 
+                                  <%}%>
+                                <%} else if(member.contactStatus == 1) {%>
+                                  <button class="btn btn-sm btn-success btn-chat-member" data-uid="<%= member._id %>">Nhắn tin</button>
+                                <%} else if(member.contactStatus == -1) {%>
+                                  <button class="btn btn-sm btn-primary btn-request-add-contact" data-uid="<%= member._id %>">Kết bạn</button>                                                          
+                                <%}%>
+                              </div>                                                                                 
+                            </li>              
+                          <%})%>   
+                        <%}%>                 
+                      <%})%>
+                       
+                    </ul>
+                  </div>
+                  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
+                  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                </div>
+                
+              </div>
+            </div>
+          </div>          
+        </div>
+      </div>
+    </div>
+  <%}%>
+<%})%>
+

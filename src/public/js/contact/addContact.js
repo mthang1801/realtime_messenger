@@ -1,7 +1,7 @@
 //Request user to make friend
 function addContact(){
   $(".btn-request-add-contact").off("click").on("click" , function(){    
-    let contactId = $(this).data("uid");      
+    let contactId = $(this).data("uid");     
     $.ajax({
       type: "post",
       url: "/contact/add-contact",
@@ -14,6 +14,9 @@ function addContact(){
           $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${contactId}]`).hide();
           $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${contactId}]`).hide();
           $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${contactId}]`).show();          
+          //group chat setting
+          $(`.list-group-members-item__button[data-contact-uid = ${contactId}]`).find(".btn-request-add-contact").remove();
+          $(`.list-group-members-item__button[data-contact-uid = ${contactId}]`).append(`<button class="btn btn-sm btn-danger btn-cancel-request-contact-sent" data-uid="${contactId}">Hủy Yêu cầu</button>`);         
           
           //show count-contact-request at nav
           increaseCountContactNumber("count-request-contact-sent");          
@@ -57,7 +60,7 @@ function addContact(){
             $(".modal-backdrop").remove();
             $(`#modalUserInfor-${contactId}`).remove();
           })
-          
+                  
         }
       },
       error : function(error){
@@ -73,7 +76,14 @@ socket.on("response-add-new-contact", function(user){
   $(".search-users-box__list-users-item").find(`.btn-request-add-contact[data-uid = ${user._id}]`).hide();
   $(".search-users-box__list-users-item").find(`.btn-reject-request-contact[data-uid = ${user._id}]`).show();
   $(".search-users-box__list-users-item").find(`.btn-accept-request-contact[data-uid = ${user._id}]`).show();
-  $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${user._id}]`).hide();          
+  $(".search-users-box__list-users-item").find(`.btn-cancel-request-contact-sent[data-uid = ${user._id}]`).hide();   
+   //group chat setting
+  $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).find(".btn-request-add-contact").remove();
+  $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).append(`
+    <button class="btn btn-sm btn-primary btn-accept-request-contact" data-uid="${user._id}">Chấp nhận</button>
+    <button class="btn btn-sm btn-danger btn-reject-request-contact" data-uid="${user._id}">Từ chối</button>      
+  `)  
+
   increaseNotificationNumber("contact-count");
   increaseNotificationNumber("notification-bell-count");
   increaseCountContactNumber("count-request-contact-received");
@@ -137,3 +147,7 @@ socket.on("response-add-new-contact", function(user){
   
 })
 
+
+$(document).ready(function () {
+  addContact();
+});

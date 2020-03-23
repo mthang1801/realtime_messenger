@@ -57,10 +57,10 @@ notificationSchema.statics = {
     ).exec();
   },
   countUnreadNotificationByReceiverId(userId){
-    return this.count({"receiverId" : userId, "isRead" : false}).exec();
+    return this.countDocuments({"receiverId" : userId, "isRead" : false}).exec();
   },
   countUnreadNotificationsGroupChat(userId, groupId){
-    return this.count({"receiverId": groupId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}, "senderId" : {$ne : userId}}).exec();
+    return this.countDocuments({"receiverId": groupId, "membersRead" : {$not : {$elemMatch : { "userId" : userId}}}, "senderId" : {$ne : userId}}).exec();
   }
 }
 

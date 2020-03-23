@@ -1,6 +1,7 @@
 import userModel from "../models/userModel";
 import chatGroupModel from "../models/chatGroupModel";
 import notificationModel  from "../models/notificationModel";
+import contactModel  from "../models/contactModel";
 import fsExtra from "fs-extra";
 import {convertDateTimeMessenger, convertToMessengerTimeStamp} from "../helpers/clientHelper";
 import {transErrors} from "../../lang/vi";
@@ -103,10 +104,70 @@ let updateGroupChat = (userId, userName, userAvatar, groupId, file, newGroupName
       reject(error);
     }
   })
+};
+/**
+ * 
+ * @param {string} userId 
+ * get member info , contact status of user and that member
+ * //create contact status 
+  //status = 0 : false
+  // ++ determine userId is sender request or receiver request
+  //status = 1 : true
+  //status = -1 : null
+ */
+let getGroupMembers = userId => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      let listGroupChat = await chatGroupModel.findGroupConversationByUserId(userId);
+      let groupChatMembers=[] ;
+      listGroupChat.forEach(async (group,index) => {      
+        group = group.toObject();
+        let listMembersId = group.members.map( memberGroup => memberGroup.userId);
+        listMembersId = listMembersId.filter(memberId => memberId != userId);  
+
+        let listMembersInfoPromise = listMembersId.map( async memberId => {         
+          let member = await userModel.findUserById(memberId);
+         
+          member = member.toObject();
+          //get time member joined group
+          let getTimeMemberJoined = group.members.find(memberItem => memberItem.userId == memberId);     
+          member.joinedAt = getTimeMemberJoined.joinedAt ; 
+          let getContactStatusOfMember = await contactModel.findContact(userId, memberId);          
+     
+          if(getContactStatusOfMember!=null){
+            let status = getContactStatusOfMember.status ;
+            if(status){
+             member.contactStatus = 1;
+            }else{
+              member.contactStatus = 0;
+              //determine userId is sender request or receiver request 
+              if(getContactStatusOfMember.userId == memberId){
+                member.isSenderRequest =true ;
+              }else {
+                member.isSenderRequest =false ;
+              }
+            }
+          }else{
+            member.contactStatus = -1;
+          }        
+          return member;
+        });
+
+        let listMembersInfo = await Promise.all(listMembersInfoPromise);
+        groupChatMembers.push({_id : group._id , members : listMembersInfo});           
+        if(index == listGroupChat.length -1 ){         
+          resolve(groupChatMembers);
+        }
+      })     
+    } catch (error) {
+      reject(error);
+    }
+  })
 }
 
 module.exports ={
   searchUsers : searchUsers,
   createNewGroup : createNewGroup,
-  updateGroupChat : updateGroupChat
+  updateGroupChat : updateGroupChat,
+  getGroupMembers : getGroupMembers,
 }

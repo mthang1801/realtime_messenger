@@ -170,7 +170,7 @@ $(document).ready(function () {
   //open modal group
   $(".btn-open-modal-group").off("click").on("click", function(){
     let targetId = $(this).data("uid");
-    $(`#modalSettingGroup-${targetId}`).modal("show");
+    $(`#modalSettingGroup-${targetId}`).modal("show");   
     originGroupName = $(`#input-group-name-${targetId}`).val();
     originGroupAvatar = $(`#group-avatar-image-${targetId}`).attr("src").split("/")[ $(`#group-avatar-image-${targetId}`).attr("src").split("/").length-1];     
     console.log(originGroupAvatar);
@@ -200,6 +200,7 @@ $(document).ready(function () {
      $("#notification-bell-count").fadeIn(100);
      increaseNotificationNumber("notification-bell-count")     
      alertify.notify("Bạn vừa có một thông báo mới", "infor", 7);
+     eventNotificationItem();
   })
 });
 

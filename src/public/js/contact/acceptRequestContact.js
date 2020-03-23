@@ -24,6 +24,12 @@ function acceptRequestAddContact(){
           $("#link-request-contact-received ul.request-contact-received-list").find(`li[data-uid = ${user._id}]`).remove();          
           //remove item at search contact 
           $("#search-users-box ul.search-users-box__list-users").find(`li[data-uid = ${user._id}]`).remove();
+          //group chat setting
+          $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).find(".btn-reject-request-contact").remove();
+          $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).find(".btn-accept-request-contact").remove();
+          $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).append(`
+            <button class="btn btn-sm btn-success btn-chat-member" data-uid="${user._id}">Nhắn tin</button>       
+          `)  
           //remove modal notification item 
           $(`#modalUserInfor-${user._id}`).modal("hide");
           $(`#modalUserInfor-${user._id}`).on("hidden.bs.modal", function(){
@@ -102,7 +108,7 @@ function acceptRequestAddContact(){
               <div class="right-side__top--leftside">
                 <div class="right-side__top--leftside-avatar">
                   <div class="right-side__top--leftside-avatar--dot"></div>
-                  <img src="images/users/${user.avatar} alt="${user.avatar} class="right-side__top--leftside-avatar--image"/>
+                  <img src="images/users/${user.avatar}" alt="${user.avatar}" class="right-side__top--leftside-avatar--image"/>
                 </div>
                 <span class="right-side__top--leftside-username">
                   ${user.username}
@@ -145,7 +151,8 @@ function acceptRequestAddContact(){
           //#endregion
           //create socket 
           socket.emit("accept-request-contact-received", {userId, updatedAt: contact.updatedAt, notificationId});
-
+          socket.emit("check-status");
+          chatWithMemberFromGroupChatSetting();
           switchTabConversation();      
           removeCurrentContact();
           eventNotificationItem();
@@ -196,6 +203,11 @@ socket.on("response-accept-request-contact-received", user => {
   $("#link-request-contact-sent ul.request-contact-sent-list").find(`li[data-uid = ${user._id}]`).remove();
   //remove item at search contact 
   $("#search-users-box ul.search-users-box__list-users").find(`li[data-uid = ${user._id}]`).remove();
+  //group chat setting
+  $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).find(".btn-cancel-request-contact-sent").remove();
+  $(`.list-group-members-item__button[data-contact-uid = ${user._id}]`).append(`
+    <button class="btn btn-sm btn-success btn-chat-member" data-uid="${user._id}">Nhắn tin</button>       
+  `)  
   //#region create new item at contact panel
   let contactHTML = `
   <li class="contact-list__item" data-uid="${user._id}">
@@ -301,7 +313,9 @@ socket.on("response-accept-request-contact-received", user => {
     </div>
     `
     $("#screen-chat").prepend(userContactRightSideHTML);
-    switchTabConversation();      
+    socket.emit("check-status");
+    switchTabConversation();     
+    chatWithMemberFromGroupChatSetting() ;
    removeCurrentContact();
    eventNotificationItem();
 })

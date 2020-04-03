@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/server.js & node-sass ./src/public/scss/main.scss ./src/public/css/style.css -w"
+    "runsass": "node-sass ./src/public/scss/main.scss ./src/public/css/style.css -w",
+    "start": "babel-node src/server.js & node-sass ./src/public/scss/main.scss ./src/public/css/style.css -w",
+    "server": "nodemon src/server.js --exec babel-node",
+    "dev": "concurrently \"npm run server\" \"npm run runsass\" "
   },
   "repository": {
     "type": "git",
@@ -51,6 +54,7 @@
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6",
     "@babel/preset-env": "^7.8.6",
+    "concurrently": "^5.1.0",
     "node-sass": "^4.13.1",
     "nodemon": "^2.0.2",
     "pem": "^1.14.4"

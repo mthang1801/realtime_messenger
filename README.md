@@ -1,4 +1,17 @@
 # realtime_messenger
+
+
+# Install 
+1. npm i 
+
+2. bower i 
+
+3. sudo systemctl start mongodb
+
+4. source sh/env.sh 
+
+5. npm run dev
+
 ================= Plaining upgrade for project messenger ============
 1- create index for mongodb
 2- fix alert for auth-page
@@ -47,3 +60,43 @@ VD: let contactSchema = new mongoose.Schema({
   },
        Lưu ý: khi lấy dữ liệu xuống, thay vì contact.msgUpdatedAt thì ta dùng : contact.get("msgUpdatedAt")
 
+======================================================================
+#config database environment variables
+export DB_CONNECT=mongodb
+export DB_HOST=localhost
+export DB_PORT=27017
+export DB_NAME=messenger
+export DB_USER=""
+export DB_PASSWORD=""
+
+#config host and port environment for server
+export APP_HOST=localhost
+export APP_PORT=3000
+
+#config admin email
+export MAIL_USER=***
+export MAIL_PASS=***
+export MAIL_HOST=smtp.gmail.com
+export MAIL_PORT=587
+
+#config login facebook
+export FB_APP_ID=564805340774728
+export FB_APP_SECRET=5079294686743f66b58b567a9e5356b9
+export FB_CALLBACK_URL=https://localhost:3000/auth/facebook/callback
+
+#config login google+
+export GG_APP_ID=519432788476-lv9bi1joqjgtdaj2fnsncppalfprieje.apps.googleusercontent.com
+export GG_APP_SECRET=KzkCrWbZw6hvvCh93Xg8hRBy
+export GG_CALLBACK_URL=https://localhost:3000/auth/google/callback
+
+#saltRounds
+export SALT_ROUNDS=10
+
+#config session
+export SESSION_KEY=express.sid
+export SESSION_SECRET==***
+
+#set get limit
+export LIMIT_NOTIFICATIONS=10
+export LIMIT_CONVERSATIONS=7
+export LIMIT_MESENGERS=30

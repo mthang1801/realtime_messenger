@@ -6,7 +6,8 @@ function convertTimerTitleMessenger(timeStamp){
 }
 function acceptRequestAddContact(){
   $(".btn-accept-request-contact").off("click").on("click", function(){
-    let userId = $(this).data("uid");
+   
+    let userId = $(this).data("uid");  
     $.ajax({
       type: "put",
       url: "/contact/accept-request-contact-received",
@@ -149,9 +150,35 @@ function acceptRequestAddContact(){
           $("#screen-chat").prepend(userContactRightSideHTML);
           switchTabConversation();      
           //#endregion
+
+          //insert into list contact at create new group modal
+          let userNewGroupChat =`
+          <li class="list-users-item" data-chat="${user._id}">
+            <div class="list-users-item__avatar">
+              <img src="images/users/${user.avatar}" class="list-users-item__avatar-image">
+            </div>
+            <div class="list-users-item__info">
+              <div class="list-users-item__info-username">
+                ${user.username}
+              </div>
+              <div class="list-users-item__info-address">
+                ${user.address ? user.address : ""}
+              </div>
+            </div>
+            <div class="list-users-item__button">
+            <button class="list-users-item__button-add" data-chat="${user._id}">Thêm vào nhóm</button>
+            <button class="list-users-item__button-remove" data-chat="${user._id}">Xóa khỏi nhóm</button>
+            </div>
+          </li>
+          `;         
+          $("#current-list-users").append(userNewGroupChat);
+          addUserIntoNewGroup();
+          removeUserOutOfNewGroup();
           //create socket 
           socket.emit("accept-request-contact-received", {userId, updatedAt: contact.updatedAt, notificationId});
           socket.emit("check-status");
+          
+
           chatWithMemberFromGroupChatSetting();
           switchTabConversation();      
           removeCurrentContact();
@@ -312,6 +339,31 @@ socket.on("response-accept-request-contact-received", user => {
       </div>
     </div>
     `
+
+     //insert into list contact at create new group modal
+     let userNewGroupChat =`
+     <li class="list-users-item" data-chat="${user._id}">
+       <div class="list-users-item__avatar">
+         <img src="images/users/${user.avatar}" class="list-users-item__avatar-image">
+       </div>
+       <div class="list-users-item__info">
+         <div class="list-users-item__info-username">
+           ${user.username}
+         </div>
+         <div class="list-users-item__info-address">
+           ${user.address ? user.address : ""}
+         </div>
+       </div>
+       <div class="list-users-item__button">
+       <button class="list-users-item__button-add" data-chat="${user._id}">Thêm vào nhóm</button>
+       <button class="list-users-item__button-remove" data-chat="${user._id}">Xóa khỏi nhóm</button>
+       </div>
+     </li>
+     `;         
+     $("#current-list-users").append(userNewGroupChat);
+     addUserIntoNewGroup();
+     removeUserOutOfNewGroup();
+     
     $("#screen-chat").prepend(userContactRightSideHTML);
     socket.emit("check-status");
     switchTabConversation();     

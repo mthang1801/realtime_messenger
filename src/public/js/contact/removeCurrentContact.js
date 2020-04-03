@@ -32,6 +32,8 @@ function removeCurrentContact(){
               if( !$(".screen-chat").find(".tab-pane").hasClass("active")){
                 $(".initial-conversation").show();
               }
+              //remove user at create new group modal                        
+              $("#current-list-users").find(`li[data-chat = ${targetId}]`).remove();          
               socket.emit("remove-current-contact", {targetId});
             }
           },
@@ -54,6 +56,8 @@ socket.on("response-remove-current-contact", user => {
   $(".left-side-conversations__content-list").find(`a.person[data-chat = ${user._id}]`).parent().remove();
   //remove user contact at rightSide
   $(`#to-${user._id}`).remove();
+   //remove user at create new group modal                        
+   $("#current-list-users").find(`li[data-chat = ${user._id}]`).remove();          
   if( !$(".screen-chat").find(".tab-pane").hasClass("active")){
     $(".initial-conversation").show();
   }

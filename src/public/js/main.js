@@ -53,6 +53,7 @@ function ajaxLoading(){
 function showModalContacts(){
   $("#modalContact").on("show.bs.modal", () => {
     $("#contact-count").fadeOut("fast");
+    sortContactOnlineOffline();
   })
 };
 
